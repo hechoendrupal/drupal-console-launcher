@@ -1,0 +1,27 @@
+# deprecation-detector
+/.rules
+
+# Composer
+/vendor
+/bin/phpunit
+/bin/composer
+/bin/jsonlint
+/bin/phpcbf
+/bin/phpcs
+/bin/validate-json
+/bin/pdepend
+/bin/php-cs-fixer
+/bin/phpmd
+
+# Binaries
+/box.phar
+/console.phar
+/composer.phar
+/drupal.phar
+/drupal.phar.version
+
+# Test
+/phpunit.xml
+
+# Drupal
+/core
