@@ -1,0 +1,24 @@
+{
+    "alias": "drupal.phar",
+    "chmod": "0755",
+    "directories": [
+        "config",
+        "src"
+    ],
+    "files": [
+        "config.yml",
+        "bin/drupal.php",
+        "vendor/autoload.php"
+    ],
+    "finder": [
+        {
+            "name": "/(\\.php|\\.json|\\.yml|\\.twig)$/",
+            "exclude": ["Tests","tests", "docs"],
+            "in": "vendor"
+        }
+    ],
+    "compression": "GZ",
+    "main": "bin/drupal",
+    "output": "drupal.phar",
+    "stub": true
+}
