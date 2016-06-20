@@ -1,6 +1,6 @@
 {
-    "name": "drupal/console-installer",
-    "description": "Drupal Console installer",
+    "name": "drupal/console-launcher",
+    "description": "Drupal Console launcher",
     "keywords": ["Drupal", "Console", "Development", "Symfony"],
     "homepage": "http://drupalconsole.com/",
     "type": "project",
