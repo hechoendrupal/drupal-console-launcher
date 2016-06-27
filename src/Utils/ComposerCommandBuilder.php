@@ -13,16 +13,18 @@ class ComposerCommandBuilder
         $input = null;
         if ($argvInputReader->get('command') === 'site:new') {
             $package = $configuration
-                ->get('application.composer.create-project.default');
+                ->get('application.composer.create-project.default.package');
+            $version = $configuration
+                ->get('application.composer.create-project.default.version');
             $input = new ArrayInput(
                 [
-                'command' => 'create-project',
-                'package' => $package,
-                'version' => '8.x-dev',
-                'directory' => $argvInputReader->get('root'),
-                '--no-interaction' => true,
-                '--prefer-dist' => true,
-                '--no-dev' => true
+                    'command' => 'create-project',
+                    'package' => $package,
+                    'version' => $version,
+                    'directory' => $argvInputReader->get('root'),
+                    '--no-interaction' => true,
+                    '--prefer-dist' => true,
+                    '--no-dev' => true
                 ]
             );
         }

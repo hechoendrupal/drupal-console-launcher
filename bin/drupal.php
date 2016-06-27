@@ -1,16 +1,15 @@
 <?php
 
-use Symfony\Component\Console\Application;
 use Drupal\Console\Utils\ArgvInputReader;
 use Drupal\Console\Utils\ConfigurationManager;
 use Drupal\Console\Utils\DrupalConsoleLauncher;
-use Drupal\Console\Utils\ComposerCommandBuilder;
 use Drupal\Console\Utils\DrupalChecker;
 
 set_time_limit(0);
 
 $pharRoot = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR;
 $pharAutoload = $pharRoot.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
+
 if (file_exists($pharAutoload)) {
     $autoload = include_once $pharAutoload;
 } else {
@@ -33,33 +32,16 @@ if ($target = $argvInputReader->get('target')) {
     $argvInputReader->setOptionsFromTargetConfiguration($targetConfig);
 }
 
+$argvInputReader->setOptionsAsArgv();
+
+//var_export($_SERVER['argv']);
+//var_export($argvInputReader->getAll());
+
 $currentDirectory = getcwd() . DIRECTORY_SEPARATOR;
 
 /* validate if this is a valid drupal root */
 $drupalChecker = new DrupalChecker();
 $isValidDrupal = $drupalChecker->isValidRoot($argvInputReader->get('root'), true);
-
-if (!$argvInputReader->get('composer', false) 
-    && $argvInputReader->get('command') === 'site:new'
-) {
-    /* Ask to execute using composer */
-}
-
-if ($argvInputReader->get('composer', false)) {
-    $composerCommandBuilder = new ComposerCommandBuilder();
-    $input = $composerCommandBuilder->build($argvInputReader, $configuration);
-
-    if ($input) {
-        chdir($argvInputReader->get('root'));
-        $composerApplication = new \Composer\Console\Application();
-        $composerApplication->setAutoExit(false);
-        $composerApplication->run($input);
-    }
-
-    if ($composerCommandBuilder->isStopExecution()) {
-        exit(0);
-    }
-}
 
 if ($argvInputReader->get('remote', false)) {
     /* execute command via ssh */
@@ -72,9 +54,3 @@ if ($isValidDrupal) {
 
     exit(0);
 }
-
-//$composerCommand = new \Drupal\Console\Command\ComposerCommand();
-//$application = new Application();
-//$application->add($composerCommand);
-//$application->run();
-
