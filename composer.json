@@ -1,6 +1,6 @@
 {
-    "name": "drupal/console-installer",
-    "description": "Drupal Console installer",
+    "name": "drupal/console-launcher",
+    "description": "Drupal Console launcher",
     "keywords": ["Drupal", "Console", "Development", "Symfony"],
     "homepage": "http://drupalconsole.com/",
     "type": "project",
@@ -39,8 +39,7 @@
         "php": ">=5.5.9",
         "dflydev/dot-access-configuration": "1.*",
         "symfony/console": "~2.7",
-        "symfony/yaml": "~2.7",
-        "composer/composer": "~1.1"
+        "symfony/yaml": "~2.7"
     },
     "bin": ["bin/drupal"],
     "config": {

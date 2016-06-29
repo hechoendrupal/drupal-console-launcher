@@ -173,4 +173,24 @@ class ArgvInputReader
     {
         return $this->options;
     }
+
+    public function setOptionsAsArgv() {
+        foreach($this->options as $optionName => $optionValue) {
+            if ($optionName == 'command') {
+                continue;
+            }
+            $optionFound = false;
+            foreach ($_SERVER['argv'] as $key => $argv) {
+                if (strpos($argv, '--' . $optionName) === 0) {
+                    $_SERVER['argv'][$key] = '--' . $optionName . '=' . $optionValue;
+                    $optionFound = true;
+                    break;
+                }
+            }
+            if (!$optionFound) {
+                $_SERVER['argv'][] = '--' . $optionName . '=' . $optionValue;
+            }
+        }
+    }
+
 }

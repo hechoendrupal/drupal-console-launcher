@@ -26,6 +26,11 @@ class DrupalConsoleLauncher
             /* ask to install drupal console */
         }
 
+        /* Add option to identify if pre-launched */
+//        $_SERVER['argv'][] = '--pre-launch';
+
+        $drupal = realpath($drupal) . '.php';
+
         include_once $drupal;
     }
 }
