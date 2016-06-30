@@ -23,14 +23,16 @@ class DrupalConsoleLauncher
         }
 
         if (!file_exists($drupal)) {
-            /* ask to install drupal console */
+            return false;
         }
 
         /* Add option to identify if pre-launched */
-//        $_SERVER['argv'][] = '--pre-launch';
+        //        $_SERVER['argv'][] = '--pre-launch';
 
         $drupal = realpath($drupal) . '.php';
 
         include_once $drupal;
+
+        return true;
     }
 }

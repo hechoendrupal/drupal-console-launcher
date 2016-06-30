@@ -174,8 +174,9 @@ class ArgvInputReader
         return $this->options;
     }
 
-    public function setOptionsAsArgv() {
-        foreach($this->options as $optionName => $optionValue) {
+    public function setOptionsAsArgv()
+    {
+        foreach ($this->options as $optionName => $optionValue) {
             if ($optionName == 'command') {
                 continue;
             }
@@ -192,5 +193,4 @@ class ArgvInputReader
             }
         }
     }
-
 }
