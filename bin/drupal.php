@@ -60,9 +60,9 @@ $launch = $drupalConsoleLauncher->launch($argvInputReader->get('root'));
 if (!$launch) {
     /* ask to install drupal console */
     echo 'Drupal Console is not installed at '. PHP_EOL .
-        'Site root : ' . $argvInputReader->get('root') . PHP_EOL .
-        'Execute:' . PHP_EOL .
-        'composer require drupal/console:~1.0 --prefer-dist --optimize-autoloader' . PHP_EOL;
+         'Site root : ' . $argvInputReader->get('root') . PHP_EOL .
+         'Execute:' . PHP_EOL .
+         'composer require drupal/console:~1.0 --prefer-dist --optimize-autoloader' . PHP_EOL;
 
     exit(1);
 }
