@@ -10,6 +10,8 @@ class DrupalConsoleLauncher
 {
     /**
      * @param $root
+     *
+     * @return boolean
      */
     public function launch($root)
     {
@@ -27,7 +29,7 @@ class DrupalConsoleLauncher
         }
 
         /* Add option to identify if pre-launched */
-        //        $_SERVER['argv'][] = '--pre-launch';
+        // $_SERVER['argv'][] = '--pre-launch';
 
         $drupal = realpath($drupal) . '.php';
 

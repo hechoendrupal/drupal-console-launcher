@@ -69,7 +69,16 @@ class ArgvInputReader
                 continue;
             }
             if (!empty($option)) {
-                $_SERVER['argv'][] = sprintf('--%s=%s', $key, $option);
+                if ($key = 'root') {
+                    foreach ($_SERVER['argv'] as $argvKey => $argv) {
+                        if (strpos($argv, '--' . $key) === 0) {
+                            $argvValue = str_replace('--'.$key.'=', '', $argv);
+                            $_SERVER['argv'][$argvKey] = sprintf('--%s=%s%s', $key, $argvValue, $option );
+                        }
+                    }
+                } else {
+                    $_SERVER['argv'][] = sprintf('--%s=%s', $key, $option);
+                }
             }
         }
         $this->readArgvInputValues();
@@ -125,14 +134,11 @@ class ArgvInputReader
             $uri = sprintf('http://%s', $uri);
         }
 
-        $composer = $input->hasParameterOption(['--composer']);
-
         $this->set('command', $input->getFirstArgument());
         $this->set('root', $root);
         $this->set('uri', $uri);
         $this->set('source', $source);
         $this->set('target', $target);
-        $this->set('composer', $composer);
     }
 
     /**
