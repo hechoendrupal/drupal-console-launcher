@@ -1,5 +1,8 @@
 <?php
 
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Drupal\Console\Utils\ArgvInputReader;
 use Drupal\Console\Utils\ConfigurationManager;
 use Drupal\Console\Utils\DrupalConsoleLauncher;
@@ -13,9 +16,10 @@ $pharAutoload = $pharRoot.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
 if (file_exists($pharAutoload)) {
     $autoload = include_once $pharAutoload;
 } else {
-    echo 'Something goes wrong with your drupal.phar archive.'.PHP_EOL.
-         'Try downloading again by executing from your terminal:'.PHP_EOL.
-         'curl https://drupalconsole.com/installer -L -o drupal.phar'.PHP_EOL;
+    echo ' Something goes wrong with your drupal.phar archive.'.PHP_EOL.
+         ' Try downloading again by executing from your terminal:'.PHP_EOL.
+         ' curl https://drupalconsole.com/installer -L -o drupal.phar'.PHP_EOL;
+
     exit(1);
 }
 
@@ -34,35 +38,44 @@ if ($target = $argvInputReader->get('target')) {
 
 $argvInputReader->setOptionsAsArgv();
 
-//var_export($_SERVER['argv']);
-//var_export($argvInputReader->getAll());
-
-$currentDirectory = getcwd() . DIRECTORY_SEPARATOR;
-
-/* validate if this is a valid drupal root */
-$drupalChecker = new DrupalChecker();
-$isValidDrupal = $drupalChecker->isValidRoot($argvInputReader->get('root'), true);
-
 if ($argvInputReader->get('remote', false)) {
-    /* execute command via ssh */
+    /*
+        Execute command via ssh
+        Relocate remote execution to this project
+    */
     exit(0);
 }
 
-if (!$isValidDrupal) {
-    echo 'Invalid site root : ' . $argvInputReader->get('root') . PHP_EOL;
+$input = null;
+$output = new ConsoleOutput();
+$input = new ArrayInput([]);
+$io = new SymfonyStyle($input, $output);
 
-    exit(1);
+$drupalChecker = new DrupalChecker();
+$isValidDrupal = $drupalChecker->isValidRoot($argvInputReader->get('root'), true);
+
+if ($isValidDrupal) {
+    $drupalConsoleLauncher = new DrupalConsoleLauncher();
+    $launch = $drupalConsoleLauncher->launch($argvInputReader->get('root'));
+
+    if (!$launch) {
+        /* Read message from translation file. */
+        $message = [
+            'Drupal Console is not installed at ',
+            'Site root : ' . $argvInputReader->get('root'),
+            'Execute:',
+            'composer require drupal/console:~1.0 --prefer-dist --optimize-autoloader'
+        ];
+
+        $io->error($message);
+        exit(1);
+    }
 }
 
-$drupalConsoleLauncher = new DrupalConsoleLauncher();
-$launch = $drupalConsoleLauncher->launch($argvInputReader->get('root'));
+/* Read message from translation file. */
+$message = [
+    'Invalid Drupal site at:',
+    $argvInputReader->get('root')
+];
 
-if (!$launch) {
-    /* ask to install drupal console */
-    echo 'Drupal Console is not installed at '. PHP_EOL .
-         'Site root : ' . $argvInputReader->get('root') . PHP_EOL .
-         'Execute:' . PHP_EOL .
-         'composer require drupal/console:~1.0 --prefer-dist --optimize-autoloader' . PHP_EOL;
-
-    exit(1);
-}
+$io->error($message);
