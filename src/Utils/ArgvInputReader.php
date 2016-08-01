@@ -5,8 +5,7 @@ namespace Drupal\Console\Utils;
 use Symfony\Component\Console\Input\ArgvInput;
 
 /**
- * Class ArgvInputReader
- * @package Drupal\Console\Utils
+ * Class ArgvInputReader.
  */
 class ArgvInputReader
 {
@@ -71,9 +70,9 @@ class ArgvInputReader
             if (!empty($option)) {
                 if ($key = 'root') {
                     foreach ($_SERVER['argv'] as $argvKey => $argv) {
-                        if (strpos($argv, '--' . $key) === 0) {
+                        if (strpos($argv, '--'.$key) === 0) {
                             $argvValue = str_replace('--'.$key.'=', '', $argv);
-                            $_SERVER['argv'][$argvKey] = sprintf('--%s=%s%s', $key, $argvValue, $option );
+                            $_SERVER['argv'][$argvKey] = sprintf('--%s=%s%s', $key, $argvValue, $option);
                         }
                     }
                 } else {
@@ -85,13 +84,13 @@ class ArgvInputReader
     }
 
     /**
-     * SetPlaceHolderAsOption
+     * SetPlaceHolderAsOption.
      */
     private function setOptionsFromPlaceHolders()
     {
-        if (count($_SERVER['argv'])>2
-            && stripos($_SERVER['argv'][1], '@')===0
-            && stripos($_SERVER['argv'][2], '@')===0
+        if (count($_SERVER['argv']) > 2
+            && stripos($_SERVER['argv'][1], '@') === 0
+            && stripos($_SERVER['argv'][2], '@') === 0
         ) {
             $_SERVER['argv'][1] = sprintf(
                 '--source=%s',
@@ -106,7 +105,7 @@ class ArgvInputReader
             return;
         }
 
-        if (count($_SERVER['argv'])>1 && stripos($_SERVER['argv'][1], '@')===0) {
+        if (count($_SERVER['argv']) > 1 && stripos($_SERVER['argv'][1], '@') === 0) {
             $_SERVER['argv'][1] = sprintf(
                 '--target=%s',
                 substr($_SERVER['argv'][1], 1)
@@ -160,7 +159,8 @@ class ArgvInputReader
 
     /**
      * @param $option
-     * @param null   $value
+     * @param null $value
+     *
      * @return string
      */
     public function get($option, $value = null)
@@ -188,14 +188,14 @@ class ArgvInputReader
             }
             $optionFound = false;
             foreach ($_SERVER['argv'] as $key => $argv) {
-                if (strpos($argv, '--' . $optionName) === 0) {
-                    $_SERVER['argv'][$key] = '--' . $optionName . '=' . $optionValue;
+                if (strpos($argv, '--'.$optionName) === 0) {
+                    $_SERVER['argv'][$key] = '--'.$optionName.'='.$optionValue;
                     $optionFound = true;
                     break;
                 }
             }
             if (!$optionFound) {
-                $_SERVER['argv'][] = '--' . $optionName . '=' . $optionValue;
+                $_SERVER['argv'][] = '--'.$optionName.'='.$optionValue;
             }
         }
     }
