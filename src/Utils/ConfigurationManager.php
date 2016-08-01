@@ -13,8 +13,8 @@ use Dflydev\DotAccessConfiguration\ConfigurationInterface;
 class ConfigurationManager
 {
     /**
- * @var ConfigurationInterface  
-*/
+     * @var ConfigurationInterface
+     */
     private $configuration = null;
 
     /**
