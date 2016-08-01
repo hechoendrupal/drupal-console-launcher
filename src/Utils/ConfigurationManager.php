@@ -23,7 +23,6 @@ class ConfigurationManager
     public function __construct()
     {
         $input = new ArgvInput();
-
         $root = $input->getParameterOption(['--root'], null);
 
         $files = [
@@ -32,14 +31,9 @@ class ConfigurationManager
             getcwd().'/console/config.yml',
         ];
 
-//        var_export($files);
-//        echo 'root : ' . $root . PHP_EOL;
-
         if ($root) {
             $files[] = $root.'/console/config.yml';
         }
-
-//        var_export($files);
 
         $builder = new YamlFileConfigurationBuilder($files);
 
