@@ -27,7 +27,7 @@ $argvInputReader = new ArgvInputReader();
 $configurationManager = new ConfigurationManager();
 $configuration = $configurationManager->getConfiguration();
 
-if ($options = $configuration->get('application.options')?:[]) {
+if ($options = $configuration->get('application.options') ?: []) {
     $argvInputReader->setOptionsFromConfiguration($options);
 }
 
@@ -62,9 +62,9 @@ if ($isValidDrupal) {
         /* Read message from translation file. */
         $message = [
             'Drupal Console is not installed at ',
-            'Site root : ' . $argvInputReader->get('root'),
+            'Site root : '.$argvInputReader->get('root'),
             'Execute:',
-            'composer require drupal/console:~1.0 --prefer-dist --optimize-autoloader'
+            'composer require drupal/console:~1.0 --prefer-dist --optimize-autoloader',
         ];
 
         $io->error($message);
@@ -75,7 +75,7 @@ if ($isValidDrupal) {
 /* Read message from translation file. */
 $message = [
     'Invalid Drupal site at:',
-    $argvInputReader->get('root')
+    $argvInputReader->get('root'),
 ];
 
 $io->error($message);

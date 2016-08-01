@@ -69,13 +69,12 @@ class ArgvInputReader
             }
             if (!empty($option)) {
                 if ($key = 'root') {
-                    echo 'is root ' . $key . PHP_EOL;
+                    echo 'is root '.$key.PHP_EOL;
                     foreach ($_SERVER['argv'] as $argvKey => $argv) {
                         if (strpos($argv, '--'.$key) === 0) {
                             $argvValue = str_replace('--'.$key.'=', '', $argv);
                             $_SERVER['argv'][$argvKey] = sprintf('--%s=%s%s', $key, $argvValue, $option);
-                        }
-                        else {
+                        } else {
                             $_SERVER['argv'][] = sprintf('--%s=%s', $key, $option);
                         }
                     }
