@@ -23,8 +23,10 @@ if (file_exists($pharAutoload)) {
     exit(1);
 }
 
+//var_export($_SERVER['argv']);
+
 $argvInputReader = new ArgvInputReader();
-$configurationManager = new ConfigurationManager($argvInputReader->get('root'));
+$configurationManager = new ConfigurationManager();
 $configuration = $configurationManager->getConfiguration();
 
 if ($options = $configuration->get('application.options')?:[]) {
