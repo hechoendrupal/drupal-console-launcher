@@ -79,3 +79,4 @@ $message = [
 ];
 
 $io->error($message);
+exit(1);
