@@ -24,7 +24,7 @@ if (file_exists($pharAutoload)) {
 }
 
 $argvInputReader = new ArgvInputReader();
-$configurationManager = new ConfigurationManager($argvInputReader->get('root'));
+$configurationManager = new ConfigurationManager();
 $configuration = $configurationManager->getConfiguration();
 
 if ($options = $configuration->get('application.options')?:[]) {
@@ -40,9 +40,9 @@ $argvInputReader->setOptionsAsArgv();
 
 if ($argvInputReader->get('remote', false)) {
     /*
-        Execute command via ssh
-        Relocate remote execution to this project
-    */
+     *  Execute command via ssh
+     *  Relocate remote execution to this project
+     */
     exit(0);
 }
 
