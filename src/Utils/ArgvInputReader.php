@@ -69,7 +69,6 @@ class ArgvInputReader
             }
             if (!empty($option)) {
                 if ($key = 'root') {
-                    echo 'is root '.$key.PHP_EOL;
                     foreach ($_SERVER['argv'] as $argvKey => $argv) {
                         if (strpos($argv, '--'.$key) === 0) {
                             $argvValue = str_replace('--'.$key.'=', '', $argv);
