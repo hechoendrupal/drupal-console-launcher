@@ -24,7 +24,7 @@ if (file_exists($pharAutoload)) {
 }
 
 $argvInputReader = new ArgvInputReader();
-$configurationManager = new ConfigurationManager();
+$configurationManager = new ConfigurationManager($argvInputReader->get('root'));
 $configuration = $configurationManager->getConfiguration();
 
 if ($options = $configuration->get('application.options')?:[]) {

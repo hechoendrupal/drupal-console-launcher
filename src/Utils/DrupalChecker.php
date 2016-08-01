@@ -3,14 +3,14 @@
 namespace Drupal\Console\Utils;
 
 /**
- * Class DrupalChecker
- * @package Drupal\Console\Utils
+ * Class DrupalChecker.
  */
 class DrupalChecker
 {
     /**
-     * @param  string $root
-     * @param  bool   $recursive
+     * @param string $root
+     * @param bool   $recursive
+     *
      * @return bool
      */
     public function isValidRoot($root, $recursive = false)

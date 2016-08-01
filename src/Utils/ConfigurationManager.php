@@ -3,38 +3,34 @@
 namespace Drupal\Console\Utils;
 
 use Symfony\Component\Yaml\Yaml;
-use Symfony\Component\Console\Input\ArgvInput;
 use Dflydev\DotAccessConfiguration\YamlFileConfigurationBuilder;
 use Dflydev\DotAccessConfiguration\ConfigurationInterface;
 
 /**
- * Class ConfigurationManager
- * @package Drupal\Console\Utils
+ * Class ConfigurationManager.
  */
 class ConfigurationManager
 {
     /**
- * @var ConfigurationInterface  
-*/
+     * @var ConfigurationInterface
+     */
     private $configuration = null;
 
     /**
      * ConfigurationReader constructor.
+     *
+     * @param $root
      */
-    public function __construct()
+    public function __construct($root)
     {
-        $input = new ArgvInput();
-
-        $root = $input->getParameterOption(['--root'], null);
-
         $files = [
             __DIR__.'/../../config.yml',
-            $this->getHomeDirectory() . '/.console/config.yml',
-            getcwd() . '/console/config.yml',
+            $this->getHomeDirectory().'/.console/config.yml',
+            getcwd().'/console/config.yml',
         ];
 
         if ($root) {
-            $files[] = $root . '/console/config.yml';
+            $files[] = $root.'/console/config.yml';
         }
 
         $builder = new YamlFileConfigurationBuilder($files);
@@ -52,6 +48,7 @@ class ConfigurationManager
 
     /**
      * @param $target
+     *
      * @return array
      */
     public function readTarget($target)
