@@ -3,15 +3,14 @@
 namespace Drupal\Console\Utils;
 
 /**
- * Class Launcher
- * @package Drupal\Console\Utils
+ * Class Launcher.
  */
 class DrupalConsoleLauncher
 {
     /**
      * @param $root
      *
-     * @return boolean
+     * @return bool
      */
     public function launch($root)
     {
@@ -31,7 +30,7 @@ class DrupalConsoleLauncher
         /* Add option to identify if pre-launched */
         // $_SERVER['argv'][] = '--pre-launch';
 
-        $drupal = realpath($drupal) . '.php';
+        $drupal = realpath($drupal).'.php';
 
         include_once $drupal;
 
