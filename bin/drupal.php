@@ -7,6 +7,7 @@ use Drupal\Console\Utils\ArgvInputReader;
 use Drupal\Console\Utils\ConfigurationManager;
 use Drupal\Console\Utils\DrupalConsoleLauncher;
 use Drupal\Console\Utils\DrupalChecker;
+use Drupal\Console\Utils\Translator;
 
 set_time_limit(0);
 
@@ -26,6 +27,8 @@ if (file_exists($pharAutoload)) {
 $argvInputReader = new ArgvInputReader();
 $configurationManager = new ConfigurationManager();
 $configuration = $configurationManager->getConfiguration();
+$translator = new Translator();
+$translator->loadResource('en', $pharRoot);
 
 if ($options = $configuration->get('application.options') ?: []) {
     $argvInputReader->setOptionsFromConfiguration($options);
@@ -60,23 +63,33 @@ if ($isValidDrupal) {
 
     if (!$launch) {
         /* Read message from translation file. */
-        $message = [
-            'Drupal Console is not installed at ',
-            'Site root : '.$argvInputReader->get('root'),
-            'Execute:',
-            'composer require drupal/console:~1.0 --prefer-dist --optimize-autoloader',
-        ];
-
+        $message = sprintf(
+            $translator->trans('application.site.errors.not-installed'),
+            $argvInputReader->get('root')
+        );
         $io->error($message);
+
+        $message = sprintf(
+            '<info> %s</info>',
+            $translator->trans('application.site.errors.execute-composer')
+        );
+        $io->writeln($message);
+
+        $io->block(
+            $configuration->get('application.composer.install-console'),
+            null,
+            'bg=yellow;fg=black',
+            ' ',
+            true
+        );
         exit(1);
     }
 }
 
-/* Read message from translation file. */
-$message = [
-    'Invalid Drupal site at:',
-    $argvInputReader->get('root'),
-];
+$message = sprintf(
+    $translator->trans('application.site.errors.directory'),
+    $argvInputReader->get('root')
+);
 
-$io->error($message);
+$io->warning($message);
 exit(1);
