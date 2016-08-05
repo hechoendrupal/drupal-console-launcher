@@ -11,3 +11,4 @@ application:
       default: 'https://packagist.drupal-composer.org'
       drupal: 'https://packages.drupal.org/8'
       packagist: 'https://packagist.org'
+    install-console: 'composer require drupal/console:~1.0 --prefer-dist --optimize-autoloader'
