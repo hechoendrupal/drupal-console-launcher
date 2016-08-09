@@ -2,12 +2,14 @@
 
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
-use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\LauncherApplication;
 use Drupal\Console\Utils\ArgvInputReader;
-use Drupal\Console\Utils\ConfigurationManager;
 use Drupal\Console\Utils\DrupalConsoleLauncher;
 use Drupal\Console\Utils\DrupalChecker;
-use Drupal\Console\Utils\Translator;
 
 set_time_limit(0);
 
@@ -24,11 +26,17 @@ if (file_exists($pharAutoload)) {
     exit(1);
 }
 
+$container = new ContainerBuilder();
+$loader = new YamlFileLoader($container, new FileLocator($pharRoot));
+$loader->load('services.yml');
+
 $argvInputReader = new ArgvInputReader();
-$configurationManager = new ConfigurationManager();
+$container->get('configuration_manager')->loadConfiguration(__DIR__);
+$configurationManager = $container->get('configuration_manager');
 $configuration = $configurationManager->getConfiguration();
-$translator = new Translator();
-$translator->loadResource('en', $pharRoot);
+
+$container->get('translator')->loadCoreLanguage('en', $pharRoot);
+$translator = $container->get('translator');
 
 if ($options = $configuration->get('application.options') ?: []) {
     $argvInputReader->setOptionsFromConfiguration($options);
@@ -49,10 +57,9 @@ if ($argvInputReader->get('remote', false)) {
     exit(0);
 }
 
-$input = null;
 $output = new ConsoleOutput();
 $input = new ArrayInput([]);
-$io = new SymfonyStyle($input, $output);
+$io = new DrupalStyle($input, $output);
 
 $drupalChecker = new DrupalChecker();
 $isValidDrupal = $drupalChecker->isValidRoot($argvInputReader->get('root'), true);
@@ -69,27 +76,29 @@ if ($isValidDrupal) {
         );
         $io->error($message);
 
-        $message = sprintf(
-            '<info> %s</info>',
+        $io->info(
             $translator->trans('application.site.errors.execute-composer')
         );
-        $io->writeln($message);
 
-        $io->block(
-            $configuration->get('application.composer.install-console'),
-            null,
-            'bg=yellow;fg=black',
-            ' ',
-            true
+        $io->commentBlock(
+            $configuration->get('application.composer.install-console')
         );
+
         exit(1);
     }
 }
 
-$message = sprintf(
-    $translator->trans('application.site.errors.directory'),
-    $argvInputReader->get('root')
-);
+$argvInputReader->restoreOriginalArgvValues();
+$application = new LauncherApplication($container);
 
-$io->warning($message);
-exit(1);
+$tags = $container->findTaggedServiceIds('console.command');
+foreach ($tags as $name => $tags) {
+    $command = $container->get($name);
+    if (method_exists($command, 'setTranslator')) {
+        $command->setTranslator($translator);
+    }
+    $application->add($command);
+}
+
+$application->setDefaultCommand('about');
+$application->run();
