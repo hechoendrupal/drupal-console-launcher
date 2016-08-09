@@ -35,20 +35,9 @@
         "forum": "https://gitter.im/hechoendrupal/DrupalConsole",
         "docs": "https://hechoendrupal.gitbooks.io/drupal-console/"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "/Users/jmolivas/develop/drupal/modules/drupal-console-en"
-        },
-        {
-            "type": "vcs",
-            "url": "/Users/jmolivas/develop/drupal/modules/drupal-console-core"
-        }
-    ],
     "require": {
         "php": "^5.6 || ^7.0",
-        "drupal/console-en" : "dev-master",
-        "drupal/console-core" : "dev-cleanup-translator",
+        "drupal/console-core" : "dev-master",
         "symfony/dependency-injection": "~2.8",
         "symfony/config": "~2.8"
     },
@@ -56,6 +45,8 @@
     "config": {
         "bin-dir": "bin/"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {"Drupal\\Console\\": "src"}
     }
