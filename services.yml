@@ -1,0 +1,22 @@
+services:
+  translator:
+    class: Drupal\Console\Utils\Translator
+  configuration_manager:
+    class: Drupal\Console\Utils\ConfigurationManager
+  #DrupalCore Commands
+  about:
+    class: Drupal\Console\Command\AboutCommand
+    tags:
+      - { name: console.command }
+  list:
+    class: Drupal\Console\Command\ListCommand
+    tags:
+      - { name: console.command }
+  help:
+    class: Drupal\Console\Command\HelpCommand
+    tags:
+      - { name: console.command }
+  init:
+    class: Drupal\Console\Command\InitCommand
+    tags:
+      - { name: console.command }
