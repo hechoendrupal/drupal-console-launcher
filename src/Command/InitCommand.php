@@ -44,68 +44,68 @@ class InitCommand extends Command
     {
         $io = new DrupalStyle($input, $output);
 
-        $io->commentBlock('New command from core');
+        $io->commentBlock('New command from launcher');
 
         $application = $this->getApplication();
         $config = $application->getConfiguration();
 
-////        $showFileHelper = $application->getShowFileHelper();
-//        $userPath = sprintf('%s/.console/', $config->getHomeDirectory());
-//        $copiedFiles = [];
-//
-//        $override = false;
-//        if ($input->hasOption('override')) {
-//            $override = $input->getOption('override');
-//        }
-//
-//        $finder = new Finder();
-//        $finder->in(sprintf('%sconfig/dist/', $application->getDirectoryRoot()));
-//        $finder->files();
-//
-//        foreach ($finder as $configFile) {
-//            $source = sprintf(
-//                '%s/config/dist/%s',
-//                $application->getDirectoryRoot(),
-//                $configFile->getRelativePathname()
-//            );
-//            $destination = sprintf(
-//                '%s/%s',
-//                $userPath,
-//                $configFile->getRelativePathname()
-//            );
-//            if ($this->copyFile($source, $destination, $override)) {
-//                $copiedFiles[] = $configFile->getRelativePathname();
-//            }
-//        }
+        ////        $showFileHelper = $application->getShowFileHelper();
+        //        $userPath = sprintf('%s/.console/', $config->getHomeDirectory());
+        //        $copiedFiles = [];
+        //
+        //        $override = false;
+        //        if ($input->hasOption('override')) {
+        //            $override = $input->getOption('override');
+        //        }
+        //
+        //        $finder = new Finder();
+        //        $finder->in(sprintf('%sconfig/dist/', $application->getDirectoryRoot()));
+        //        $finder->files();
+        //
+        //        foreach ($finder as $configFile) {
+        //            $source = sprintf(
+        //                '%s/config/dist/%s',
+        //                $application->getDirectoryRoot(),
+        //                $configFile->getRelativePathname()
+        //            );
+        //            $destination = sprintf(
+        //                '%s/%s',
+        //                $userPath,
+        //                $configFile->getRelativePathname()
+        //            );
+        //            if ($this->copyFile($source, $destination, $override)) {
+        //                $copiedFiles[] = $configFile->getRelativePathname();
+        //            }
+        //        }
 
-//        if ($copiedFiles) {
-//            $showFileHelper->copiedFiles($io, $copiedFiles);
-//        }
+        //        if ($copiedFiles) {
+        //            $showFileHelper->copiedFiles($io, $copiedFiles);
+        //        }
 
-//        $this->createAutocomplete();
-        $io->newLine(1);
-//        $io->writeln($this->trans('application.messages.autocomplete'));
+        //        $this->createAutocomplete();
+        //        $io->newLine(1);
+        //        $io->writeln($this->trans('application.messages.autocomplete'));
     }
 
-//    protected function createAutocomplete()
-//    {
-//        $generator = new AutocompleteGenerator();
-//        $generator->setHelperSet($this->getHelperSet());
-//
-//        $application = $this->getApplication();
-//        $config = $application->getConfig();
-//        $userPath = $config->getUserHomeDir().'/.console/';
-//
-//        $processBuilder = new ProcessBuilder(array('bash'));
-//        $process = $processBuilder->getProcess();
-//        $process->setCommandLine('echo $_');
-//        $process->run();
-//        $fullPathExecutable = explode('/', $process->getOutput());
-//        $executable = trim(end($fullPathExecutable));
-//        $process->stop();
-//
-//        $generator->generate($userPath, $executable);
-//    }
+    //    protected function createAutocomplete()
+    //    {
+    //        $generator = new AutocompleteGenerator();
+    //        $generator->setHelperSet($this->getHelperSet());
+    //
+    //        $application = $this->getApplication();
+    //        $config = $application->getConfig();
+    //        $userPath = $config->getUserHomeDir().'/.console/';
+    //
+    //        $processBuilder = new ProcessBuilder(array('bash'));
+    //        $process = $processBuilder->getProcess();
+    //        $process->setCommandLine('echo $_');
+    //        $process->run();
+    //        $fullPathExecutable = explode('/', $process->getOutput());
+    //        $executable = trim(end($fullPathExecutable));
+    //        $process->stop();
+    //
+    //        $generator->generate($userPath, $executable);
+    //    }
 
     /**
      * @param string $source
@@ -113,20 +113,20 @@ class InitCommand extends Command
      * @param string $override
      * @return bool
      */
-//    public function copyFile($source, $destination, $override)
-//    {
-//        if (file_exists($destination) && !$override) {
-//            return false;
-//        }
-//
-//        $filePath = dirname($destination);
-//        if (!is_dir($filePath)) {
-//            mkdir($filePath);
-//        }
-//
-//        return copy(
-//            $source,
-//            $destination
-//        );
-//    }
+    //    public function copyFile($source, $destination, $override)
+    //    {
+    //        if (file_exists($destination) && !$override) {
+    //            return false;
+    //        }
+    //
+    //        $filePath = dirname($destination);
+    //        if (!is_dir($filePath)) {
+    //            mkdir($filePath);
+    //        }
+    //
+    //        return copy(
+    //            $source,
+    //            $destination
+    //        );
+    //    }
 }

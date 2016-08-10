@@ -1,14 +1,3 @@
 application:
   composer:
-    create-project:
-      default:
-#          repository: 'https://packagist.org'
-        package: 'drupal-composer/drupal-project'
-      drupal:
-#          repository: 'https://packagist.org'
-        package: 'drupal/drupal'
-    repositories:
-      default: 'https://packagist.drupal-composer.org'
-      drupal: 'https://packages.drupal.org/8'
-      packagist: 'https://packagist.org'
     install-console: 'composer require drupal/console:~1.0 --prefer-dist --optimize-autoloader'

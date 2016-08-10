@@ -1,22 +1,28 @@
 services:
-  translator:
-    class: Drupal\Console\Utils\Translator
-  configuration_manager:
+  #DrupalConsoleCore Services
+  console.translator_manager:
+    class: Drupal\Console\Utils\TranslatorManager
+  console.configuration_manager:
     class: Drupal\Console\Utils\ConfigurationManager
-  #DrupalCore Commands
-  about:
+  console.drupal_checker:
+      class: Drupal\Console\Utils\DrupalChecker
+  #DrupalConsoleLauncher Services
+  console.launcher:
+    class: Drupal\Console\Utils\Launcher
+  #DrupalConsoleCore Commands
+  console.about:
     class: Drupal\Console\Command\AboutCommand
     tags:
       - { name: console.command }
-  list:
+  console.list:
     class: Drupal\Console\Command\ListCommand
     tags:
       - { name: console.command }
-  help:
+  console.help:
     class: Drupal\Console\Command\HelpCommand
     tags:
       - { name: console.command }
-  init:
+  console.init:
     class: Drupal\Console\Command\InitCommand
     tags:
       - { name: console.command }
