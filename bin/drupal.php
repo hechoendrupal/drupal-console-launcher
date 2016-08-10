@@ -6,10 +6,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Drupal\Console\Style\DrupalStyle;
-use Drupal\Console\LauncherApplication;
+use Drupal\Console\Application;
 use Drupal\Console\Utils\ArgvInputReader;
-use Drupal\Console\Utils\DrupalConsoleLauncher;
-use Drupal\Console\Utils\DrupalChecker;
 
 set_time_limit(0);
 
@@ -31,19 +29,20 @@ $loader = new YamlFileLoader($container, new FileLocator($pharRoot));
 $loader->load('services.yml');
 
 $argvInputReader = new ArgvInputReader();
-$container->get('configuration_manager')->loadConfiguration(__DIR__);
-$configurationManager = $container->get('configuration_manager');
-$configuration = $configurationManager->getConfiguration();
+$configuration = $container->get('console.configuration_manager')
+    ->loadConfiguration(__DIR__)
+    ->getConfiguration();
 
-$container->get('translator')->loadCoreLanguage('en', $pharRoot);
-$translator = $container->get('translator');
+$translator = $container->get('console.translator_manager')
+    ->loadCoreLanguage('en', $pharRoot);
 
 if ($options = $configuration->get('application.options') ?: []) {
     $argvInputReader->setOptionsFromConfiguration($options);
 }
 
 if ($target = $argvInputReader->get('target')) {
-    $targetConfig = $configurationManager->readTarget($target);
+    $targetConfig = $container->get('console.configuration_manager')
+        ->readTarget($target);
     $argvInputReader->setOptionsFromTargetConfiguration($targetConfig);
 }
 
@@ -61,11 +60,11 @@ $output = new ConsoleOutput();
 $input = new ArrayInput([]);
 $io = new DrupalStyle($input, $output);
 
-$drupalChecker = new DrupalChecker();
+$drupalChecker = $container->get('console.drupal_checker');
 $isValidDrupal = $drupalChecker->isValidRoot($argvInputReader->get('root'), true);
 
 if ($isValidDrupal) {
-    $drupalConsoleLauncher = new DrupalConsoleLauncher();
+    $drupalConsoleLauncher = $container->get('console.launcher');
     $launch = $drupalConsoleLauncher->launch($argvInputReader->get('root'));
 
     if (!$launch) {
@@ -89,7 +88,7 @@ if ($isValidDrupal) {
 }
 
 $argvInputReader->restoreOriginalArgvValues();
-$application = new LauncherApplication($container);
+$application = new Application($container);
 
 $tags = $container->findTaggedServiceIds('console.command');
 foreach ($tags as $name => $tags) {

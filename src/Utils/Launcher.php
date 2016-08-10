@@ -5,7 +5,7 @@ namespace Drupal\Console\Utils;
 /**
  * Class Launcher.
  */
-class DrupalConsoleLauncher
+class Launcher
 {
     /**
      * @param $root
