@@ -1,4 +1,4 @@
-# drupal-console-launcher
+# Drupal Console Launcher 
 
 DrupalConsole global executable.
 
@@ -8,8 +8,15 @@ DrupalConsole global executable.
 * https://github.com/hechoendrupal/DrupalConsole#getting-the-project-to-contribute
 * https://github.com/hechoendrupal/DrupalConsole#enabling-autocomplete
 
-### Investigate if is possible to relocate commands:
+### Relocate commands:
 ```
+* about                 Display basic information about project.
+* init                  Copy configuration files.
+* help                  Displays help for a command.
+* list                  Lists all available commands.
+* self-update           Update project to the latest version.
+* settings:debug        List user Drupal Console settings.
+* settings:set          Change a specific setting value in DrupalConsole config file
 * site:new              Create a new Drupal project
 * site:debug            List all known local and remote sites.
 * site:import:local     Import/Configure an existing local Drupal project
