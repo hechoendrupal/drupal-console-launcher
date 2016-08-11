@@ -26,6 +26,7 @@ if (file_exists($pharAutoload)) {
 
 $container = new ContainerBuilder();
 $loader = new YamlFileLoader($container, new FileLocator($pharRoot));
+$loader->load('vendor/drupal/console-core/services.yml');
 $loader->load('services.yml');
 
 $argvInputReader = new ArgvInputReader();
