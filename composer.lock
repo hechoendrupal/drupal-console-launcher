@@ -179,12 +179,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/hechoendrupal/drupal-console-core.git",
-                "reference": "da6a7e61dd9a7e68e224670ef6c2f76fd725ec2c"
+                "reference": "2456d8c8fff233c22a50f01e2b1cbe4f68116dd3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-core/zipball/da6a7e61dd9a7e68e224670ef6c2f76fd725ec2c",
-                "reference": "da6a7e61dd9a7e68e224670ef6c2f76fd725ec2c",
+                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-core/zipball/2456d8c8fff233c22a50f01e2b1cbe4f68116dd3",
+                "reference": "2456d8c8fff233c22a50f01e2b1cbe4f68116dd3",
                 "shasum": ""
             },
             "require": {
@@ -192,6 +192,7 @@
                 "drupal/console-en": "dev-master",
                 "php": "^5.6 || ^7.0",
                 "symfony/console": "~2.8",
+                "symfony/event-dispatcher": "~2.8",
                 "symfony/filesystem": "~2.8",
                 "symfony/finder": "~2.8",
                 "symfony/process": "~2.8",
@@ -241,7 +242,7 @@
                 "drupal",
                 "symfony"
             ],
-            "time": "2016-08-11 07:51:22"
+            "time": "2016-08-14 18:09:30"
         },
         {
             "name": "drupal/console-en",
@@ -249,12 +250,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/hechoendrupal/drupal-console-en.git",
-                "reference": "fb425356f97fffb67784b34d3bab4bcf209f6542"
+                "reference": "f4ee38e892bd58d0c0fc96a23c038735c0a780e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-en/zipball/fb425356f97fffb67784b34d3bab4bcf209f6542",
-                "reference": "fb425356f97fffb67784b34d3bab4bcf209f6542",
+                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-en/zipball/f4ee38e892bd58d0c0fc96a23c038735c0a780e3",
+                "reference": "f4ee38e892bd58d0c0fc96a23c038735c0a780e3",
                 "shasum": ""
             },
             "type": "drupal-console-language",
@@ -295,7 +296,7 @@
                 "drupal",
                 "symfony"
             ],
-            "time": "2016-08-09 05:19:50"
+            "time": "2016-08-13 20:10:29"
         },
         {
             "name": "symfony/config",
@@ -472,6 +473,66 @@
             "description": "Symfony DependencyInjection Component",
             "homepage": "https://symfony.com",
             "time": "2016-07-30 07:20:35"
+        },
+        {
+            "name": "symfony/event-dispatcher",
+            "version": "v2.8.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/event-dispatcher.git",
+                "reference": "889983a79a043dfda68f38c38b6dba092dd49cd8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/889983a79a043dfda68f38c38b6dba092dd49cd8",
+                "reference": "889983a79a043dfda68f38c38b6dba092dd49cd8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "require-dev": {
+                "psr/log": "~1.0",
+                "symfony/config": "~2.0,>=2.0.5|~3.0.0",
+                "symfony/dependency-injection": "~2.6|~3.0.0",
+                "symfony/expression-language": "~2.6|~3.0.0",
+                "symfony/stopwatch": "~2.3|~3.0.0"
+            },
+            "suggest": {
+                "symfony/dependency-injection": "",
+                "symfony/http-kernel": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.8-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\EventDispatcher\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony EventDispatcher Component",
+            "homepage": "https://symfony.com",
+            "time": "2016-07-28 16:56:28"
         },
         {
             "name": "symfony/filesystem",

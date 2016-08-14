@@ -31,7 +31,7 @@ $loader->load('services.yml');
 
 $argvInputReader = new ArgvInputReader();
 $configuration = $container->get('console.configuration_manager')
-    ->loadConfiguration(__DIR__)
+    ->loadConfiguration($pharRoot)
     ->getConfiguration();
 
 $translator = $container->get('console.translator_manager')
@@ -86,6 +86,8 @@ if ($isValidDrupal) {
 
         exit(1);
     }
+
+    exit(0);
 }
 
 $argvInputReader->restoreOriginalArgvValues();
