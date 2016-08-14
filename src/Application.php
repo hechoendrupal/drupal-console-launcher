@@ -24,8 +24,7 @@ class Application extends ConsoleApplication
 
     public function __construct($container)
     {
-        parent::__construct($this::NAME, $this::VERSION);
-        $this->container = $container;
+        parent::__construct($container, $this::NAME, $this::VERSION);
     }
 
     /**
