@@ -2,11 +2,13 @@
     "alias": "drupal.phar",
     "chmod": "0755",
     "directories": [
-        "config",
-        "src"
+        "src",
+        "templates"
     ],
     "files": [
         "config.yml",
+        "services.yml",
+        "LICENSE.txt",
         "bin/drupal.php",
         "vendor/autoload.php"
     ],
@@ -16,6 +18,9 @@
             "exclude": ["Tests","tests", "docs"],
             "in": "vendor"
         }
+    ],
+    "compactors": [
+        "Herrera\\Box\\Compactor\\Php"
     ],
     "compression": "GZ",
     "main": "bin/drupal",

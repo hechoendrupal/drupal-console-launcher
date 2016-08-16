@@ -26,7 +26,7 @@ if (file_exists($pharAutoload)) {
 
 $container = new ContainerBuilder();
 $loader = new YamlFileLoader($container, new FileLocator($pharRoot));
-$loader->load('vendor/drupal/console-core/services.yml');
+$loader->load($pharRoot.DRUPAL_CONSOLE_CORE.'/services.yml');
 $loader->load('services.yml');
 
 $argvInputReader = new ArgvInputReader();
@@ -36,6 +36,19 @@ $configuration = $container->get('console.configuration_manager')
 
 $translator = $container->get('console.translator_manager')
     ->loadCoreLanguage('en', $pharRoot);
+
+$container->set(
+    'app.root',
+    $container->get('console.configuration_manager')->getHomeDirectory()
+);
+
+$container->get('console.renderer')
+    ->setSkeletonDirs(
+        [
+            $pharRoot.'/templates/',
+            $pharRoot.DRUPAL_CONSOLE_CORE.'/templates/'
+        ]
+    );
 
 if ($options = $configuration->get('application.options') ?: []) {
     $argvInputReader->setOptionsFromConfiguration($options);
@@ -92,15 +105,5 @@ if ($isValidDrupal) {
 
 $argvInputReader->restoreOriginalArgvValues();
 $application = new Application($container);
-
-$tags = $container->findTaggedServiceIds('console.command');
-foreach ($tags as $name => $tags) {
-    $command = $container->get($name);
-    if (method_exists($command, 'setTranslator')) {
-        $command->setTranslator($translator);
-    }
-    $application->add($command);
-}
-
 $application->setDefaultCommand('about');
 $application->run();

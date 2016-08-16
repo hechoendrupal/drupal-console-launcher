@@ -2,8 +2,5 @@ services:
   # DrupalConsoleLauncher Services
   console.launcher:
     class: Drupal\Console\Utils\Launcher
-  # DrupalConsoleLauncher Commands
-  console.init:
-    class: Drupal\Console\Command\InitCommand
-    tags:
-      - { name: console.command }
+  app.root:
+    class: SplString
