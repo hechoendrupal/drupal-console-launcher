@@ -32,11 +32,33 @@ class Application extends ConsoleApplication
      */
     public function doRun(InputInterface $input, OutputInterface $output)
     {
+        $this->registerCommands();
         parent::doRun($input, $output);
-
         if ($this->getCommandName($input) == 'list') {
             $io = new DrupalStyle($input, $output);
             $io->warning($this->trans('application.site.errors.directory'));
+        }
+    }
+
+    private function registerCommands()
+    {
+        $consoleCommands = $this->container->findTaggedServiceIds('console.command');
+
+        foreach ($consoleCommands as $name => $tags) {
+            if (!$this->container->has($name)) {
+                continue;
+            }
+
+            $command = $this->container->get($name);
+            if (!$command) {
+                continue;
+            }
+            if (method_exists($command, 'setTranslator')) {
+                $command->setTranslator(
+                    $this->container->get('console.translator_manager')
+                );
+            }
+            $this->add($command);
         }
     }
 }
