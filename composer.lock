@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9a9236e107c72cdaf713e2254d2aed29",
-    "content-hash": "fd57a72a76753c4a7c2118ed75f3d9c8",
+    "hash": "5ac55cc67e1311d47d1e513669a34004",
+    "content-hash": "7f417c0425bd5a3b1d15c792c0e4144e",
     "packages": [
         {
             "name": "dflydev/dot-access-configuration",
@@ -175,11 +175,17 @@
         },
         {
             "name": "drupal/console-core",
-            "version": "dev-relocate-init-command",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "/Users/jmolivas/develop/drupal/modules/drupal-console-core",
-                "reference": "610098c677df786732bb4caaebffbd0bb714d55a"
+                "url": "https://github.com/hechoendrupal/drupal-console-core.git",
+                "reference": "975e8a251d33fa3883528876c1d98826b1b582ab"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-core/zipball/975e8a251d33fa3883528876c1d98826b1b582ab",
+                "reference": "975e8a251d33fa3883528876c1d98826b1b582ab",
+                "shasum": ""
             },
             "require": {
                 "dflydev/dot-access-configuration": "1.*",
@@ -203,6 +209,7 @@
                     "Drupal\\Console\\": "src"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPL-2.0+"
             ],
@@ -218,6 +225,10 @@
                     "homepage": "http://jmolivas.com"
                 },
                 {
+                    "name": "Drupal Console Contributors",
+                    "homepage": "https://github.com/hechoendrupal/DrupalConsole/graphs/contributors"
+                },
+                {
                     "name": "Eduardo Garcia",
                     "email": "enzo@enzolutions.com",
                     "homepage": "http://enzolutions.com/"
@@ -225,26 +236,17 @@
                 {
                     "name": "Omar Aguirre",
                     "email": "omersguchigu@gmail.com"
-                },
-                {
-                    "name": "Drupal Console Contributors",
-                    "homepage": "https://github.com/hechoendrupal/DrupalConsole/graphs/contributors"
                 }
             ],
             "description": "Drupal Console Core",
             "homepage": "http://drupalconsole.com/",
             "keywords": [
-                "Console",
-                "Development",
-                "Drupal",
-                "Symfony"
+                "console",
+                "development",
+                "drupal",
+                "symfony"
             ],
-            "support": {
-                "issues": "https://github.com/hechoendrupal/DrupalConsole/issues",
-                "forum": "https://gitter.im/hechoendrupal/DrupalConsole",
-                "docs": "https://hechoendrupal.gitbooks.io/drupal-console/"
-            },
-            "time": "2016-08-16 07:50:43"
+            "time": "2016-08-16 16:57:47"
         },
         {
             "name": "drupal/console-en",
