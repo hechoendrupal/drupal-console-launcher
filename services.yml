@@ -2,5 +2,5 @@ services:
   # DrupalConsoleLauncher Services
   console.launcher:
     class: Drupal\Console\Utils\Launcher
-  app.root:
-    class: SplString
+#  app.root:
+#    class: SplString

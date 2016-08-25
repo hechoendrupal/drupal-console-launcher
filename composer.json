@@ -37,9 +37,7 @@
     },
     "require": {
         "php": "^5.5.9 || ^7.0",
-        "drupal/console-core" : "dev-master",
-        "symfony/dependency-injection": "~2.8",
-        "symfony/config": "~2.8"
+        "drupal/console-core" : "dev-master"
     },
     "bin": ["bin/drupal"],
     "config": {
