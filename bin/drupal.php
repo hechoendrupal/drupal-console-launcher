@@ -2,12 +2,10 @@
 
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Drupal\Console\Utils\Bootstrap\DrupalConsoleCore;
+use Drupal\Console\Utils\ArgvInputReader;
 use Drupal\Console\Style\DrupalStyle;
 use Drupal\Console\Application;
-use Drupal\Console\Utils\ArgvInputReader;
 
 set_time_limit(0);
 
@@ -24,31 +22,15 @@ if (file_exists($pharAutoload)) {
     exit(1);
 }
 
-$container = new ContainerBuilder();
-$loader = new YamlFileLoader($container, new FileLocator($pharRoot));
-$loader->load($pharRoot.DRUPAL_CONSOLE_CORE.'/services.yml');
-$loader->load('services.yml');
+$drupalConsole = new DrupalConsoleCore($pharRoot);
+$container = $drupalConsole->boot();
 
-$argvInputReader = new ArgvInputReader();
 $configuration = $container->get('console.configuration_manager')
-    ->loadConfiguration($pharRoot)
     ->getConfiguration();
 
-$translator = $container->get('console.translator_manager')
-    ->loadCoreLanguage('en', $pharRoot);
+$translator = $container->get('console.translator_manager');
 
-$container->set(
-    'app.root',
-    $container->get('console.configuration_manager')->getHomeDirectory()
-);
-
-$container->get('console.renderer')
-    ->setSkeletonDirs(
-        [
-            $pharRoot.'/templates/',
-            $pharRoot.DRUPAL_CONSOLE_CORE.'/templates/'
-        ]
-    );
+$argvInputReader = new ArgvInputReader();
 
 if ($options = $configuration->get('application.options') ?: []) {
     $argvInputReader->setOptionsFromConfiguration($options);

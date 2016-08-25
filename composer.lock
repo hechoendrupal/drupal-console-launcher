@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5ac55cc67e1311d47d1e513669a34004",
-    "content-hash": "7f417c0425bd5a3b1d15c792c0e4144e",
+    "hash": "455011d22559764e4ac5794cdb3e0d9e",
+    "content-hash": "0bab351e2da3852761d968eadcef1cdd",
     "packages": [
         {
             "name": "dflydev/dot-access-configuration",
@@ -179,19 +179,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/hechoendrupal/drupal-console-core.git",
-                "reference": "975e8a251d33fa3883528876c1d98826b1b582ab"
+                "reference": "ab5375034906b4960993a6c854012d3ca14a35b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-core/zipball/975e8a251d33fa3883528876c1d98826b1b582ab",
-                "reference": "975e8a251d33fa3883528876c1d98826b1b582ab",
+                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-core/zipball/ab5375034906b4960993a6c854012d3ca14a35b9",
+                "reference": "ab5375034906b4960993a6c854012d3ca14a35b9",
                 "shasum": ""
             },
             "require": {
                 "dflydev/dot-access-configuration": "1.*",
                 "drupal/console-en": "dev-master",
                 "php": "^5.5.9 || ^7.0",
+                "symfony/config": "~2.8",
                 "symfony/console": "~2.8",
+                "symfony/dependency-injection": "~2.8",
                 "symfony/event-dispatcher": "~2.8",
                 "symfony/filesystem": "~2.8",
                 "symfony/finder": "~2.8",
@@ -203,7 +205,8 @@
             "type": "project",
             "autoload": {
                 "files": [
-                    "src/constants.php"
+                    "src/constants.php",
+                    "src/functions.php"
                 ],
                 "psr-4": {
                     "Drupal\\Console\\": "src"
@@ -246,7 +249,7 @@
                 "drupal",
                 "symfony"
             ],
-            "time": "2016-08-16 16:57:47"
+            "time": "2016-08-25 09:44:44"
         },
         {
             "name": "drupal/console-en",
@@ -254,12 +257,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/hechoendrupal/drupal-console-en.git",
-                "reference": "f4ee38e892bd58d0c0fc96a23c038735c0a780e3"
+                "reference": "df8f0be6b3bea00506731a367939886ff9116263"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-en/zipball/f4ee38e892bd58d0c0fc96a23c038735c0a780e3",
-                "reference": "f4ee38e892bd58d0c0fc96a23c038735c0a780e3",
+                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-en/zipball/df8f0be6b3bea00506731a367939886ff9116263",
+                "reference": "df8f0be6b3bea00506731a367939886ff9116263",
                 "shasum": ""
             },
             "type": "drupal-console-language",
@@ -300,7 +303,7 @@
                 "drupal",
                 "symfony"
             ],
-            "time": "2016-08-13 20:10:29"
+            "time": "2016-08-25 05:41:51"
         },
         {
             "name": "symfony/config",
