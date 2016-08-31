@@ -2,7 +2,7 @@
 
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
-use Drupal\Console\Utils\Bootstrap\DrupalConsoleCore;
+use Drupal\Console\Bootstrap\DrupalConsoleCore;
 use Drupal\Console\Utils\ArgvInputReader;
 use Drupal\Console\Style\DrupalStyle;
 use Drupal\Console\Application;
