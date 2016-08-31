@@ -32,6 +32,7 @@ class Application extends ConsoleApplication
      */
     public function doRun(InputInterface $input, OutputInterface $output)
     {
+        $this->registerGenerators();
         $this->registerCommands();
         parent::doRun($input, $output);
         if ($this->getCommandName($input) == 'list') {
@@ -42,7 +43,8 @@ class Application extends ConsoleApplication
 
     private function registerCommands()
     {
-        $consoleCommands = $this->container->findTaggedServiceIds('console.command');
+        $consoleCommands = $this->container
+            ->findTaggedServiceIds('console.command');
 
         foreach ($consoleCommands as $name => $tags) {
             if (!$this->container->has($name)) {
@@ -59,6 +61,33 @@ class Application extends ConsoleApplication
                 );
             }
             $this->add($command);
+        }
+    }
+
+    private function registerGenerators()
+    {
+        $consoleGenerators = $this->container
+            ->findTaggedServiceIds('console.generator');
+
+        foreach ($consoleGenerators as $name => $tags) {
+            if (!$this->container->has($name)) {
+                continue;
+            }
+
+            $generator = $this->container->get($name);
+            if (!$generator) {
+                continue;
+            }
+            if (method_exists($generator, 'setRenderer')) {
+                $generator->setRenderer(
+                    $this->container->get('console.renderer')
+                );
+            }
+            if (method_exists($generator, 'setFileQueue')) {
+                $generator->setFileQueue(
+                    $this->container->get('console.file_queue')
+                );
+            }
         }
     }
 }
