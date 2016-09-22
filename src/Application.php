@@ -44,7 +44,7 @@ class Application extends ConsoleApplication
     private function registerCommands()
     {
         $consoleCommands = $this->container
-            ->findTaggedServiceIds('console.command');
+            ->findTaggedServiceIds('drupal.command');
 
         foreach ($consoleCommands as $name => $tags) {
             if (!$this->container->has($name)) {
@@ -67,7 +67,7 @@ class Application extends ConsoleApplication
     private function registerGenerators()
     {
         $consoleGenerators = $this->container
-            ->findTaggedServiceIds('console.generator');
+            ->findTaggedServiceIds('drupal.generator');
 
         foreach ($consoleGenerators as $name => $tags) {
             if (!$this->container->has($name)) {
