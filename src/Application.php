@@ -44,7 +44,7 @@ class Application extends ConsoleApplication
     private function registerCommands()
     {
         $consoleCommands = $this->container
-            ->findTaggedServiceIds('console.command');
+            ->findTaggedServiceIds('drupal.command');
 
         foreach ($consoleCommands as $name => $tags) {
             if (!$this->container->has($name)) {
