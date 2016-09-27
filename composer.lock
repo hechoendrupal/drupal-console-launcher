@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a738b048d78a889bcca5b24fb28b372e",
-    "content-hash": "1c1042f9480d86d0840a1222b6958981",
+    "hash": "f03fc8edddafc7dc02a17d55c9ca9dfa",
+    "content-hash": "8e3037ef0482a7901ef99838cc366e23",
     "packages": [
         {
             "name": "dflydev/dot-access-configuration",
@@ -175,21 +175,21 @@
         },
         {
             "name": "drupal/console-core",
-            "version": "dev-master",
+            "version": "1.0.0-rc1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hechoendrupal/drupal-console-core.git",
-                "reference": "82e11e29c0cc6781941b96ec0abcadc6b1acb35a"
+                "reference": "bbec9234a7afe6f1d696d2eb19fbf624254d4915"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-core/zipball/82e11e29c0cc6781941b96ec0abcadc6b1acb35a",
-                "reference": "82e11e29c0cc6781941b96ec0abcadc6b1acb35a",
+                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-core/zipball/bbec9234a7afe6f1d696d2eb19fbf624254d4915",
+                "reference": "bbec9234a7afe6f1d696d2eb19fbf624254d4915",
                 "shasum": ""
             },
             "require": {
                 "dflydev/dot-access-configuration": "1.*",
-                "drupal/console-en": "dev-master",
+                "drupal/console-en": "~1.0",
                 "php": "^5.5.9 || ^7.0",
                 "stecman/symfony-console-completion": "^0.5.1",
                 "symfony/config": "~2.8",
@@ -250,11 +250,11 @@
                 "drupal",
                 "symfony"
             ],
-            "time": "2016-09-25 18:12:23"
+            "time": "2016-09-27 12:18:20"
         },
         {
             "name": "drupal/console-en",
-            "version": "dev-master",
+            "version": "1.0.0-rc1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hechoendrupal/drupal-console-en.git",
@@ -1081,7 +1081,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "drupal/console-core": 20,
         "padraic/phar-updater": 20
     },
     "prefer-stable": true,
