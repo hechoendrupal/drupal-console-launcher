@@ -47,6 +47,9 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "autoload": {
-        "psr-4": {"Drupal\\Console\\": "src"}
+        "psr-4": {"Drupal\\ConsoleLauncher\\": "src"}
+    },
+    "require-dev": {
+        "kherge/box": "^2.7"
     }
 }

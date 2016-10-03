@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Console\Utils;
+namespace Drupal\ConsoleLauncher\Utils;
 
 /**
  * Class Launcher.

@@ -1,7 +1,8 @@
 <?php
 
-namespace Drupal\Console;
+namespace Drupal\ConsoleLauncher;
 
+use Drupal\Console\ConsoleApplication;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Drupal\Console\Style\DrupalStyle;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copied temporary from https://github.com/padraic/phar-updater to bypass
  * alpha versions.
@@ -15,7 +16,7 @@
  * This class is partially patterned after Composer's version parser.
  */
 
-namespace Drupal\Console\Command\Self;
+namespace Drupal\ConsoleLauncher\Command\Self;
 
 class VersionParser
 {

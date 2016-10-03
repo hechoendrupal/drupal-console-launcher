@@ -12,6 +12,7 @@
 /bin/pdepend
 /bin/php-cs-fixer
 /bin/phpmd
+/bin/box
 
 # Binaries
 /box.phar
