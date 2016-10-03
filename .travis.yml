@@ -13,5 +13,5 @@ before_script:
 
 script:
   - composer install
-  - ./vendor/bin/box build
+  - ./bin/box build
   - ./drupal.phar
