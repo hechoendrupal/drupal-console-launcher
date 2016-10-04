@@ -20,7 +20,7 @@ class Application extends ConsoleApplication
     /**
      * @var string
      */
-    const VERSION = '1.0.0-rc3';
+    const VERSION = '1.0.0-rc4';
 
     public function __construct($container)
     {
