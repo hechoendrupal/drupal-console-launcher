@@ -1,3 +1,5 @@
 application:
   composer:
-    install-console: 'composer require drupal/console:~1.0 --prefer-dist --optimize-autoloader'
+    install-console: |
+      composer require drupal/console:~1.0 --prefer-dist --optimize-autoloader
+      composer update drupal/console --with-dependencies
