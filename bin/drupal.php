@@ -25,12 +25,12 @@ if (file_exists($pharAutoload)) {
 $drupalConsole = new DrupalConsoleCore($pharRoot);
 $container = $drupalConsole->boot();
 
+$argvInputReader = new ArgvInputReader();
+
 $configuration = $container->get('console.configuration_manager')
     ->getConfiguration();
 
 $translator = $container->get('console.translator_manager');
-
-$argvInputReader = new ArgvInputReader();
 
 if ($options = $configuration->get('application.options') ?: []) {
     $argvInputReader->setOptionsFromConfiguration($options);
