@@ -1,10 +1,11 @@
 <?php
+
 /**
  * @file
- * Contains \Drupal\Console\Command\Self\ManifestStrategy.
+ * Contains \Drupal\ConsoleLauncher\Command\Self\ManifestStrategy.
  */
 
-namespace Drupal\Console\Command\Self;
+namespace Drupal\ConsoleLauncher\Command\Self;
 
 use Humbug\SelfUpdate\Exception\HttpRequestException;
 use Humbug\SelfUpdate\Exception\JsonParsingException;
@@ -14,27 +15,27 @@ use Humbug\SelfUpdate\Updater;
 class ManifestStrategy implements StrategyInterface
 {
     /**
- * @var string 
+ * @var string
 */
     private $manifestUrl;
 
     /**
- * @var array 
+ * @var array
 */
     private $manifest;
 
     /**
- * @var array 
+ * @var array
 */
     private $availableVersions;
 
     /**
- * @var string 
+ * @var string
 */
     private $localVersion;
 
     /**
- * @var bool 
+ * @var bool
 */
     private $allowMajor = false;
 

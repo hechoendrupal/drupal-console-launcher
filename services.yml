@@ -1,9 +1,9 @@
 services:
   # DrupalConsoleLauncher Services
   console.launcher:
-    class: Drupal\Console\Utils\Launcher
+    class: Drupal\ConsoleLauncher\Utils\Launcher
   # DrupalConsoleLauncher Commands
   console.self_update:
-    class: Drupal\Console\Command\Self\UpdateCommand
+    class: Drupal\ConsoleLauncher\Command\Self\UpdateCommand
     tags:
       - { name: drupal.command }

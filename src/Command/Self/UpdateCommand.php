@@ -2,10 +2,10 @@
 
 /**
  * @file
- * Contains \Drupal\Console\Command\Self\UpdateCommand.
+ * Contains \Drupal\ConsoleLauncher\Command\Self\UpdateCommand.
  */
 
-namespace Drupal\Console\Command\Self;
+namespace Drupal\ConsoleLauncher\Command\Self;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
