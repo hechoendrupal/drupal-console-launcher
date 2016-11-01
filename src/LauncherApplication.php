@@ -10,7 +10,7 @@ use Drupal\Console\Style\DrupalStyle;
  * Class Application
  * @package Drupal\Console
  */
-class Application extends ConsoleApplication
+class LauncherApplication extends ConsoleApplication
 {
     /**
      * @var string

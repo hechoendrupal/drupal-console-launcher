@@ -5,7 +5,7 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 use Drupal\Console\Bootstrap\DrupalConsoleCore;
 use Drupal\Console\Utils\ArgvInputReader;
 use Drupal\Console\Style\DrupalStyle;
-use Drupal\Console\Application;
+use Drupal\Console\LauncherApplication;
 
 set_time_limit(0);
 
@@ -86,6 +86,6 @@ if ($isValidDrupal) {
 }
 
 $argvInputReader->restoreOriginalArgvValues();
-$application = new Application($container);
+$application = new LauncherApplication($container);
 $application->setDefaultCommand('about');
 $application->run();
