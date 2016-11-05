@@ -206,10 +206,10 @@ class NewCommand extends Command
         $io = new DrupalStyle($input, $output);
 
         $directory = $input->getArgument('directory');
-        $version   = $input->getArgument('version');
-        $latest    = $input->getOption('latest');
-        $unstable  = $input->getOption('unstable');
-        $composer  = $input->getOption('composer');
+        $version = $input->getArgument('version');
+        $latest = $input->getOption('latest');
+        $unstable = $input->getOption('unstable');
+        $composer = $input->getOption('composer');
 
         if (!$directory) {
             $directory = $io->ask(

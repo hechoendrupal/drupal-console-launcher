@@ -32,29 +32,30 @@ trait CoreDownloadTrait
         $commandKey = str_replace(':', '.', $this->getName());
 
         $io->comment(
-            sprintf(
-                $this->trans('commands.'.$commandKey.'.messages.downloading'),
-                $project,
-                $version
-            )
+          sprintf(
+            $this->trans('commands.'.$commandKey.'.messages.downloading'),
+            $project,
+            $version
+          )
         );
 
         try {
             $destination = $this->downloadCoreRelease(
-                $version
+              $version
             );
 
-            $projectPath = tempnam(sys_get_temp_dir(), 'drupal_');
+            $projectPath = tempnam(sys_get_temp_dir(), $project.'_');
             unlink($projectPath);
 
             if (!file_exists($projectPath)) {
                 if (!mkdir($projectPath, 0777, true)) {
                     $io->error(
-                        sprintf(
-                            $this->trans('commands.'.$commandKey.'.messages.error-creating-folder'),
-                            $projectPath
-                        )
+                      sprintf(
+                        $this->trans('commands.'.$commandKey.'.messages.error-creating-folder'),
+                        $projectPath
+                      )
                     );
+
                     return null;
                 }
             }
@@ -64,10 +65,10 @@ trait CoreDownloadTrait
                 $container = AdapterContainer::load();
                 $container['Drupal\\Console\\Zippy\\Adapter\\TarGzGNUTarForWindowsAdapter'] = function ($container) {
                     return TarGzGNUTarForWindowsAdapter::newInstance(
-                        $container['executable-finder'],
-                        $container['resource-manager'],
-                        $container['gnu-tar.inflator'],
-                        $container['gnu-tar.deflator']
+                      $container['executable-finder'],
+                      $container['resource-manager'],
+                      $container['gnu-tar.inflator'],
+                      $container['gnu-tar.deflator']
                     );
                 };
                 $zippy->addStrategy(new TarGzFileForWindowsStrategy($container));
@@ -87,8 +88,8 @@ trait CoreDownloadTrait
 
     /**
      * @param \Drupal\Console\Style\DrupalStyle $io
-     * @param bool                              $latest
-     * @param bool                              $stable
+     * @param bool $latest
+     * @param bool $stable
      * @return string
      */
     public function releasesQuestion(DrupalStyle $io, $latest = false, $stable = false)
@@ -96,20 +97,20 @@ trait CoreDownloadTrait
         $commandKey = str_replace(':', '.', $this->getName());
 
         $io->comment(
-            sprintf(
-                $this->trans('commands.'.$commandKey.'.messages.getting-releases'),
-                'drupal'
-            )
+          sprintf(
+            $this->trans('commands.'.$commandKey.'.messages.getting-releases'),
+            'drupal'
+          )
         );
 
-        $releases = $this->getCoreReleases($latest?1:15, $stable);
+        $releases = $this->getCoreReleases($latest ? 1 : 15, $stable);
 
         if (!$releases) {
             $io->error(
-                sprintf(
-                    $this->trans('commands.'.$commandKey.'.messages.no-releases'),
-                    'drupal'
-                )
+              sprintf(
+                $this->trans('commands.'.$commandKey.'.messages.no-releases'),
+                'drupal'
+              )
             );
 
             return null;
@@ -120,8 +121,8 @@ trait CoreDownloadTrait
         }
 
         $version = $io->choice(
-            $this->trans('commands.'.$commandKey.'.messages.select-release'),
-            $releases
+          $this->trans('commands.'.$commandKey.'.messages.select-release'),
+          $releases
         );
 
         return $version;
@@ -154,7 +155,7 @@ trait CoreDownloadTrait
             $releases[] = $element->nodeValue;
         }
 
-        if (count($releases)>$limit) {
+        if (count($releases) > $limit) {
             array_splice($releases, $limit);
         }
 
@@ -163,7 +164,7 @@ trait CoreDownloadTrait
 
     /**
      * @param $release
-     * @param null    $destination
+     * @param null $destination
      * @return null|string
      */
     public function downloadCoreRelease($release, $destination = null)
