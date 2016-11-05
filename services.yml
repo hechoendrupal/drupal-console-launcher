@@ -7,3 +7,8 @@ services:
     class: Drupal\Console\Command\Self\UpdateCommand
     tags:
       - { name: drupal.command }
+  console.site_new:
+    class: Drupal\Console\Command\Site\NewCommand
+    arguments: ['@console.shell_process']
+    tags:
+      - { name: drupal.command }
