@@ -52,6 +52,10 @@ class LauncherApplication extends ConsoleApplication
         $consoleCommands = $this->container
             ->findTaggedServiceIds('drupal.command');
 
+        $aliases = $this->container->get('console.configuration_manager')
+            ->getConfiguration()
+            ->get('application.commands.aliases')?:[];
+
         foreach ($consoleCommands as $name => $tags) {
             if (!$this->container->has($name)) {
                 continue;
@@ -66,6 +70,12 @@ class LauncherApplication extends ConsoleApplication
                     $this->container->get('console.translator_manager')
                 );
             }
+
+            if (array_key_exists($command->getName(), $aliases)) {
+                $commandAliases = $aliases[$command->getName()];
+                $command->setAliases([$commandAliases]);
+            }
+
             $this->add($command);
         }
     }
