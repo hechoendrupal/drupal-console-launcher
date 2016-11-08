@@ -10,7 +10,7 @@ use Drupal\Console\Style\DrupalStyle;
  * Class Application
  * @package Drupal\Console
  */
-class Application extends ConsoleApplication
+class LauncherApplication extends ConsoleApplication
 {
     /**
      * @var string
@@ -20,7 +20,7 @@ class Application extends ConsoleApplication
     /**
      * @var string
      */
-    const VERSION = '1.0.0-rc5';
+    const VERSION = '1.0.0-rc8';
 
     public function __construct($container)
     {
@@ -34,6 +34,12 @@ class Application extends ConsoleApplication
     {
         $this->registerGenerators();
         $this->registerCommands();
+        $clear = $this->container->get('console.configuration_manager')
+            ->getConfiguration()
+            ->get('application.clear')?:false;
+        if ($clear === true || $clear === 'true') {
+            $output->write(sprintf("\033\143"));
+        }
         parent::doRun($input, $output);
         if ($this->getCommandName($input) == 'list') {
             $io = new DrupalStyle($input, $output);
@@ -45,6 +51,10 @@ class Application extends ConsoleApplication
     {
         $consoleCommands = $this->container
             ->findTaggedServiceIds('drupal.command');
+
+        $aliases = $this->container->get('console.configuration_manager')
+            ->getConfiguration()
+            ->get('application.commands.aliases')?:[];
 
         foreach ($consoleCommands as $name => $tags) {
             if (!$this->container->has($name)) {
@@ -60,6 +70,12 @@ class Application extends ConsoleApplication
                     $this->container->get('console.translator_manager')
                 );
             }
+
+            if (array_key_exists($command->getName(), $aliases)) {
+                $commandAliases = $aliases[$command->getName()];
+                $command->setAliases([$commandAliases]);
+            }
+
             $this->add($command);
         }
     }
