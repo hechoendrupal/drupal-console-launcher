@@ -1,5 +1,6 @@
 <?php
 
+use DrupalFinder\DrupalFinder;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Drupal\Console\Bootstrap\DrupalConsoleCore;
@@ -56,15 +57,20 @@ $output = new ConsoleOutput();
 $input = new ArrayInput([]);
 $io = new DrupalStyle($input, $output);
 
-$drupalChecker = $container->get('console.drupal_checker');
-$isValidDrupal = $drupalChecker->isValidRoot($argvInputReader->get('root'), true);
+$root = $argvInputReader->get('root');
+if (!$root) {
+    $root = getcwd();
+}
+$drupalFinder = new DrupalFinder();
+$drupalFinder->locateRoot($root);
+$composerRoot = $drupalFinder->getComposerRoot();
+$drupalRoot = $drupalFinder->getDrupalRoot();
 
-if ($isValidDrupal) {
+if ($composerRoot && $drupalRoot) {
     $drupalConsoleLauncher = $container->get('console.launcher');
-    $launch = $drupalConsoleLauncher->launch($argvInputReader->get('root'));
+    $launch = $drupalConsoleLauncher->launch($composerRoot);
 
     if (!$launch) {
-        /* Read message from translation file. */
         $message = sprintf(
             $translator->trans('application.site.errors.not-installed'),
             $argvInputReader->get('root')
