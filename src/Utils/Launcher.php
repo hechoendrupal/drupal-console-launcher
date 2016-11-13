@@ -15,12 +15,13 @@ class Launcher
     public function launch($root)
     {
         chdir($root);
-        /* default drupal installation */
+
+        /* drupal symlink executable */
         $drupal = $root.'/vendor/bin/drupal';
 
         if (!file_exists($drupal)) {
-            /* drupal installed via drupal-composer related project */
-            $drupal = $root.'/../vendor/bin/drupal';
+            /* drupal symlink does not work, try full path */
+            $drupal = $root.'/vendor/drupal/console/bin/drupal';
         }
 
         if (!file_exists($drupal)) {
