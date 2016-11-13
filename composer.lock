@@ -179,12 +179,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/hechoendrupal/drupal-console-core.git",
-                "reference": "8edde0b96465de04e39fa99cec0e5007015656a9"
+                "reference": "4c57bef658801d336c83a9e7f13d86af54607d10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-core/zipball/8edde0b96465de04e39fa99cec0e5007015656a9",
-                "reference": "8edde0b96465de04e39fa99cec0e5007015656a9",
+                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-core/zipball/4c57bef658801d336c83a9e7f13d86af54607d10",
+                "reference": "4c57bef658801d336c83a9e7f13d86af54607d10",
                 "shasum": ""
             },
             "require": {
@@ -251,20 +251,20 @@
                 "drupal",
                 "symfony"
             ],
-            "time": "2016-11-12 18:13:01"
+            "time": "2016-11-13 15:43:30"
         },
         {
             "name": "drupal/console-en",
-            "version": "1.0.0-rc7",
+            "version": "1.0.0-rc8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hechoendrupal/drupal-console-en.git",
-                "reference": "5807dce9efd84ccb1198a926eea03b600b8a93e6"
+                "reference": "789a088b3b6ecf77bc245d905a86387ada105245"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-en/zipball/5807dce9efd84ccb1198a926eea03b600b8a93e6",
-                "reference": "5807dce9efd84ccb1198a926eea03b600b8a93e6",
+                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-en/zipball/789a088b3b6ecf77bc245d905a86387ada105245",
+                "reference": "789a088b3b6ecf77bc245d905a86387ada105245",
                 "shasum": ""
             },
             "type": "drupal-console-language",
@@ -305,7 +305,7 @@
                 "drupal",
                 "symfony"
             ],
-            "time": "2016-11-05 06:21:34"
+            "time": "2016-11-13 00:44:14"
         },
         {
             "name": "padraic/humbug_get_contents",
