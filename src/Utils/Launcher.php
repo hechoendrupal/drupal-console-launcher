@@ -16,13 +16,8 @@ class Launcher
     {
         chdir($root);
 
-        /* drupal symlink executable */
-        $drupal = $root.'/vendor/bin/drupal';
-
-        if (!file_exists($drupal)) {
-            /* drupal symlink does not work, try full path */
-            $drupal = $root.'/vendor/drupal/console/bin/drupal';
-        }
+        /* drupal executable */
+        $drupal = $root.'/vendor/drupal/console/bin/drupal';
 
         if (!file_exists($drupal)) {
             return false;
