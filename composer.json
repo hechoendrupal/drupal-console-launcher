@@ -38,8 +38,7 @@
     "require": {
         "php": "^5.5.9 || ^7.0",
         "drupal/console-core" : "~1.0",
-        "padraic/phar-updater": "~1.0@dev",
-        "webflo/drupal-finder": "^0.1.1"
+        "padraic/phar-updater": "~1.0@dev"
     },
     "bin": ["bin/drupal"],
     "config": {
