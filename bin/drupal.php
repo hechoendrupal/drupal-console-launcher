@@ -10,7 +10,6 @@ use Drupal\Console\Style\DrupalStyle;
 use Drupal\Console\Utils\ArgvInputReader;
 use Drupal\Console\Utils\Remote;
 
-
 set_time_limit(0);
 
 $pharRoot = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR;
