@@ -2,11 +2,14 @@
 
 use DrupalFinder\DrupalFinder;
 use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Drupal\Console\Bootstrap\DrupalConsoleCore;
-use Drupal\Console\Utils\ArgvInputReader;
-use Drupal\Console\Style\DrupalStyle;
 use Drupal\Console\LauncherApplication;
+use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Utils\ArgvInputReader;
+use Drupal\Console\Utils\Remote;
+
 
 set_time_limit(0);
 
@@ -28,8 +31,9 @@ $container = $drupalConsole->boot();
 
 $argvInputReader = new ArgvInputReader();
 
-$configuration = $container->get('console.configuration_manager')
-    ->getConfiguration();
+$configurationManager = $container->get('console.configuration_manager');
+
+$configuration = $configurationManager->getConfiguration();
 
 $translator = $container->get('console.translator_manager');
 
@@ -45,7 +49,24 @@ if ($target = $argvInputReader->get('target')) {
 
 $argvInputReader->setOptionsAsArgv();
 
+$output = new ConsoleOutput();
+
 if ($argvInputReader->get('remote', false)) {
+
+    $input = new ArgvInput();
+
+    $remote = $container->get('console.remote');
+    $commandName = $argvInputReader->get('command', false);
+
+    $remoteResult = $remote->executeCommand(
+        $commandName,
+        $target,
+        $targetConfig,
+        $input->__toString(),
+        $configurationManager->getHomeDirectory()
+    );
+
+    $output->writeln($remoteResult);
     /*
      *  Execute command via ssh
      *  Relocate remote execution to this project
@@ -53,7 +74,7 @@ if ($argvInputReader->get('remote', false)) {
     exit(0);
 }
 
-$output = new ConsoleOutput();
+
 $input = new ArrayInput([]);
 $io = new DrupalStyle($input, $output);
 
