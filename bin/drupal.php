@@ -39,7 +39,7 @@ $translator = $container->get('console.translator_manager');
 if ($options = $configuration->get('application.options') ?: []) {
     $argvInputReader->setOptionsFromConfiguration($options);
 }
-
+$targetConfig = [];
 if ($target = $argvInputReader->get('target')) {
     $targetConfig = $container->get('console.configuration_manager')
         ->readTarget($target);
@@ -51,7 +51,6 @@ $argvInputReader->setOptionsAsArgv();
 $output = new ConsoleOutput();
 
 if ($argvInputReader->get('remote', false)) {
-
     $input = new ArgvInput();
 
     $remote = $container->get('console.remote');
