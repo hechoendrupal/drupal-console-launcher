@@ -53,21 +53,21 @@ $input = new ArrayInput([]);
 $io = new DrupalStyle($input, $output);
 
 if ($argvInputReader->get('remote', false)) {
-    $input = new ArgvInput();
+    $commandInput = new ArgvInput();
 
     $remote = $container->get('console.remote');
     $commandName = $argvInputReader->get('command', false);
 
-    $remoteResult = $remote->executeCommand(
+    $remoteSuccess = $remote->executeCommand(
         $io,
         $commandName,
         $target,
         $targetConfig,
-        $input->__toString(),
+        $commandInput->__toString(),
         $configurationManager->getHomeDirectory()
     );
 
-    exit($remoteResult?1:0);
+    exit($remoteSuccess?0:1);
 }
 
 $root = $argvInputReader->get('root');
