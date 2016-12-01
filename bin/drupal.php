@@ -49,6 +49,8 @@ if ($target = $argvInputReader->get('target')) {
 $argvInputReader->setOptionsAsArgv();
 
 $output = new ConsoleOutput();
+$input = new ArrayInput([]);
+$io = new DrupalStyle($input, $output);
 
 if ($argvInputReader->get('remote', false)) {
     $input = new ArgvInput();
@@ -57,6 +59,7 @@ if ($argvInputReader->get('remote', false)) {
     $commandName = $argvInputReader->get('command', false);
 
     $remoteResult = $remote->executeCommand(
+        $io,
         $commandName,
         $target,
         $targetConfig,
@@ -64,17 +67,8 @@ if ($argvInputReader->get('remote', false)) {
         $configurationManager->getHomeDirectory()
     );
 
-    $output->writeln($remoteResult);
-    /*
-     *  Execute command via ssh
-     *  Relocate remote execution to this project
-     */
-    exit(0);
+    exit($remoteResult?1:0);
 }
-
-
-$input = new ArrayInput([]);
-$io = new DrupalStyle($input, $output);
 
 $root = $argvInputReader->get('root');
 if (!$root) {
