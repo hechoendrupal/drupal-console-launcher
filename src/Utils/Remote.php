@@ -10,6 +10,7 @@ namespace Drupal\Console\Utils;
 use phpseclib\Crypt\RSA;
 use phpseclib\System\SSH\Agent;
 use phpseclib\Net\SFTP;
+use Drupal\Console\Style\DrupalStyle;
 
 /**
  * Class RemoteHelper
@@ -34,32 +35,23 @@ class Remote
     }
 
     /**
+     * @param DrupalStyle $io
      * @param string $commandName
      * @param string $target
      * @param array  $targetConfig
      * @param array  $inputCommand
      * @param array  $userHomeDir
-     * @return string
+     *
+     * @return boolean
      */
     public function executeCommand(
+        $io,
         $commandName,
         $target,
         $targetConfig,
         $inputCommand,
         $userHomeDir
     ) {
-        $remoteCommand = str_replace(
-            [sprintf('\'%s\'', $commandName), sprintf('target=\'%s\'', $target), '--remote=1'],
-            [$commandName, sprintf('root=%s', $targetConfig['root']), ''],
-            $inputCommand
-        );
-
-        $remoteCommand = sprintf(
-            '%s %s',
-            $targetConfig['console'],
-            $remoteCommand
-        );
-
         $key = null;
         if (array_key_exists('password', $targetConfig)) {
             $key = $targetConfig['password'];
@@ -68,9 +60,12 @@ class Remote
         if (!$key) {
             if (array_key_exists('keys', $targetConfig)) {
                 if (!array_key_exists('passphrase', $targetConfig['keys'])) {
-                    return $this->translator->trans('commands.site.debug.messages.passphrase-file');
+                    $io->error(
+                        $this->translator->trans('application.remote.errors.passphrase-missing')
+                    );
+                    return false;
                 }
-                $passphrase = realpath(
+                $passPhrase = realpath(
                     preg_replace(
                         '/~/',
                         $userHomeDir,
@@ -78,13 +73,19 @@ class Remote
                         1
                     )
                 );
-                if (!file_exists($passphrase)) {
-                    return $this->translator->trans('commands.site.debug.messages.passphrase-file');
+                if (!file_exists($passPhrase)) {
+                    $io->error(
+                        $this->translator->trans('application.remote.errors.passphrase-empty')
+                    );
+                    return false;
                 }
-                $passphrase = trim(file_get_contents($passphrase))?:false;
+                $passPhrase = trim(file_get_contents($passPhrase))?:false;
 
                 if (!array_key_exists('private', $targetConfig['keys'])) {
-                    return $this->translator->trans('commands.site.debug.messages.private-file');
+                    $io->error(
+                        $this->translator->trans('application.remote.errors.private-missing')
+                    );
+                    return false;
                 }
                 $private = realpath(
                     preg_replace(
@@ -95,30 +96,88 @@ class Remote
                     )
                 );
                 if (!file_exists($private)) {
-                    return $this->translator->trans('commands.site.debug.messages.private-file');
+                    $io->error(
+                        $this->translator->trans('application.remote.errors.private-empty')
+                    );
+                    return false;
                 }
                 $private = trim(file_get_contents($private));
 
                 $key = new RSA();
-                $key->setPassword($passphrase);
+                $key->setPassword($passPhrase);
                 if (!$key->loadKey($private)) {
-                    return $this->translator->trans('commands.site.debug.messages.private-key');
+                    $io->error(
+                        $this->translator->trans('application.remote.errors.private-invalid')
+                    );
+                    return false;
                 }
-            } else {
-                $key = new Agent();
-                $key->startSSHForwarding(null);
             }
         }
 
-        $sftp = new SFTP($targetConfig['host'], $targetConfig['port'], 30);
+        if (!$key) {
+            $key = new Agent();
+            $key->startSSHForwarding(null);
+        }
+
+        $sftp = new SFTP($targetConfig['host'], $targetConfig['port'], 600);
         if (!$sftp->login($targetConfig['user'], $key)) {
-            return sprintf(
+           $io->error(sprintf(
                 '%s - %s',
                 $sftp->getExitStatus(),
                 $sftp->getErrors()
-            );
-        } else {
-            return $sftp->exec($remoteCommand);
+            ));
+            return false;
         }
+
+        $remoteCommand = str_replace(
+            [
+                sprintf('\'%s\'', $commandName),
+                sprintf('--target=\'%s\'', $target),
+                sprintf('--root=\'%s\'', $targetConfig['root']),
+                '--remote=1'
+            ],
+            [
+                $commandName,
+                '',
+                '',
+                ''
+            ],
+            $inputCommand
+        );
+
+        if (!$sftp->is_dir($targetConfig['root'])) {
+            $io->error($this->translator
+                ->trans('application.remote.errors.invalid-root')
+            );
+            return false;
+        }
+
+        if (!$sftp->chdir($targetConfig['root'])) {
+            $io->error($this->translator
+                ->trans('application.remote.errors.invalid-root')
+            );
+            return false;
+        }
+
+        if (!$sftp->file_exists($targetConfig['root'].'/vendor/drupal/console/bin/drupal')) {
+            $io->error(
+                $this->translator
+                    ->trans('application.remote.errors.console-not-found')
+            );
+        }
+
+        $root = $targetConfig['root'];
+        $remoteCommand = "cd $root && vendor/drupal/console/bin/drupal $remoteCommand";
+        $executionResult = rtrim($sftp->exec($remoteCommand)) . PHP_EOL;
+
+        if (preg_match('(ERROR|WARNING)', $executionResult) === 1) {
+            $io->block($executionResult, null, 'fg=white;bg=red', ' ', false);
+
+            return false;
+        }
+
+        $io->write($executionResult);
+
+        return true;
     }
 }
