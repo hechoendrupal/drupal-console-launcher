@@ -34,6 +34,8 @@ class LauncherApplication extends ConsoleApplication
     {
         $this->registerGenerators();
         $this->registerCommands();
+        $this->registerExtendCommands();
+
         $clear = $this->container->get('console.configuration_manager')
             ->getConfiguration()
             ->get('application.clear')?:false;
@@ -45,6 +47,12 @@ class LauncherApplication extends ConsoleApplication
             $io = new DrupalStyle($input, $output);
             $io->warning($this->trans('application.site.errors.directory'));
         }
+    }
+
+    private function registerExtendCommands()
+    {
+        $this->container->get('console.configuration_manager')
+            ->loadExtendLibraries();
     }
 
     private function registerCommands()
