@@ -39,7 +39,17 @@
         "php": "^5.5.9 || ^7.0",
         "drupal/console-core" : "~1.0",
         "padraic/phar-updater": "~1.0@dev",
-        "phpseclib/phpseclib": "2.*"
+        "phpseclib/phpseclib": "2.*",
+        "symfony/console": "2.8.14",
+        "symfony/debug": "2.8.14",
+        "symfony/dependency-injection": "2.8.14",
+        "symfony/config": "2.8.14",
+        "symfony/filesystem": "2.8.14",
+        "symfony/finder": "2.8.14",
+        "symfony/process": "2.8.14",
+        "symfony/translation": "2.8.14",
+        "symfony/yaml": "2.8.14",
+        "symfony/event-dispatcher": "2.8.14"
     },
     "bin": ["bin/drupal"],
     "config": {

@@ -39,7 +39,3 @@ source "$HOME/.console/console.rc" 2>/dev/null
 # Fish: Create a symbolic link
 ln -s ~/.console/drupal.fish ~/.config/fish/completions/drupal.fish
 ```
-### Relocate commands:
-```
-* site:new              Create a new Drupal project
-```
