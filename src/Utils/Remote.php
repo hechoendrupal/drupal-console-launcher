@@ -63,6 +63,7 @@ class Remote
                     $io->error(
                         $this->translator->trans('application.remote.errors.passphrase-missing')
                     );
+
                     return false;
                 }
                 $passPhrase = realpath(
@@ -77,6 +78,7 @@ class Remote
                     $io->error(
                         $this->translator->trans('application.remote.errors.passphrase-empty')
                     );
+
                     return false;
                 }
                 $passPhrase = trim(file_get_contents($passPhrase))?:false;
@@ -85,6 +87,7 @@ class Remote
                     $io->error(
                         $this->translator->trans('application.remote.errors.private-missing')
                     );
+
                     return false;
                 }
                 $private = realpath(
@@ -99,6 +102,7 @@ class Remote
                     $io->error(
                         $this->translator->trans('application.remote.errors.private-empty')
                     );
+
                     return false;
                 }
                 $private = trim(file_get_contents($private));
@@ -109,6 +113,7 @@ class Remote
                     $io->error(
                         $this->translator->trans('application.remote.errors.private-invalid')
                     );
+
                     return false;
                 }
             }
@@ -120,12 +125,22 @@ class Remote
         }
 
         $sftp = new SFTP($targetConfig['host'], $targetConfig['port'], 600);
-        if (!$sftp->login($targetConfig['user'], $key)) {
-           $io->error(sprintf(
-                '%s - %s',
-                $sftp->getExitStatus(),
-                $sftp->getErrors()
-            ));
+        try {
+            $logged = $sftp->login($targetConfig['user'], $key);
+        } catch (\Exception $e) {
+            $io->error($e->getMessage());
+            $this->showErrorsAsString($io, $sftp);
+
+            return false;
+        }
+
+        if (!$logged) {
+            $io->error($this->translator
+                ->trans('application.remote.errors.invalid-login')
+            );
+
+            $this->showErrorsAsString($io, $sftp);
+
             return false;
         }
 
@@ -149,6 +164,7 @@ class Remote
             $io->error($this->translator
                 ->trans('application.remote.errors.invalid-root')
             );
+
             return false;
         }
 
@@ -156,6 +172,7 @@ class Remote
             $io->error($this->translator
                 ->trans('application.remote.errors.invalid-root')
             );
+
             return false;
         }
 
@@ -164,6 +181,8 @@ class Remote
                 $this->translator
                     ->trans('application.remote.errors.console-not-found')
             );
+
+            return false;
         }
 
         $root = $targetConfig['root'];
@@ -176,8 +195,25 @@ class Remote
             return false;
         }
 
+        if ($sftp->getExitStatus() == 1){
+            $this->showErrorsAsString($io, $sftp);
+            $io->error($executionResult);
+
+            return false;
+        }
+
         $io->write($executionResult);
 
         return true;
+    }
+
+    private function showErrorsAsString($io, $sftp) {
+        if ($sftp->getErrors()) {
+            $io->error(sprintf(
+                '%s - %s',
+                $sftp->getExitStatus(),
+                implode(', ', $sftp->getErrors())
+            ));
+        }
     }
 }
