@@ -20,7 +20,7 @@ class LauncherApplication extends ConsoleApplication
     /**
      * @var string
      */
-    const VERSION = '1.0.0-rc11';
+    const VERSION = '1.0.0-rc12';
 
     public function __construct($container)
     {
