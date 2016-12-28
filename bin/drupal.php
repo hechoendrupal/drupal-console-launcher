@@ -1,15 +1,15 @@
 <?php
 
-use DrupalFinder\DrupalFinder;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
-use Drupal\Console\Bootstrap\DrupalConsoleCore;
-use Drupal\Console\LauncherApplication;
-use Drupal\Console\Style\DrupalStyle;
-use Drupal\Console\Utils\ArgvInputReader;
-use Drupal\Console\Utils\ConfigurationManager;
-use Drupal\Console\Utils\Remote;
+use DrupalFinder\DrupalFinder;
+use Drupal\Console\Core\Bootstrap\DrupalConsoleCore;
+use Drupal\Console\Launcher\Application;
+use Drupal\Console\Core\Style\DrupalStyle;
+use Drupal\Console\Core\Utils\ArgvInputReader;
+use Drupal\Console\Core\Utils\ConfigurationManager;
+use Drupal\Console\Launcher\Utils\Remote;
 
 set_time_limit(0);
 
@@ -108,6 +108,6 @@ if ($composerRoot && $drupalRoot) {
 }
 
 $argvInputReader->restoreOriginalArgvValues();
-$application = new LauncherApplication($container);
+$application = new Application($container);
 $application->setDefaultCommand('about');
 $application->run();

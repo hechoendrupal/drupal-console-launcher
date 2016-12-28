@@ -35,9 +35,15 @@
         "forum": "https://gitter.im/hechoendrupal/DrupalConsole",
         "docs": "http://docs.drupalconsole.com/"
     },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "/Users/jmolivas/develop/drupal/modules/drupal-console-core"
+        }
+    ],
     "require": {
         "php": "^5.5.9 || ^7.0",
-        "drupal/console-core" : "1.0.0-rc12",
+        "drupal/console-core" : "self.version",
         "padraic/phar-updater": "~1.0@dev",
         "phpseclib/phpseclib": "2.*",
         "symfony/console": "2.8.14",
@@ -58,6 +64,6 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "autoload": {
-        "psr-4": {"Drupal\\Console\\": "src"}
+        "psr-4": {"Drupal\\Console\\Launcher\\": "src"}
     }
 }
