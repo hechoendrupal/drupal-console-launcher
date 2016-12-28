@@ -5,13 +5,13 @@ namespace Drupal\Console\Launcher;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Drupal\Console\Core\Style\DrupalStyle;
-use Drupal\Console\Core\Application as ConsoleApplication;
+use Drupal\Console\Core\Application as CoreApplication;
 
 /**
  * Class Application
  * @package Drupal\Console
  */
-class Application extends ConsoleApplication
+class Application extends CoreApplication
 {
     /**
      * @var string
