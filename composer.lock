@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d41a34946551670c3c8bd33bdd53283a",
+    "content-hash": "bc480ff1189774b3c0d5602c05aae545",
     "packages": [
         {
             "name": "dflydev/dot-access-configuration",
@@ -174,21 +174,16 @@
         },
         {
             "name": "drupal/console-core",
-            "version": "1.0.0-rc12",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/hechoendrupal/drupal-console-core.git",
-                "reference": "44e8ed9bcaef688ffe1bad47ea94dc1d8e01dcb5"
-            },
+            "version": "dev-master",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-core/zipball/44e8ed9bcaef688ffe1bad47ea94dc1d8e01dcb5",
-                "reference": "44e8ed9bcaef688ffe1bad47ea94dc1d8e01dcb5",
-                "shasum": ""
+                "type": "path",
+                "url": "/Users/jmolivas/develop/drupal/modules/drupal-console-core",
+                "reference": "59e2f5069db3eec1260eecd7e7b4e7167c36cc91",
+                "shasum": null
             },
             "require": {
                 "dflydev/dot-access-configuration": "dev-master",
-                "drupal/console-en": "1.0.0-rc12",
+                "drupal/console-en": "self.version",
                 "php": "^5.5.9 || ^7.0",
                 "stecman/symfony-console-completion": "~0.7",
                 "symfony/config": ">=2.7 <3.2",
@@ -211,10 +206,9 @@
                     "src/functions.php"
                 ],
                 "psr-4": {
-                    "Drupal\\Console\\": "src"
+                    "Drupal\\Console\\Core\\": "src"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPL-2.0+"
             ],
@@ -230,10 +224,6 @@
                     "homepage": "http://jmolivas.com"
                 },
                 {
-                    "name": "Drupal Console Contributors",
-                    "homepage": "https://github.com/hechoendrupal/DrupalConsole/graphs/contributors"
-                },
-                {
                     "name": "Eduardo Garcia",
                     "email": "enzo@enzolutions.com",
                     "homepage": "http://enzolutions.com/"
@@ -241,30 +231,38 @@
                 {
                     "name": "Omar Aguirre",
                     "email": "omersguchigu@gmail.com"
+                },
+                {
+                    "name": "Drupal Console Contributors",
+                    "homepage": "https://github.com/hechoendrupal/DrupalConsole/graphs/contributors"
                 }
             ],
             "description": "Drupal Console Core",
             "homepage": "http://drupalconsole.com/",
             "keywords": [
-                "console",
-                "development",
-                "drupal",
-                "symfony"
+                "Console",
+                "Development",
+                "Drupal",
+                "Symfony"
             ],
-            "time": "2016-12-22T21:42:28+00:00"
+            "support": {
+                "issues": "https://github.com/hechoendrupal/DrupalConsole/issues",
+                "forum": "https://gitter.im/hechoendrupal/DrupalConsole",
+                "docs": "http://docs.drupalconsole.com/"
+            }
         },
         {
             "name": "drupal/console-en",
-            "version": "1.0.0-rc12",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hechoendrupal/drupal-console-en.git",
-                "reference": "810cc4d3e45d47ff444be57c8d25f50ebfcfae28"
+                "reference": "815bd92f8984bb3a8ad8fceabdba60b1a50fe345"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-en/zipball/810cc4d3e45d47ff444be57c8d25f50ebfcfae28",
-                "reference": "810cc4d3e45d47ff444be57c8d25f50ebfcfae28",
+                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-en/zipball/815bd92f8984bb3a8ad8fceabdba60b1a50fe345",
+                "reference": "815bd92f8984bb3a8ad8fceabdba60b1a50fe345",
                 "shasum": ""
             },
             "type": "drupal-console-language",
@@ -305,7 +303,7 @@
                 "drupal",
                 "symfony"
             ],
-            "time": "2016-12-22T16:11:31+00:00"
+            "time": "2016-12-27 01:51:22"
         },
         {
             "name": "padraic/humbug_get_contents",
@@ -1215,16 +1213,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.29.0",
+            "version": "v1.30.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "74f723e542368ca2080b252740be5f1113ebb898"
+                "reference": "c6ff71094fde15d12398eaba029434b013dc5e59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/74f723e542368ca2080b252740be5f1113ebb898",
-                "reference": "74f723e542368ca2080b252740be5f1113ebb898",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/c6ff71094fde15d12398eaba029434b013dc5e59",
+                "reference": "c6ff71094fde15d12398eaba029434b013dc5e59",
                 "shasum": ""
             },
             "require": {
@@ -1237,7 +1235,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.29-dev"
+                    "dev-master": "1.30-dev"
                 }
             },
             "autoload": {
@@ -1272,7 +1270,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2016-12-13T17:28:18+00:00"
+            "time": "2016-12-23T11:06:22+00:00"
         },
         {
             "name": "webflo/drupal-finder",
@@ -1316,6 +1314,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "drupal/console-core": 20,
         "padraic/phar-updater": 20
     },
     "prefer-stable": true,

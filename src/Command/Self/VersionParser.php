@@ -15,7 +15,7 @@
  * This class is partially patterned after Composer's version parser.
  */
 
-namespace Drupal\Console\Command\Self;
+namespace Drupal\Console\Launcher\Command\Self;
 
 class VersionParser
 {

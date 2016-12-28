@@ -5,12 +5,12 @@
  * Contains \Drupal\Console\Utils\Remote.
  */
 
-namespace Drupal\Console\Utils;
+namespace Drupal\Console\Launcher\Utils;
 
 use phpseclib\Crypt\RSA;
 use phpseclib\System\SSH\Agent;
 use phpseclib\Net\SFTP;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class RemoteHelper
