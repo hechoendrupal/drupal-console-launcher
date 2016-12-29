@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "81902d708f0bbbe425bee1ac7259ea97",
+    "content-hash": "6303e488dc6cb4c5dda5fb42a3a022b3",
     "packages": [
         {
             "name": "dflydev/dot-access-configuration",
@@ -178,17 +178,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/hechoendrupal/drupal-console-core.git",
-                "reference": "db06bb9fbe7851417a7abbbae5afe5a973de1a06"
+                "reference": "6e8c0f802c67fc086f0588492e500ee7ebd8bb35"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-core/zipball/db06bb9fbe7851417a7abbbae5afe5a973de1a06",
-                "reference": "db06bb9fbe7851417a7abbbae5afe5a973de1a06",
+                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-core/zipball/6e8c0f802c67fc086f0588492e500ee7ebd8bb35",
+                "reference": "6e8c0f802c67fc086f0588492e500ee7ebd8bb35",
                 "shasum": ""
             },
             "require": {
                 "dflydev/dot-access-configuration": "dev-master",
-                "drupal/console-en": "self.version",
+                "drupal/console-en": "dev-master",
                 "php": "^5.5.9 || ^7.0",
                 "stecman/symfony-console-completion": "~0.7",
                 "symfony/config": ">=2.7 <3.2",
@@ -251,7 +251,7 @@
                 "drupal",
                 "symfony"
             ],
-            "time": "2016-12-28 08:22:19"
+            "time": "2016-12-28 15:36:26"
         },
         {
             "name": "drupal/console-en",
