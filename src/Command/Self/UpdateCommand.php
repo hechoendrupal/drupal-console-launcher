@@ -15,6 +15,10 @@ use Humbug\SelfUpdate\Updater;
 use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Style\DrupalStyle;
 
+/**
+ * Class UpdateCommand
+ * @package Drupal\Console\Launcher\Command\Self
+ */
 class UpdateCommand extends Command
 {
     use CommandTrait;

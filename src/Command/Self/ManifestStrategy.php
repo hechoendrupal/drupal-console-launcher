@@ -11,38 +11,42 @@ use Humbug\SelfUpdate\Exception\JsonParsingException;
 use Humbug\SelfUpdate\Strategy\StrategyInterface;
 use Humbug\SelfUpdate\Updater;
 
+/**
+ * Class ManifestStrategy
+ * @package Drupal\Console\Launcher\Command\Self
+ */
 class ManifestStrategy implements StrategyInterface
 {
     /**
- * @var string 
-*/
+     * @var string
+     */
     private $manifestUrl;
 
     /**
- * @var array 
-*/
+     * @var array
+     */
     private $manifest;
 
     /**
- * @var array 
-*/
+     * @var array
+     */
     private $availableVersions;
 
     /**
- * @var string 
-*/
+     * @var string
+     */
     private $localVersion;
 
     /**
- * @var bool 
-*/
+     * @var bool
+     */
     private $allowMajor = false;
 
     /**
-   * @param string $localVersion
-   * @param bool   $allowMajor
-   * @param string $manifestUrl
-   */
+     * @param string $localVersion
+     * @param bool   $allowMajor
+     * @param string $manifestUrl
+     */
     public function __construct($localVersion, $allowMajor = false, $manifestUrl)
     {
         $this->localVersion = $localVersion;
@@ -51,12 +55,12 @@ class ManifestStrategy implements StrategyInterface
     }
 
     /**
-   * Download the remote Phar file.
-   *
-   * @param Updater $updater
-   *
-   * @throws \Exception on failure
-   */
+     * Download the remote Phar file.
+     *
+     * @param Updater $updater
+     *
+     * @throws \Exception on failure
+     */
     public function download(Updater $updater)
     {
         $version = $this->getCurrentRemoteVersion($updater);
@@ -108,12 +112,12 @@ class ManifestStrategy implements StrategyInterface
     }
 
     /**
-   * Get available versions to update to.
-   *
-   * @return array
-   *   An array keyed by the version name, whose elements are arrays
-   *   containing version information ('name', 'sha1', and 'url').
-   */
+     * Get available versions to update to.
+     *
+     * @return array
+     *   An array keyed by the version name, whose elements are arrays
+     *   containing version information ('name', 'sha1', and 'url').
+     */
     private function getAvailableVersions()
     {
         if (!isset($this->availableVersions)) {
@@ -135,10 +139,10 @@ class ManifestStrategy implements StrategyInterface
     }
 
     /**
-   * Download the manifest.
-   *
-   * @return array
-   */
+     * Download the manifest.
+     *
+     * @return array
+     */
     private function getManifest()
     {
         if (!isset($this->manifest)) {
@@ -160,12 +164,12 @@ class ManifestStrategy implements StrategyInterface
     }
 
     /**
-   * Retrieve the current version available remotely.
-   *
-   * @param Updater $updater
-   *
-   * @return string|bool
-   */
+     * Retrieve the current version available remotely.
+     *
+     * @param Updater $updater
+     *
+     * @return string|bool
+     */
     public function getCurrentRemoteVersion(Updater $updater)
     {
         $versionParser = new VersionParser(array_keys($this->getAvailableVersions()));
@@ -174,12 +178,12 @@ class ManifestStrategy implements StrategyInterface
     }
 
     /**
-   * Retrieve the current version of the local phar file.
-   *
-   * @param Updater $updater
-   *
-   * @return string
-   */
+     * Retrieve the current version of the local phar file.
+     *
+     * @param Updater $updater
+     *
+     * @return string
+     */
     public function getCurrentLocalVersion(Updater $updater)
     {
         return $this->localVersion;
