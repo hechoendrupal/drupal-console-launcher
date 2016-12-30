@@ -17,6 +17,10 @@
 
 namespace Drupal\Console\Launcher\Command\Self;
 
+/**
+ * Class VersionParser
+ * @package Drupal\Console\Launcher\Command\Self
+ */
 class VersionParser
 {
     /**
@@ -116,6 +120,9 @@ class VersionParser
         return $this->development($version);
     }
 
+    /**
+     * @return bool|null
+     */
     private function selectRecentStable()
     {
         $candidates = array();
@@ -131,6 +138,9 @@ class VersionParser
         return $this->findMostRecent($candidates);
     }
 
+    /**
+     * @return bool|null
+     */
     private function selectRecentUnstable()
     {
         $candidates = array();
@@ -146,6 +156,9 @@ class VersionParser
         return $this->findMostRecent($candidates);
     }
 
+    /**
+     * @return bool|null
+     */
     private function selectRecentAll()
     {
         $candidates = array();
@@ -161,6 +174,10 @@ class VersionParser
         return $this->findMostRecent($candidates);
     }
 
+    /**
+     * @param array $candidates
+     * @return null
+     */
     private function findMostRecent(array $candidates)
     {
         $candidate = null;
@@ -173,6 +190,10 @@ class VersionParser
         return $candidate;
     }
 
+    /**
+     * @param $version
+     * @return bool
+     */
     private function stable($version)
     {
         $version = preg_replace('{#.+$}i', '', $version);
@@ -195,6 +216,10 @@ class VersionParser
         return true;
     }
 
+    /**
+     * @param $version
+     * @return bool
+     */
     private function development($version)
     {
         if ('dev-' === substr($version, 0, 4) || '-dev' === substr($version, -4)) {

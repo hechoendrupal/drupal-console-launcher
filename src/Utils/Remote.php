@@ -14,8 +14,8 @@ use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Core\Utils\TranslatorManager;
 
 /**
- * Class RemoteHelper
- * @package \Drupal\Console\Utils
+ * Class Remote
+ * @package Drupal\Console\Launcher\Utils
  */
 class Remote
 {
@@ -37,11 +37,11 @@ class Remote
 
     /**
      * @param DrupalStyle $io
-     * @param string $commandName
-     * @param string $target
-     * @param array  $targetConfig
-     * @param array  $inputCommand
-     * @param array  $userHomeDir
+     * @param string      $commandName
+     * @param string      $target
+     * @param array       $targetConfig
+     * @param array       $inputCommand
+     * @param array       $userHomeDir
      *
      * @return boolean
      */
@@ -136,8 +136,9 @@ class Remote
         }
 
         if (!$logged) {
-            $io->error($this->translator
-                ->trans('application.remote.errors.invalid-login')
+            $io->error(
+                $this->translator
+                    ->trans('application.remote.errors.invalid-login')
             );
 
             $this->showErrorsAsString($io, $sftp);
@@ -162,16 +163,18 @@ class Remote
         );
 
         if (!$sftp->is_dir($targetConfig['root'])) {
-            $io->error($this->translator
-                ->trans('application.remote.errors.invalid-root')
+            $io->error(
+                $this->translator
+                    ->trans('application.remote.errors.invalid-root')
             );
 
             return false;
         }
 
         if (!$sftp->chdir($targetConfig['root'])) {
-            $io->error($this->translator
-                ->trans('application.remote.errors.invalid-root')
+            $io->error(
+                $this->translator
+                    ->trans('application.remote.errors.invalid-root')
             );
 
             return false;
@@ -196,7 +199,7 @@ class Remote
             return false;
         }
 
-        if ($sftp->getExitStatus() == 1){
+        if ($sftp->getExitStatus() == 1) {
             $this->showErrorsAsString($io, $sftp);
             $io->error($executionResult);
 
@@ -208,13 +211,20 @@ class Remote
         return true;
     }
 
-    private function showErrorsAsString($io, $sftp) {
+    /**
+     * @param $io
+     * @param $sftp
+     */
+    private function showErrorsAsString($io, $sftp)
+    {
         if ($sftp->getErrors()) {
-            $io->error(sprintf(
-                '%s - %s',
-                $sftp->getExitStatus(),
-                implode(', ', $sftp->getErrors())
-            ));
+            $io->error(
+                sprintf(
+                    '%s - %s',
+                    $sftp->getExitStatus(),
+                    implode(', ', $sftp->getErrors())
+                )
+            );
         }
     }
 }

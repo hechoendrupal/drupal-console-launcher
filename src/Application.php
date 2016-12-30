@@ -4,6 +4,7 @@ namespace Drupal\Console\Launcher;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Core\Application as CoreApplication;
 
@@ -23,6 +24,10 @@ class Application extends CoreApplication
      */
     const VERSION = '1.0.0-rc12';
 
+    /**
+     * Application constructor.
+     * @param ContainerInterface $container
+     */
     public function __construct($container)
     {
         parent::__construct($container, $this::NAME, $this::VERSION);
@@ -50,12 +55,18 @@ class Application extends CoreApplication
         }
     }
 
+    /**
+     * registerExtendCommands
+     */
     private function registerExtendCommands()
     {
         $this->container->get('console.configuration_manager')
             ->loadExtendLibraries();
     }
 
+    /**
+     * registerCommands
+     */
     private function registerCommands()
     {
         $consoleCommands = $this->container
@@ -92,6 +103,9 @@ class Application extends CoreApplication
         }
     }
 
+    /**
+     * registerGenerators
+     */
     private function registerGenerators()
     {
         $consoleGenerators = $this->container
