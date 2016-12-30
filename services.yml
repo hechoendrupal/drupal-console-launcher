@@ -3,8 +3,8 @@ services:
   console.launcher:
     class: Drupal\Console\Launcher\Utils\Launcher
   console.remote:
-      class: Drupal\Console\Launcher\Utils\Remote
-      arguments: ['@console.translator_manager']
+    class: Drupal\Console\Launcher\Utils\Remote
+    arguments: ['@console.translator_manager']
   # DrupalConsoleLauncher Commands
   console.self_update:
     class: Drupal\Console\Launcher\Command\Self\UpdateCommand
