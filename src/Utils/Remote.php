@@ -11,6 +11,7 @@ use phpseclib\Crypt\RSA;
 use phpseclib\System\SSH\Agent;
 use phpseclib\Net\SFTP;
 use Drupal\Console\Core\Style\DrupalStyle;
+use Drupal\Console\Core\Utils\TranslatorManager;
 
 /**
  * Class RemoteHelper

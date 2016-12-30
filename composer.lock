@@ -178,12 +178,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/hechoendrupal/drupal-console-core.git",
-                "reference": "6e8c0f802c67fc086f0588492e500ee7ebd8bb35"
+                "reference": "6709d274f576b2457dc374feb26116671c61b851"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-core/zipball/6e8c0f802c67fc086f0588492e500ee7ebd8bb35",
-                "reference": "6e8c0f802c67fc086f0588492e500ee7ebd8bb35",
+                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-core/zipball/6709d274f576b2457dc374feb26116671c61b851",
+                "reference": "6709d274f576b2457dc374feb26116671c61b851",
                 "shasum": ""
             },
             "require": {
@@ -251,7 +251,7 @@
                 "drupal",
                 "symfony"
             ],
-            "time": "2016-12-28 15:36:26"
+            "time": "2016-12-29 03:21:01"
         },
         {
             "name": "drupal/console-en",
