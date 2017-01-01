@@ -19,6 +19,7 @@ namespace Drupal\Console\Launcher\Command\Self;
 
 /**
  * Class VersionParser
+ *
  * @package Drupal\Console\Launcher\Command\Self
  */
 class VersionParser
@@ -36,7 +37,7 @@ class VersionParser
     /**
      * @param array $versions
      */
-    public function __construct(array $versions = array())
+    public function __construct(array $versions = [])
     {
         $this->versions = $versions;
     }
@@ -125,7 +126,7 @@ class VersionParser
      */
     private function selectRecentStable()
     {
-        $candidates = array();
+        $candidates = [];
         foreach ($this->versions as $version) {
             if (!$this->stable($version)) {
                 continue;
@@ -143,7 +144,7 @@ class VersionParser
      */
     private function selectRecentUnstable()
     {
-        $candidates = array();
+        $candidates = [];
         foreach ($this->versions as $version) {
             if ($this->stable($version) || $this->development($version)) {
                 continue;
@@ -161,7 +162,7 @@ class VersionParser
      */
     private function selectRecentAll()
     {
-        $candidates = array();
+        $candidates = [];
         foreach ($this->versions as $version) {
             if ($this->development($version)) {
                 continue;

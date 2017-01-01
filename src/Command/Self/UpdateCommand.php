@@ -17,6 +17,7 @@ use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class UpdateCommand
+ *
  * @package Drupal\Console\Launcher\Command\Self
  */
 class UpdateCommand extends Command

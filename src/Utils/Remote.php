@@ -15,6 +15,7 @@ use Drupal\Console\Core\Utils\TranslatorManager;
 
 /**
  * Class Remote
+ *
  * @package Drupal\Console\Launcher\Utils
  */
 class Remote
