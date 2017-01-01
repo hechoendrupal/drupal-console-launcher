@@ -4,6 +4,7 @@ namespace Drupal\Console\Launcher\Utils;
 
 /**
  * Class Launcher
+ *
  * @package Drupal\Console\Launcher\Utils
  */
 class Launcher

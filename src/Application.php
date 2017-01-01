@@ -10,6 +10,7 @@ use Drupal\Console\Core\Application as CoreApplication;
 
 /**
  * Class Application
+ *
  * @package Drupal\Console
  */
 class Application extends CoreApplication
@@ -26,6 +27,7 @@ class Application extends CoreApplication
 
     /**
      * Application constructor.
+     *
      * @param ContainerInterface $container
      */
     public function __construct($container)

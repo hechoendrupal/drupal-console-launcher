@@ -13,6 +13,7 @@ use Humbug\SelfUpdate\Updater;
 
 /**
  * Class ManifestStrategy
+ *
  * @package Drupal\Console\Launcher\Command\Self
  */
 class ManifestStrategy implements StrategyInterface

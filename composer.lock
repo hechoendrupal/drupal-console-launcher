@@ -211,12 +211,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/hechoendrupal/drupal-console-core.git",
-                "reference": "604eccaaca3455c32d3491b19ae8adb8954d9e2b"
+                "reference": "99fc36977d967041f43778b8062035bd280242eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-core/zipball/604eccaaca3455c32d3491b19ae8adb8954d9e2b",
-                "reference": "604eccaaca3455c32d3491b19ae8adb8954d9e2b",
+                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-core/zipball/99fc36977d967041f43778b8062035bd280242eb",
+                "reference": "99fc36977d967041f43778b8062035bd280242eb",
                 "shasum": ""
             },
             "require": {
@@ -285,7 +285,7 @@
                 "drupal",
                 "symfony"
             ],
-            "time": "2016-12-30 02:19:32"
+            "time": "2016-12-30 21:23:02"
         },
         {
             "name": "drupal/console-en",
@@ -293,12 +293,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/hechoendrupal/drupal-console-en.git",
-                "reference": "815bd92f8984bb3a8ad8fceabdba60b1a50fe345"
+                "reference": "dfe4ac6103aae66d5dfdb40e8ecf9b94dd0d30ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-en/zipball/815bd92f8984bb3a8ad8fceabdba60b1a50fe345",
-                "reference": "815bd92f8984bb3a8ad8fceabdba60b1a50fe345",
+                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-en/zipball/dfe4ac6103aae66d5dfdb40e8ecf9b94dd0d30ff",
+                "reference": "dfe4ac6103aae66d5dfdb40e8ecf9b94dd0d30ff",
                 "shasum": ""
             },
             "type": "drupal-console-language",
@@ -339,7 +339,7 @@
                 "drupal",
                 "symfony"
             ],
-            "time": "2016-12-27 01:51:22"
+            "time": "2016-12-30 22:28:07"
         },
         {
             "name": "jakub-onderka/php-console-color",
