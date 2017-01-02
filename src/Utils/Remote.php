@@ -11,7 +11,7 @@ use phpseclib\Crypt\RSA;
 use phpseclib\System\SSH\Agent;
 use phpseclib\Net\SFTP;
 use Drupal\Console\Core\Style\DrupalStyle;
-use Drupal\Console\Core\Utils\TranslatorManager;
+use Drupal\Console\Core\Utils\TranslatorManagerInterface;
 
 /**
  * Class Remote
@@ -21,7 +21,7 @@ use Drupal\Console\Core\Utils\TranslatorManager;
 class Remote
 {
     /**
-     * @var TranslatorManager
+     * @var TranslatorManagerInterface
      */
     protected $translator;
 
@@ -31,7 +31,7 @@ class Remote
      * @param $translator
      */
     public function __construct(
-        TranslatorManager $translator
+        TranslatorManagerInterface $translator
     ) {
         $this->translator = $translator;
     }
