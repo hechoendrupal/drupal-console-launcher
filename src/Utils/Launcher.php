@@ -1,9 +1,11 @@
 <?php
 
-namespace Drupal\Console\Utils;
+namespace Drupal\Console\Launcher\Utils;
 
 /**
- * Class Launcher.
+ * Class Launcher
+ *
+ * @package Drupal\Console\Launcher\Utils
  */
 class Launcher
 {

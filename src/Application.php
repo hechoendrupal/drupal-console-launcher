@@ -1,16 +1,19 @@
 <?php
 
-namespace Drupal\Console;
+namespace Drupal\Console\Launcher;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Drupal\Console\Style\DrupalStyle;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Console\Core\Style\DrupalStyle;
+use Drupal\Console\Core\Application as CoreApplication;
 
 /**
  * Class Application
+ *
  * @package Drupal\Console
  */
-class LauncherApplication extends ConsoleApplication
+class Application extends CoreApplication
 {
     /**
      * @var string
@@ -20,8 +23,13 @@ class LauncherApplication extends ConsoleApplication
     /**
      * @var string
      */
-    const VERSION = '1.0.0-rc9';
+    const VERSION = '1.0.0-rc14';
 
+    /**
+     * Application constructor.
+     *
+     * @param ContainerInterface $container
+     */
     public function __construct($container)
     {
         parent::__construct($container, $this::NAME, $this::VERSION);
@@ -34,6 +42,8 @@ class LauncherApplication extends ConsoleApplication
     {
         $this->registerGenerators();
         $this->registerCommands();
+        $this->registerExtendCommands();
+
         $clear = $this->container->get('console.configuration_manager')
             ->getConfiguration()
             ->get('application.clear')?:false;
@@ -47,6 +57,18 @@ class LauncherApplication extends ConsoleApplication
         }
     }
 
+    /**
+     * registerExtendCommands
+     */
+    private function registerExtendCommands()
+    {
+        $this->container->get('console.configuration_manager')
+            ->loadExtendLibraries();
+    }
+
+    /**
+     * registerCommands
+     */
     private function registerCommands()
     {
         $consoleCommands = $this->container
@@ -73,13 +95,19 @@ class LauncherApplication extends ConsoleApplication
 
             if (array_key_exists($command->getName(), $aliases)) {
                 $commandAliases = $aliases[$command->getName()];
-                $command->setAliases([$commandAliases]);
+                if (!is_array($commandAliases)) {
+                    $commandAliases = [$commandAliases];
+                }
+                $command->setAliases($commandAliases);
             }
 
             $this->add($command);
         }
     }
 
+    /**
+     * registerGenerators
+     */
     private function registerGenerators()
     {
         $consoleGenerators = $this->container

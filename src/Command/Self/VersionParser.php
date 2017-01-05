@@ -15,8 +15,13 @@
  * This class is partially patterned after Composer's version parser.
  */
 
-namespace Drupal\Console\Command\Self;
+namespace Drupal\Console\Launcher\Command\Self;
 
+/**
+ * Class VersionParser
+ *
+ * @package Drupal\Console\Launcher\Command\Self
+ */
 class VersionParser
 {
     /**
@@ -32,7 +37,7 @@ class VersionParser
     /**
      * @param array $versions
      */
-    public function __construct(array $versions = array())
+    public function __construct(array $versions = [])
     {
         $this->versions = $versions;
     }
@@ -116,9 +121,12 @@ class VersionParser
         return $this->development($version);
     }
 
+    /**
+     * @return bool|null
+     */
     private function selectRecentStable()
     {
-        $candidates = array();
+        $candidates = [];
         foreach ($this->versions as $version) {
             if (!$this->stable($version)) {
                 continue;
@@ -131,9 +139,12 @@ class VersionParser
         return $this->findMostRecent($candidates);
     }
 
+    /**
+     * @return bool|null
+     */
     private function selectRecentUnstable()
     {
-        $candidates = array();
+        $candidates = [];
         foreach ($this->versions as $version) {
             if ($this->stable($version) || $this->development($version)) {
                 continue;
@@ -146,9 +157,12 @@ class VersionParser
         return $this->findMostRecent($candidates);
     }
 
+    /**
+     * @return bool|null
+     */
     private function selectRecentAll()
     {
-        $candidates = array();
+        $candidates = [];
         foreach ($this->versions as $version) {
             if ($this->development($version)) {
                 continue;
@@ -161,6 +175,10 @@ class VersionParser
         return $this->findMostRecent($candidates);
     }
 
+    /**
+     * @param array $candidates
+     * @return null
+     */
     private function findMostRecent(array $candidates)
     {
         $candidate = null;
@@ -173,6 +191,10 @@ class VersionParser
         return $candidate;
     }
 
+    /**
+     * @param $version
+     * @return bool
+     */
     private function stable($version)
     {
         $version = preg_replace('{#.+$}i', '', $version);
@@ -195,6 +217,10 @@ class VersionParser
         return true;
     }
 
+    /**
+     * @param $version
+     * @return bool
+     */
     private function development($version)
     {
         if ('dev-' === substr($version, 0, 4) || '-dev' === substr($version, -4)) {

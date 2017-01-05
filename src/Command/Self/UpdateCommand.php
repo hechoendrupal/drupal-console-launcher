@@ -5,16 +5,21 @@
  * Contains \Drupal\Console\Command\Self\UpdateCommand.
  */
 
-namespace Drupal\Console\Command\Self;
+namespace Drupal\Console\Launcher\Command\Self;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Command\Command;
 use Humbug\SelfUpdate\Updater;
-use Drupal\Console\Command\Shared\CommandTrait;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Console\Core\Style\DrupalStyle;
 
+/**
+ * Class UpdateCommand
+ *
+ * @package Drupal\Console\Launcher\Command\Self
+ */
 class UpdateCommand extends Command
 {
     use CommandTrait;

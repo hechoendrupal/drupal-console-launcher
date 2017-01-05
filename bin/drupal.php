@@ -1,12 +1,15 @@
 <?php
 
-use DrupalFinder\DrupalFinder;
 use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
-use Drupal\Console\Bootstrap\DrupalConsoleCore;
-use Drupal\Console\Utils\ArgvInputReader;
-use Drupal\Console\Style\DrupalStyle;
-use Drupal\Console\LauncherApplication;
+use DrupalFinder\DrupalFinder;
+use Drupal\Console\Core\Bootstrap\DrupalConsoleCore;
+use Drupal\Console\Launcher\Application;
+use Drupal\Console\Core\Style\DrupalStyle;
+use Drupal\Console\Core\Utils\ArgvInputReader;
+use Drupal\Console\Core\Utils\ConfigurationManager;
+use Drupal\Console\Launcher\Utils\Remote;
 
 set_time_limit(0);
 
@@ -28,15 +31,17 @@ $container = $drupalConsole->boot();
 
 $argvInputReader = new ArgvInputReader();
 
-$configuration = $container->get('console.configuration_manager')
-    ->getConfiguration();
+/* @var ConfigurationManager  $configurationManager */
+$configurationManager = $container->get('console.configuration_manager');
+
+$configuration = $configurationManager->getConfiguration();
 
 $translator = $container->get('console.translator_manager');
 
 if ($options = $configuration->get('application.options') ?: []) {
     $argvInputReader->setOptionsFromConfiguration($options);
 }
-
+$targetConfig = [];
 if ($target = $argvInputReader->get('target')) {
     $targetConfig = $container->get('console.configuration_manager')
         ->readTarget($target);
@@ -45,17 +50,28 @@ if ($target = $argvInputReader->get('target')) {
 
 $argvInputReader->setOptionsAsArgv();
 
-if ($argvInputReader->get('remote', false)) {
-    /*
-     *  Execute command via ssh
-     *  Relocate remote execution to this project
-     */
-    exit(0);
-}
-
 $output = new ConsoleOutput();
 $input = new ArrayInput([]);
 $io = new DrupalStyle($input, $output);
+
+if ($argvInputReader->get('remote', false)) {
+    $commandInput = new ArgvInput();
+
+    /* @var Remote $remote */
+    $remote = $container->get('console.remote');
+    $commandName = $argvInputReader->get('command', false);
+
+    $remoteSuccess = $remote->executeCommand(
+        $io,
+        $commandName,
+        $target,
+        $targetConfig,
+        $commandInput->__toString(),
+        $configurationManager->getHomeDirectory()
+    );
+
+    exit($remoteSuccess?0:1);
+}
 
 $root = $argvInputReader->get('root');
 if (!$root) {
@@ -92,6 +108,6 @@ if ($composerRoot && $drupalRoot) {
 }
 
 $argvInputReader->restoreOriginalArgvValues();
-$application = new LauncherApplication($container);
+$application = new Application($container);
 $application->setDefaultCommand('about');
 $application->run();

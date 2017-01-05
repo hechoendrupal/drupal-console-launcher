@@ -12,14 +12,11 @@ application:
       exception: true
       options:
         e: 'php'
-        exclude: vendor/
+        exclude: /vendor
       arguments:
     php-cs-fixer:
       enabled: true
       exception: false
-      file:
-        config-file: .php_cs
-        single-execution: false
       options:
         level: psr2
       arguments:
@@ -36,7 +33,7 @@ application:
       arguments:
         - '-n'
     phpcs:
-      enabled: true
+      enabled: false
       exception: false
       options:
         standard: PSR2
@@ -52,7 +49,7 @@ application:
       prefixes:
       postfixes:
         - 'text'
-        - 'cleancode'
+        - 'cleancode,codesize,unusedcode,naming,controversial,design'
     phploc:
       enabled: false
       exception: false
