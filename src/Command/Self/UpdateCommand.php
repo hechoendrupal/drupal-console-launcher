@@ -109,7 +109,8 @@ class UpdateCommand extends Command
                 $newVersion
             ),
             true
-        )) {
+        )
+        ) {
             return 1;
         }
 
