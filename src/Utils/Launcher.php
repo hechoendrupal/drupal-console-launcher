@@ -14,7 +14,7 @@ class Launcher
      *
      * @return bool
      */
-    public function launch($root)
+    public function launch($root, $autoload)
     {
         chdir($root);
 
@@ -26,6 +26,8 @@ class Launcher
         }
 
         $drupal = realpath($drupal).'.php';
+
+        $autoload->unregister();
 
         include_once $drupal;
 

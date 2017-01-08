@@ -19,17 +19,16 @@ $pharAutoload = $pharRoot.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
 if (file_exists($pharAutoload)) {
     $autoload = include_once $pharAutoload;
 } else {
-    echo ' Something goes wrong with your drupal.phar archive.'.PHP_EOL.
+    echo ' Something is wrong with your drupal.phar archive.'.PHP_EOL.
          ' Try downloading again by executing from your terminal:'.PHP_EOL.
          ' curl https://drupalconsole.com/installer -L -o drupal.phar'.PHP_EOL;
 
     exit(1);
 }
 
+$argvInputReader = new ArgvInputReader();
 $drupalConsole = new DrupalConsoleCore($pharRoot);
 $container = $drupalConsole->boot();
-
-$argvInputReader = new ArgvInputReader();
 
 /* @var ConfigurationManager  $configurationManager */
 $configurationManager = $container->get('console.configuration_manager');
@@ -84,7 +83,7 @@ $drupalRoot = $drupalFinder->getDrupalRoot();
 
 if ($composerRoot && $drupalRoot) {
     $drupalConsoleLauncher = $container->get('console.launcher');
-    $launch = $drupalConsoleLauncher->launch($composerRoot);
+    $launch = $drupalConsoleLauncher->launch($composerRoot, $autoload);
 
     if (!$launch) {
         $message = sprintf(
