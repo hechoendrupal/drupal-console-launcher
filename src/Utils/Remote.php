@@ -189,9 +189,8 @@ class Remote
 
             return false;
         }
-
         $root = $targetConfig['root'];
-        $remoteCommand = "cd $root && vendor/drupal/console/bin/drupal $remoteCommand";
+        $remoteCommand = "cd $root && vendor/drupal/console/bin/drupal $remoteCommand --no-interaction";
         $executionResult = rtrim($sftp->exec($remoteCommand)) . PHP_EOL;
 
         if (preg_match('(ERROR|WARNING)', $executionResult) === 1) {
@@ -202,7 +201,8 @@ class Remote
 
         if ($sftp->getExitStatus() == 1) {
             $this->showErrorsAsString($io, $sftp);
-            $io->error($executionResult);
+
+            $io->writeln($executionResult);
 
             return false;
         }
