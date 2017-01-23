@@ -63,7 +63,7 @@ class Application extends CoreApplication
     private function registerExtendCommands()
     {
         $this->container->get('console.configuration_manager')
-            ->loadExtendLibraries();
+            ->loadExtendConfiguration();
     }
 
     /**
