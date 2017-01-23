@@ -37,7 +37,7 @@
     },
     "require": {
         "php": "^5.5.9 || ^7.0",
-        "drupal/console-core" : "dev-master",
+        "drupal/console-core" : "1.0.0-rc15",
         "padraic/phar-updater": "~1.0@dev",
         "phpseclib/phpseclib": "2.*",
         "symfony/console": "2.8.16",
