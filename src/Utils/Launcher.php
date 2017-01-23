@@ -27,8 +27,6 @@ class Launcher
 
         $drupal = realpath($drupal).'.php';
 
-        $autoload->unregister();
-
         include_once $drupal;
 
         return true;
