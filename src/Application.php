@@ -23,7 +23,7 @@ class Application extends CoreApplication
     /**
      * @var string
      */
-    const VERSION = '1.0.0-rc14';
+    const VERSION = '1.0.0-rc15';
 
     /**
      * Application constructor.
@@ -63,7 +63,7 @@ class Application extends CoreApplication
     private function registerExtendCommands()
     {
         $this->container->get('console.configuration_manager')
-            ->loadExtendLibraries();
+            ->loadExtendConfiguration();
     }
 
     /**
