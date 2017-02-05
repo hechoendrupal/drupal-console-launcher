@@ -42,7 +42,6 @@ class Application extends CoreApplication
     {
         $this->registerGenerators();
         $this->registerCommands();
-        $this->registerExtendCommands();
 
         $clear = $this->container->get('console.configuration_manager')
             ->getConfiguration()
@@ -55,15 +54,6 @@ class Application extends CoreApplication
             $io = new DrupalStyle($input, $output);
             $io->warning($this->trans('application.site.errors.directory'));
         }
-    }
-
-    /**
-     * registerExtendCommands
-     */
-    private function registerExtendCommands()
-    {
-        $this->container->get('console.configuration_manager')
-            ->loadExtendConfiguration();
     }
 
     /**
