@@ -14,7 +14,7 @@ class Launcher
      *
      * @return bool
      */
-    public function launch($root, $autoload)
+    public function launch($root)
     {
         chdir($root);
 
