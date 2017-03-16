@@ -10,8 +10,6 @@ namespace Drupal\Console\Launcher\Utils;
 use phpseclib\Crypt\RSA;
 use phpseclib\System\SSH\Agent;
 use phpseclib\Net\SFTP;
-use Drupal\Console\Core\Style\DrupalStyle;
-use Drupal\Console\Core\Utils\TranslatorManagerInterface;
 
 /**
  * Class Remote
@@ -20,34 +18,17 @@ use Drupal\Console\Core\Utils\TranslatorManagerInterface;
  */
 class Remote
 {
-    /**
-     * @var TranslatorManagerInterface
-     */
-    protected $translator;
 
     /**
-     * Remote constructor.
-     *
-     * @param $translator
-     */
-    public function __construct(
-        TranslatorManagerInterface $translator
-    ) {
-        $this->translator = $translator;
-    }
-
-    /**
-     * @param DrupalStyle $io
-     * @param string      $commandName
-     * @param string      $target
-     * @param array       $targetConfig
-     * @param array       $inputCommand
-     * @param array       $userHomeDir
+     * @param string $commandName
+     * @param string $target
+     * @param array  $targetConfig
+     * @param array  $inputCommand
+     * @param array  $userHomeDir
      *
      * @return boolean
      */
     public function executeCommand(
-        $io,
         $commandName,
         $target,
         $targetConfig,
@@ -62,10 +43,7 @@ class Remote
         if (!$key) {
             if (array_key_exists('keys', $targetConfig)) {
                 if (!array_key_exists('passphrase', $targetConfig['keys'])) {
-                    $io->error(
-                        $this->translator->trans('application.remote.errors.passphrase-missing')
-                    );
-
+                    echo 'Passphrase file is missing' . PHP_EOL;
                     return false;
                 }
                 $passPhrase = realpath(
@@ -77,18 +55,14 @@ class Remote
                     )
                 );
                 if (!file_exists($passPhrase)) {
-                    $io->error(
-                        $this->translator->trans('application.remote.errors.passphrase-empty')
-                    );
+                    echo  'Passphrase file is empty' . PHP_EOL;
 
                     return false;
                 }
                 $passPhrase = trim(file_get_contents($passPhrase))?:false;
 
                 if (!array_key_exists('private', $targetConfig['keys'])) {
-                    $io->error(
-                        $this->translator->trans('application.remote.errors.private-missing')
-                    );
+                    echo 'Private file is missing' . PHP_EOL;
 
                     return false;
                 }
@@ -101,9 +75,7 @@ class Remote
                     )
                 );
                 if (!file_exists($private)) {
-                    $io->error(
-                        $this->translator->trans('application.remote.errors.private-empty')
-                    );
+                    echo 'Private file is empty' . PHP_EOL;
 
                     return false;
                 }
@@ -112,9 +84,7 @@ class Remote
                 $key = new RSA();
                 $key->setPassword($passPhrase);
                 if (!$key->loadKey($private)) {
-                    $io->error(
-                        $this->translator->trans('application.remote.errors.private-invalid')
-                    );
+                    echo 'Private file is invalid' . PHP_EOL;
 
                     return false;
                 }
@@ -130,19 +100,15 @@ class Remote
         try {
             $logged = $sftp->login($targetConfig['user'], $key);
         } catch (\Exception $e) {
-            $io->error($e->getMessage());
-            $this->showErrorsAsString($io, $sftp);
+            echo $e->getMessage() . PHP_EOL;
+            $this->showErrorsAsString($sftp);
 
             return false;
         }
 
         if (!$logged) {
-            $io->error(
-                $this->translator
-                    ->trans('application.remote.errors.invalid-login')
-            );
-
-            $this->showErrorsAsString($io, $sftp);
+            echo 'Invalid login credentials.' . PHP_EOL;
+            $this->showErrorsAsString($sftp);
 
             return false;
         }
@@ -164,28 +130,19 @@ class Remote
         );
 
         if (!$sftp->is_dir($targetConfig['root'])) {
-            $io->error(
-                $this->translator
-                    ->trans('application.remote.errors.invalid-root')
-            );
+            echo 'Invalid root directory' . PHP_EOL;
 
             return false;
         }
 
         if (!$sftp->chdir($targetConfig['root'])) {
-            $io->error(
-                $this->translator
-                    ->trans('application.remote.errors.invalid-root')
-            );
+            echo 'Invalid root directory' . PHP_EOL;
 
             return false;
         }
 
         if (!$sftp->file_exists($targetConfig['root'].'/vendor/drupal/console/bin/drupal')) {
-            $io->error(
-                $this->translator
-                    ->trans('application.remote.errors.console-not-found')
-            );
+            echo 'Drupal Console not found on this site' . PHP_EOL;
 
             return false;
         }
@@ -194,38 +151,32 @@ class Remote
         $executionResult = rtrim($sftp->exec($remoteCommand)) . PHP_EOL;
 
         if (preg_match('(ERROR|WARNING)', $executionResult) === 1) {
-            $io->block($executionResult, null, 'fg=white;bg=red', ' ', false);
+            echo $executionResult . PHP_EOL;
 
             return false;
         }
 
         if ($sftp->getExitStatus() == 1) {
-            $this->showErrorsAsString($io, $sftp);
-
-            $io->writeln($executionResult);
+            $this->showErrorsAsString($sftp);
+            echo $executionResult . PHP_EOL;
 
             return false;
         }
 
-        $io->write($executionResult);
+        echo $executionResult . PHP_EOL;
 
         return true;
     }
 
     /**
-     * @param $io
      * @param $sftp
      */
-    private function showErrorsAsString($io, $sftp)
+    private function showErrorsAsString($sftp)
     {
-        if ($sftp->getErrors()) {
-            $io->error(
-                sprintf(
-                    '%s - %s',
-                    $sftp->getExitStatus(),
-                    implode(', ', $sftp->getErrors())
-                )
-            );
-        }
+        echo sprintf(
+            '%s - %s',
+            $sftp->getExitStatus(),
+            implode(', ', $sftp->getErrors())
+        ) . PHP_EOL;
     }
 }
