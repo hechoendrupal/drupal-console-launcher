@@ -53,9 +53,13 @@ if ($composerRoot && $drupalRoot) {
         exit(0);
     }
     echo 'Could not find DrupalConsole in the current path.' . PHP_EOL;
-    echo 'Execute: composer require drupal/console:~1.0' . PHP_EOL;
+    echo 'Executing: composer require drupal/console:~1.0' . PHP_EOL;
     exit(1);
 }
 
 echo 'Could not find Drupal in the current path.' . PHP_EOL;
+if (file_exists($root.'/composer.json')) {
+    echo 'Use composer to validate your composer.json file.' . PHP_EOL;
+    echo 'Executing: composer validate' . PHP_EOL;
+}
 exit(1);
