@@ -3,11 +3,8 @@
     "chmod": "0755",
     "directories": [
         "src",
-        "templates"
     ],
     "files": [
-        "config.yml",
-        "services.yml",
         "LICENSE.txt",
         "bin/drupal.php",
         "vendor/autoload.php"
@@ -25,5 +22,6 @@
     "compression": "GZ",
     "main": "bin/drupal",
     "output": "drupal.phar",
-    "stub": true
+    "stub": true,
+    "git-version": "git_version"
 }
