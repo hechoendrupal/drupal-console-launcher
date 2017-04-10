@@ -2,7 +2,7 @@
     "alias": "drupal.phar",
     "chmod": "0755",
     "directories": [
-        "src",
+        "src"
     ],
     "files": [
         "LICENSE.txt",
