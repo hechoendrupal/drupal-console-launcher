@@ -57,7 +57,8 @@ if ($composerRoot && $drupalRoot) {
     exit(1);
 }
 
-echo 'Could not find Drupal in the current path.' . PHP_EOL;
+echo 'The drupal command should be run from within a Drupal project. See the 
+documentation page about the Launcher' . PHP_EOL;
 if (file_exists($root.'/composer.json')) {
     echo 'Use composer to validate your composer.json file.' . PHP_EOL;
     echo 'Please execute: composer validate' . PHP_EOL;
