@@ -27,13 +27,10 @@ $root = getcwd();
 $source = null;
 $target = null;
 $command = null;
+$version = '1.0.0-rc17';
+
 if ($argc>1) {
     $command = $argv[1];
-}
-
-if ($command === 'self-update' || $command === 'selfupdate') {
-    $selfUpdate = new SelfUpdate();
-    $selfUpdate->run();
 }
 
 foreach ($argv as $value) {
@@ -46,8 +43,14 @@ $drupalFinder = new DrupalFinder();
 $drupalFinder->locateRoot($root);
 $composerRoot = $drupalFinder->getComposerRoot();
 $drupalRoot = $drupalFinder->getDrupalRoot();
+$isValidDrupal = ($composerRoot && $drupalRoot)?true:false;
 
-if ($composerRoot && $drupalRoot) {
+if ($command === 'self-update' || $command === 'selfupdate') {
+    $selfUpdate = new SelfUpdate();
+    $selfUpdate->run($version, $isValidDrupal, $composerRoot);
+}
+
+if ($isValidDrupal) {
     $launcher = new Launcher();
     if ($launcher->launch($composerRoot)) {
         exit(0);
@@ -57,7 +60,8 @@ if ($composerRoot && $drupalRoot) {
     echo 'Please execute: composer require drupal/console:~1.0' . PHP_EOL;
     exit(1);
 }
-
+echo 'Drupal Console Launcher ' . $version . PHP_EOL;
+echo 'Path: ' . exec('which drupal') . PHP_EOL;
 echo 'The drupal command should be run from within a Drupal project.' . PHP_EOL;
 echo 'See the documentation page about the Launcher 
 (https://docs.drupalconsole.com/en/getting/launcher.html).' . PHP_EOL;

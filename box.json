@@ -22,6 +22,5 @@
     "compression": "GZ",
     "main": "bin/drupal",
     "output": "drupal.phar",
-    "stub": true,
-    "git-version": "git_version"
+    "stub": true
 }
