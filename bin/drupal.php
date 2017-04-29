@@ -27,13 +27,10 @@ $root = getcwd();
 $source = null;
 $target = null;
 $command = null;
+$version = '1.0.0-rc17';
+
 if ($argc>1) {
     $command = $argv[1];
-}
-
-if ($command === 'self-update' || $command === 'selfupdate') {
-    $selfUpdate = new SelfUpdate();
-    $selfUpdate->run();
 }
 
 foreach ($argv as $value) {
@@ -47,7 +44,12 @@ $drupalFinder->locateRoot($root);
 $composerRoot = $drupalFinder->getComposerRoot();
 $drupalRoot = $drupalFinder->getDrupalRoot();
 
-if ($composerRoot && $drupalRoot) {
+if ($command === 'self-update' || $command === 'selfupdate') {
+    $selfUpdate = new SelfUpdate();
+    $selfUpdate->run($version, $isValidDrupal, $composerRoot);
+}
+
+if ($isValidDrupal) {
     $launcher = new Launcher();
     if ($launcher->launch($composerRoot)) {
         exit(0);
