@@ -43,6 +43,7 @@ $drupalFinder = new DrupalFinder();
 $drupalFinder->locateRoot($root);
 $composerRoot = $drupalFinder->getComposerRoot();
 $drupalRoot = $drupalFinder->getDrupalRoot();
+$isValidDrupal = ($composerRoot && $drupalRoot)?true:false;
 
 if ($command === 'self-update' || $command === 'selfupdate') {
     $selfUpdate = new SelfUpdate();

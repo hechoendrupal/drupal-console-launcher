@@ -7,7 +7,7 @@ use Drupal\Console\Launcher\Utils\ManifestStrategy;
 
 class SelfUpdate
 {
-    public function run()
+    public function run($version, $isValidDrupal, $composerRoot)
     {
         if (!extension_loaded('Phar') || !(\Phar::running(false))) {
             echo 'This instance of the CLI was not installed as a Phar archive.' . PHP_EOL;
@@ -17,12 +17,12 @@ class SelfUpdate
 
         echo sprintf(
             'Checking for updates from version: "%s"',
-            '@git_version@'
+            $version
         ) . PHP_EOL;
 
         $updater = new Updater(null, false);
         $strategy = new ManifestStrategy(
-            '@git_version@',
+            $version,
             true,
             'http://drupalconsole.com/manifest.json'
         );
@@ -31,9 +31,10 @@ class SelfUpdate
 
         if (!$updater->hasUpdate()) {
             echo sprintf(
-                'The latest version "%s", was already installed on your system.',
-                '@git_version@'
+                'The latest version "%s" of DrupalConsole Launcher, was already installed on your system.',
+                $version
             ) . PHP_EOL;
+            $this->isValidMessage($isValidDrupal, $composerRoot);
             exit(0);
         }
 
@@ -46,7 +47,17 @@ class SelfUpdate
             $oldVersion,
             $newVersion
         ) . PHP_EOL;
-        ;
+        $this->isValidMessage($isValidDrupal, $composerRoot);
         exit(0);
+    }
+
+    private function isValidMessage($isValidDrupal, $composerRoot)
+    {
+        if ($isValidDrupal) {
+            echo PHP_EOL;
+            echo 'If you want to update the DrupalConsole dependency' . PHP_EOL ;
+            echo 'in your current site: ' . $composerRoot . PHP_EOL;
+            echo 'Execute: composer update drupal/console --with-dependencies' . PHP_EOL;
+        }
     }
 }
