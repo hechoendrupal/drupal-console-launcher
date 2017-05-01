@@ -31,7 +31,8 @@ class SelfUpdate
 
         if (!$updater->hasUpdate()) {
             echo sprintf(
-                'The latest version "%s" of DrupalConsole Launcher, was already installed on your system.',
+                'The latest version "%s" of DrupalConsole Launcher,' . PHP_EOL .
+                'was already installed on your system.',
                 $version
             ) . PHP_EOL;
             $this->isValidMessage($isValidDrupal, $composerRoot);
