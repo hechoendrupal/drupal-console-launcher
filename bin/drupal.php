@@ -60,13 +60,14 @@ if ($isValidDrupal) {
     echo 'Please execute: composer require drupal/console:~1.0' . PHP_EOL;
     exit(1);
 }
-echo 'Drupal Console Launcher ' . $version . PHP_EOL;
-echo 'Path: ' . exec('which drupal') . PHP_EOL;
-echo 'The drupal command should be run from within a Drupal project.' . PHP_EOL;
-echo 'See the documentation page about the Launcher 
-(https://docs.drupalconsole.com/en/getting/launcher.html).' . PHP_EOL;
+echo 'Drupal Console Launcher version ' . $version . PHP_EOL;
+echo 'Path: ' . $argv[0] . PHP_EOL . PHP_EOL;
 if (file_exists($root.'/composer.json')) {
-    echo 'Use composer to validate your composer.json file.' . PHP_EOL;
+    echo 'Seems like there is an error with your composer.json file,' . PHP_EOL;
     echo 'Please execute: composer validate' . PHP_EOL;
+} else {
+    echo 'The drupal command should be run from within a Drupal project.' . PHP_EOL;
+    echo 'See the documentation page about the Launcher:' . PHP_EOL;
+    echo 'https://docs.drupalconsole.com/en/getting/launcher.html' . PHP_EOL . PHP_EOL;
 }
 exit(1);
