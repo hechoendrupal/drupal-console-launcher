@@ -27,7 +27,7 @@ $root = getcwd();
 $source = null;
 $target = null;
 $command = null;
-$version = '1.0.0-rc17';
+$version = '1.0.0-rc18';
 
 if ($argc>1) {
     $command = $argv[1];
