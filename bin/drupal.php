@@ -52,7 +52,7 @@ if ($command === 'self-update' || $command === 'selfupdate') {
 
 if ($isValidDrupal) {
     $launcher = new Launcher();
-    if ($launcher->launch($composerRoot)) {
+    if ($launcher->launch($composerRoot, $version)) {
         exit(0);
     }
     echo 'Could not find DrupalConsole in the current site (' . $root . ').' .

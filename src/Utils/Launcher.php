@@ -14,7 +14,7 @@ class Launcher
      *
      * @return bool
      */
-    public function launch($root)
+    public function launch($root, $launcherVersion)
     {
         chdir($root);
 
