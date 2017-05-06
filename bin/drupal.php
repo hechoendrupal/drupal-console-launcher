@@ -1,6 +1,7 @@
 <?php
 
 use DrupalFinder\DrupalFinder;
+use Drupal\Console\Launcher\Utils\Colors;
 use Drupal\Console\Launcher\Utils\Launcher;
 use Drupal\Console\Launcher\Command\SelfUpdate;
 
@@ -28,6 +29,8 @@ $source = null;
 $target = null;
 $command = null;
 $version = '1.0.0-rc18';
+$showVersion = false;
+$debug = false;
 
 if ($argc>1) {
     $command = $argv[1];
@@ -37,6 +40,18 @@ foreach ($argv as $value) {
     if (substr($value, 0, 7) == "--root=") {
         $root = substr($value, 7);
     }
+    if (substr($value, 0, 9) == "--version") {
+        $showVersion = true;
+    }
+    if (substr($value, 0, 7) == "--debug") {
+        $debug = true;
+    }
+}
+if ($showVersion || $debug) {
+    echo Colors::LIGHT_GREEN . 'Drupal Console Launcher' . Colors::WHITE . ' version ' . Colors::YELLOW . $version . Colors::WHITE . PHP_EOL;
+}
+if ($debug) {
+    echo Colors::LIGHT_GREEN . 'Path: ' . Colors::YELLOW . $argv[0] . Colors::WHITE . PHP_EOL . PHP_EOL;
 }
 
 $drupalFinder = new DrupalFinder();
@@ -52,16 +67,15 @@ if ($command === 'self-update' || $command === 'selfupdate') {
 
 if ($isValidDrupal) {
     $launcher = new Launcher();
-    if ($launcher->launch($composerRoot, $version)) {
+    if ($launcher->launch($drupalFinder)) {
         exit(0);
     }
     echo 'Could not find DrupalConsole in the current site (' . $root . ').' .
-      PHP_EOL;
+        PHP_EOL;
     echo 'Please execute: composer require drupal/console:~1.0' . PHP_EOL;
     exit(1);
 }
-echo 'Drupal Console Launcher version ' . $version . PHP_EOL;
-echo 'Path: ' . $argv[0] . PHP_EOL . PHP_EOL;
+
 if (file_exists($root.'/composer.json')) {
     echo 'Seems like there is an error with your composer.json file,' . PHP_EOL;
     echo 'Please execute: composer validate' . PHP_EOL;
