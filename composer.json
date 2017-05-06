@@ -37,7 +37,7 @@
     },
     "require": {
         "php": "^5.5.9 || ^7.0",
-        "webflo/drupal-finder": "^0.2.1",
+        "webflo/drupal-finder": "0.*",
         "padraic/phar-updater": "~1.0@dev",
         "phpseclib/phpseclib": "2.*"
     },

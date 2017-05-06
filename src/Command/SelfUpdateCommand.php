@@ -5,7 +5,7 @@ namespace Drupal\Console\Launcher\Command;
 use Humbug\SelfUpdate\Updater;
 use Drupal\Console\Launcher\Utils\ManifestStrategy;
 
-class SelfUpdate
+class SelfUpdateCommand
 {
     public function run($version, $isValidDrupal, $composerRoot)
     {
