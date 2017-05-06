@@ -3,7 +3,7 @@
 use DrupalFinder\DrupalFinder;
 use Drupal\Console\Launcher\Utils\Colors;
 use Drupal\Console\Launcher\Utils\Launcher;
-use Drupal\Console\Launcher\Command\SelfUpdate;
+use Drupal\Console\Launcher\Command\SelfUpdateCommand;
 
 set_time_limit(0);
 
@@ -61,8 +61,8 @@ $drupalRoot = $drupalFinder->getDrupalRoot();
 $isValidDrupal = ($composerRoot && $drupalRoot)?true:false;
 
 if ($command === 'self-update' || $command === 'selfupdate') {
-    $selfUpdate = new SelfUpdate();
-    $selfUpdate->run($version, $isValidDrupal, $composerRoot);
+    $selfUpdateCommand = new SelfUpdateCommand();
+    $selfUpdateCommand->run($version, $isValidDrupal, $composerRoot);
 }
 
 if ($isValidDrupal) {
