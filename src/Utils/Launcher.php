@@ -20,7 +20,11 @@ class Launcher
     {
         $composerRoot = $drupalFinder->getComposerRoot();
         chdir($composerRoot);
-        $vendorDir = str_replace($composerRoot .'/', '', $drupalFinder->getVendorDir()) . '/';
+        $vendorDir = str_replace(
+            $composerRoot .'/',
+            '',
+            $drupalFinder->getVendorDir()
+        );
 
         $drupal = $composerRoot.'/'.$vendorDir.'/drupal/console/bin/drupal';
         if (!file_exists($drupal)) {
