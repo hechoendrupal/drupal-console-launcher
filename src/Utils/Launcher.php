@@ -19,28 +19,15 @@ class Launcher
     public function launch(DrupalFinder $drupalFinder)
     {
         $root = $drupalFinder->getComposerRoot();
-
         chdir($root);
+        $vendorDir = str_replace($root .'/', '', $drupalFinder->getVendorDir()) . '/';
 
-        $vendorDir = 'vendor/';
-        $json = json_decode(
-            file_get_contents(getcwd() . '/composer.json'),
-            true
-        );
-        if (is_array($json) && isset($json['config']['vendor-dir'])) {
-            $vendorDir = $json['config']['vendor-dir'];
-        }
-
-        /* drupal executable */
         $drupal = $root.'/'.$vendorDir.'/drupal/console/bin/drupal';
-
         if (!file_exists($drupal)) {
             return false;
         }
 
-        $argv = $this->readArgv();
-
-        pcntl_exec($vendorDir.'/bin/drupal', $argv);
+        pcntl_exec($vendorDir.'/bin/drupal', $this->readArgv());
 
         return true;
     }
