@@ -18,11 +18,15 @@ class Launcher
      */
     public function launch(DrupalFinder $drupalFinder)
     {
-        $root = $drupalFinder->getComposerRoot();
-        chdir($root);
-        $vendorDir = str_replace($root .'/', '', $drupalFinder->getVendorDir()) . '/';
+        $composerRoot = $drupalFinder->getComposerRoot();
+        chdir($composerRoot);
+        $vendorDir = str_replace(
+            $composerRoot .'/',
+            '',
+            $drupalFinder->getVendorDir()
+        );
 
-        $drupal = $root.'/'.$vendorDir.'/drupal/console/bin/drupal';
+        $drupal = $composerRoot.'/'.$vendorDir.'/drupal/console/bin/drupal';
         if (!file_exists($drupal)) {
             return false;
         }
