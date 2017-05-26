@@ -28,7 +28,7 @@ $root = getcwd();
 $source = null;
 $target = null;
 $command = null;
-$version = '1.0.0-rc19';
+$version = '1.0.0-rc20';
 $showVersion = false;
 $debug = false;
 
