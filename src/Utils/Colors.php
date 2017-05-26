@@ -20,6 +20,7 @@ class Colors
     const YELLOW = "\033[1;33m";
     const LIGHT_GRAY = "\033[0;37m";
     const WHITE = "\033[1;37m";
+    const NONE = "\033[0m";
 
     const BG_BLACK = "\033[40m";
     const BG_RED = "\033[41m";

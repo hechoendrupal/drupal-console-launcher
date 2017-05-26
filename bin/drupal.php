@@ -48,10 +48,10 @@ foreach ($argv as $value) {
     }
 }
 if ($showVersion || $debug) {
-    echo Colors::LIGHT_GREEN . 'Drupal Console Launcher' . Colors::WHITE . ' version ' . Colors::YELLOW . $version . Colors::WHITE . PHP_EOL;
+    echo Colors::LIGHT_GREEN . 'Drupal Console Launcher' . Colors::NONE . ' version ' . Colors::YELLOW . $version . Colors::NONE . PHP_EOL;
 }
 if ($debug) {
-    echo Colors::LIGHT_GREEN . 'Path: ' . Colors::YELLOW . $argv[0] . Colors::WHITE . PHP_EOL . PHP_EOL;
+    echo Colors::LIGHT_GREEN . 'Path: ' . Colors::YELLOW . $argv[0] . Colors::NONE . PHP_EOL . PHP_EOL;
 }
 
 $drupalFinder = new DrupalFinder();
