@@ -31,9 +31,21 @@ class Launcher
             return false;
         }
 
-        pcntl_exec($vendorDir.'/bin/drupal', $this->readArgv());
+        $this->exec($vendorDir.'/bin/drupal', $this->readArgv());
 
         return true;
+    }
+
+    private function exec($binary, $arguments) {
+        if (function_exists("pcntl_exec") && extension_loaded('pcntl')) {
+            pcntl_exec($binary, $arguments);
+            exit(0);
+        }
+        else {
+            $cli  = $binary . ' ' . implode(' ', $arguments);
+            passthru($cli, $status_code);
+            exit($status_code);
+        }
     }
 
     private function readArgv()
