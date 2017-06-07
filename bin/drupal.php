@@ -28,7 +28,7 @@ $root = getcwd();
 $source = null;
 $target = null;
 $command = null;
-$version = '1.0.0-rc20';
+$version = '1.0.0-rc21';
 $showVersion = false;
 $debug = false;
 
@@ -47,6 +47,7 @@ foreach ($argv as $value) {
         $debug = true;
     }
 }
+
 if ($showVersion || $debug) {
     echo Colors::GREEN . 'Drupal Console Launcher' . Colors::NONE . ' version ' . Colors::YELLOW . $version . Colors::NONE . PHP_EOL;
 }
