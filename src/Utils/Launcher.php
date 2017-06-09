@@ -2,6 +2,8 @@
 
 namespace Drupal\Console\Launcher\Utils;
 
+use DrupalFinder\DrupalFinder;
+
 /**
  * Class Launcher
  *
@@ -10,16 +12,14 @@ namespace Drupal\Console\Launcher\Utils;
 class Launcher
 {
     /**
-     * @param $root
+     * @param $drupalFinder
      *
      * @return bool
      */
-    public function launch($root)
+    public function launch(DrupalFinder $drupalFinder)
     {
-        chdir($root);
-
-        /* drupal executable */
-        $drupal = $root.'/vendor/drupal/console/bin/drupal';
+        chdir($drupalFinder->getComposerRoot());
+        $drupal = $drupalFinder->getVendorDir() . '/drupal/console/bin/drupal';
 
         if (!file_exists($drupal)) {
             return false;
