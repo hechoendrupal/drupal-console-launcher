@@ -1,10 +1,5 @@
 <?php
 
-//use DrupalFinder\DrupalFinder;
-use Drupal\Console\Launcher\Utils\Colors;
-use Drupal\Console\Launcher\Utils\Launcher;
-use Drupal\Console\Launcher\Command\SelfUpdateCommand;
-
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -18,24 +13,18 @@ use Drupal\Console\Core\Utils\DrupalFinder;
 
 set_time_limit(0);
 
-$autoloaders = [
-    __DIR__ . '/../../../autoload.php',
-    __DIR__ . '/../vendor/autoload.php'
-];
-foreach ($autoloaders as $file) {
-    if (file_exists($file)) {
-        $autoloader = $file;
-        break;
-    }
-}
-if (isset($autoloader)) {
-    include_once $autoloader;
+$pharRoot = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR;
+$pharAutoload = $pharRoot.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
+
+if (file_exists($pharAutoload)) {
+    $autoload = include_once $pharAutoload;
 } else {
-    echo 'You must set up the project dependencies using `composer install`' . PHP_EOL;
+    echo ' Something is wrong with your drupal.phar archive.'.PHP_EOL.
+        ' Try downloading again by executing from your terminal:'.PHP_EOL.
+        ' curl https://drupalconsole.com/installer -L -o drupal.phar'.PHP_EOL;
     exit(1);
 }
 
-$pharRoot = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR;
 $argvInputReader = new ArgvInputReader();
 $target = $argvInputReader->get('target', null);
 $root = $argvInputReader->get('root', getcwd());
