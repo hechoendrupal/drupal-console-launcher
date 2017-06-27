@@ -40,8 +40,8 @@
         "drupal/console-core": "dev-master",
         "padraic/phar-updater": "~1.0@dev",
         "phpseclib/phpseclib": "2.*",
-        "pwfisher/command-line-php": "dev-master",
-        "webflo/drupal-finder": "0.*"
+        "pwfisher/command-line-php": "dev-master#ce756a94efa3544b56d03a02d3634a8d969ee962",
+        "webflo/drupal-finder": "^0.3.0"
     },
     "bin": ["bin/drupal"],
     "config": {
