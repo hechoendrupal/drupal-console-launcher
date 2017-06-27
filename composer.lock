@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b34789a7424e1ccce30f23f1fbb85825",
+    "content-hash": "3c603f4734daf201875054c0bc617ded",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -238,21 +238,21 @@
         },
         {
             "name": "drupal/console-core",
-            "version": "1.0.0-rc22",
+            "version": "1.0.0-rc23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hechoendrupal/drupal-console-core.git",
-                "reference": "e67dbb4d1fe98d3f44ba915316c689e1bdeb4cb3"
+                "reference": "b1f3680ae19a4d00f8b701b060521bab2cccd6b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-core/zipball/e67dbb4d1fe98d3f44ba915316c689e1bdeb4cb3",
-                "reference": "e67dbb4d1fe98d3f44ba915316c689e1bdeb4cb3",
+                "url": "https://api.github.com/repos/hechoendrupal/drupal-console-core/zipball/b1f3680ae19a4d00f8b701b060521bab2cccd6b1",
+                "reference": "b1f3680ae19a4d00f8b701b060521bab2cccd6b1",
                 "shasum": ""
             },
             "require": {
                 "dflydev/dot-access-configuration": "1.0.1",
-                "drupal/console-en": "1.0.0-rc22",
+                "drupal/console-en": "1.0.0-rc23",
                 "php": "^5.5.9 || ^7.0",
                 "stecman/symfony-console-completion": "~0.7",
                 "symfony/config": "~2.8",
@@ -315,11 +315,11 @@
                 "drupal",
                 "symfony"
             ],
-            "time": "2017-06-27T05:56:52+00:00"
+            "time": "2017-06-27T09:16:56+00:00"
         },
         {
             "name": "drupal/console-en",
-            "version": "1.0.0-rc22",
+            "version": "1.0.0-rc23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hechoendrupal/drupal-console-en.git",
