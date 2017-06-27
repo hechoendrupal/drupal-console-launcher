@@ -6,6 +6,7 @@
     ],
     "files": [
         "LICENSE.txt",
+        "services.yml",
         "bin/drupal.php",
         "vendor/autoload.php"
     ],
