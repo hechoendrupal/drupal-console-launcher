@@ -37,13 +37,16 @@
     },
     "require": {
         "php": "^5.5.9 || ^7.0",
-        "webflo/drupal-finder": "0.*",
+        "drupal/console-core": "dev-master",
         "padraic/phar-updater": "~1.0@dev",
-        "phpseclib/phpseclib": "2.*"
+        "phpseclib/phpseclib": "2.*",
+        "pwfisher/command-line-php": "dev-master",
+        "webflo/drupal-finder": "0.*"
     },
     "bin": ["bin/drupal"],
     "config": {
-        "bin-dir": "bin/"
+        "bin-dir": "bin/",
+        "sort-packages": true
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

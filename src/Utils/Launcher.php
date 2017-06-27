@@ -2,7 +2,7 @@
 
 namespace Drupal\Console\Launcher\Utils;
 
-use DrupalFinder\DrupalFinder;
+use Drupal\Console\Core\Utils\DrupalFinder;
 
 /**
  * Class Launcher
@@ -18,6 +18,8 @@ class Launcher
      */
     public function launch(DrupalFinder $drupalFinder)
     {
+        $args = \CommandLine::parseArgs($_SERVER['argv']);
+
         chdir($drupalFinder->getComposerRoot());
         $drupal = $drupalFinder->getVendorDir() . '/drupal/console/bin/drupal';
 
@@ -25,9 +27,27 @@ class Launcher
             return false;
         }
 
-        $drupal = realpath($drupal).'.php';
+        $command = $drupal;
+        foreach ($args as $key => $value) {
+            if (is_numeric($key)) {
+                $command .= ' ' . $value;
+                continue;
+            }
+            if (is_bool($value)) {
+                $command .=  ' --'.$key;
+                continue;
+            }
+            $command .=  ' --'.$key.'=\''.$value . '\'';
+        }
 
-        include_once $drupal;
+        $process = proc_open(
+            $command,
+            [0 => STDIN, 1 => STDOUT, 2 => STDERR],
+            $pipes,
+            $drupalFinder->getComposerRoot()
+        );
+
+        proc_close($process);
 
         return true;
     }

@@ -4,7 +4,7 @@
  * Contains \Drupal\Console\Command\Self\ManifestStrategy.
  */
 
-namespace Drupal\Console\Launcher\Utils;
+namespace Drupal\Console\Launcher\Command\Self;
 
 use Humbug\SelfUpdate\Exception\HttpRequestException;
 use Humbug\SelfUpdate\Exception\JsonParsingException;
