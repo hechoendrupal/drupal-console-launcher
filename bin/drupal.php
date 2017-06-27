@@ -28,6 +28,8 @@ if (file_exists($pharAutoload)) {
 $argvInputReader = new ArgvInputReader();
 $target = $argvInputReader->get('target', null);
 $root = $argvInputReader->get('root', getcwd());
+$debug = $argvInputReader->get('debug', false);
+$command = $argvInputReader->get('command', false);
 
 $drupalFinder = new DrupalFinder();
 $drupalFinder->locateRoot($root);
@@ -76,6 +78,25 @@ if ($argvInputReader->get('remote', false)) {
     );
 
     exit($remoteSuccess?0:1);
+}
+
+if ($debug || ($isValidDrupal && $command == 'list')) {
+    $io->writeln(
+        sprintf(
+            '<info>%s</info> version <comment>%s</comment>',
+            Application::NAME,
+            Application::VERSION
+        )
+    );
+}
+
+if ($debug) {
+    $io->writeln(
+        sprintf(
+            '<info>Launcher path:</info> <comment>%s</comment>',
+            $argv[0]
+        )
+    );
 }
 
 if ($isValidDrupal) {
