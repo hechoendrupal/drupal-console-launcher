@@ -28,7 +28,17 @@ class Launcher
         }
 
         $command = $drupal;
+        $skipOptionKeys = [
+            'uri',
+            'target',
+            'root'
+        ];
         foreach ($args as $key => $value) {
+
+            if ($key !== 0 && in_array($key, $skipOptionKeys)) {
+                continue;
+            }
+
             if (is_numeric($key)) {
                 $command .= ' ' . $value;
                 continue;
