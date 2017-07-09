@@ -29,7 +29,6 @@ class Launcher
 
         $command = $drupal;
         $skipOptionKeys = [
-            'uri',
             'target',
             'root'
         ];
@@ -47,7 +46,13 @@ class Launcher
                 $command .=  ' --'.$key;
                 continue;
             }
-            $command .=  ' --'.$key.'=\''.$value . '\'';
+            $argv = '--'.$key.'=\''.$value . '\'';
+
+            if ($argv === "--uri='http://default'") {
+                continue;
+            }
+
+            $command .= ' ' .$argv;
         }
 
         $process = proc_open(
