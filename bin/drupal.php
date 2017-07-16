@@ -12,6 +12,7 @@ use Drupal\Console\Launcher\Utils\Remote;
 use Drupal\Console\Core\Utils\DrupalFinder;
 
 set_time_limit(0);
+error_reporting(-1);
 
 $pharRoot = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR;
 $pharAutoload = $pharRoot.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
