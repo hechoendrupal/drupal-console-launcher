@@ -8,7 +8,8 @@ use Drupal\Console\Launcher\Application;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Core\Utils\ArgvInputReader;
 use Drupal\Console\Core\Utils\ConfigurationManager;
-use Drupal\Console\Launcher\Utils\Remote;
+use Drupal\Console\Launcher\Utils\Server;
+use Drupal\Console\Launcher\Utils\RemoteProcess;
 use Drupal\Console\Core\Utils\DrupalFinder;
 
 set_time_limit(0);
@@ -62,23 +63,13 @@ $output = new ConsoleOutput();
 $input = new ArrayInput([]);
 $io = new DrupalStyle($input, $output);
 
-if ($argvInputReader->get('remote', false)) {
-    $commandInput = new ArgvInput();
-
-    /* @var Remote $remote */
-    $remote = $container->get('console.remote');
-    $commandName = $argvInputReader->get('command', false);
-
-    $remoteSuccess = $remote->executeCommand(
-        $io,
-        $commandName,
-        $target,
-        $targetConfig,
-        $commandInput->__toString(),
-        $configurationManager->getHomeDirectory()
-    );
-
-    exit($remoteSuccess?0:1);
+if ($target = $argvInputReader->get('target')) {
+    $configurationManager->loadConfiguration($drupalFinder->getComposerRoot());
+    $configurationManager->getSites();
+    $options = $configurationManager->readTarget($target);
+    if ($options && $options['remote']) {
+        exit((new RemoteProcess(new Server($options)))->run('list')->getExitCode());
+    }
 }
 
 if ($debug || ($isValidDrupal && $command == 'list')) {
