@@ -18,8 +18,7 @@ class Launcher
      */
     public function launch(DrupalFinder $drupalFinder)
     {
-        $args = \CommandLine::parseArgs($_SERVER['argv']);
-
+        
         chdir($drupalFinder->getComposerRoot());
         $drupal = $drupalFinder->getVendorDir() . '/drupal/console/bin/drupal';
 
@@ -27,33 +26,12 @@ class Launcher
             return false;
         }
 
-        $command = $drupal;
         $skipOptionKeys = [
             'target',
             'root'
         ];
-        foreach ($args as $key => $value) {
-
-            if ($key !== 0 && in_array($key, $skipOptionKeys)) {
-                continue;
-            }
-
-            if (is_numeric($key)) {
-                $command .= ' ' . $value;
-                continue;
-            }
-            if (is_bool($value)) {
-                $command .=  ' --'.$key;
-                continue;
-            }
-            $argv = '--'.$key.'=\''.$value . '\'';
-
-            if ($argv === "--uri='http://default'") {
-                continue;
-            }
-
-            $command .= ' ' .$argv;
-        }
+        $args = (new ParseArguments())->parse($skipOptionKeys);
+        $command = $drupal . $args;
 
         $process = proc_open(
             $command,
