@@ -18,9 +18,11 @@ use Symfony\Component\Process\Process;
 class RemoteProcess {
 
     private $Server;
+    private $output;
 
     public function __construct(Server $Server) {
         $this->Server = $Server;
+        $this->output = '';
     }
 
     public function run($command) {
@@ -34,11 +36,15 @@ class RemoteProcess {
         $process->start();
         $process->wait(function ($type, $buffer) {
             if (Process::ERR === $type) {
-                echo($buffer);
+                $this->output .= $buffer;
             } else {
-                echo($buffer);
+                $this->output .= $buffer;
             }
         });
         return $process;
+    }
+
+    public function getOutput() {
+        return $this->output;
     }
 }
