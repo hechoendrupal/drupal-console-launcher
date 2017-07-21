@@ -1,15 +1,17 @@
 <?php
 
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Input\ArgvInput;
-use Symfony\Component\Console\Output\ConsoleOutput;
 use Drupal\Console\Core\Bootstrap\DrupalConsoleCore;
-use Drupal\Console\Launcher\Application;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Core\Utils\ArgvInputReader;
 use Drupal\Console\Core\Utils\ConfigurationManager;
-use Drupal\Console\Launcher\Utils\Remote;
 use Drupal\Console\Core\Utils\DrupalFinder;
+use Drupal\Console\Launcher\Application;
+use Drupal\Console\Launcher\Utils\ParseArguments;
+use Drupal\Console\Launcher\Utils\RemoteProcess;
+use Drupal\Console\Launcher\Utils\Server;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\ConsoleOutput;
 
 set_time_limit(0);
 error_reporting(-1);
@@ -62,23 +64,22 @@ $output = new ConsoleOutput();
 $input = new ArrayInput([]);
 $io = new DrupalStyle($input, $output);
 
-if ($argvInputReader->get('remote', false)) {
-    $commandInput = new ArgvInput();
-
-    /* @var Remote $remote */
-    $remote = $container->get('console.remote');
-    $commandName = $argvInputReader->get('command', false);
-
-    $remoteSuccess = $remote->executeCommand(
-        $io,
-        $commandName,
-        $target,
-        $targetConfig,
-        $commandInput->__toString(),
-        $configurationManager->getHomeDirectory()
-    );
-
-    exit($remoteSuccess?0:1);
+if ($target = $argvInputReader->get('target')) {
+    $skipOptionKeys = [
+        'target',
+        'root'
+    ];
+    $args = (new ParseArguments())->parse($skipOptionKeys);
+    $configurationManager->loadConfiguration($drupalFinder->getComposerRoot());
+    $configurationManager->getSites();
+    $options = $configurationManager->readTarget($target);
+    if ($options && $options['remote']) {
+        $remote = new RemoteProcess(new Server($options));
+        $process = $remote->run($args);
+        $status = $process->getExitCode();
+        echo (substr($remote->getOutput(), 0, -50)); // hack to remove clear after close connection
+        exit($status);
+    }
 }
 
 if ($debug || ($isValidDrupal && $command == 'list')) {
