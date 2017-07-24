@@ -6,8 +6,8 @@ use Drupal\Console\Core\Utils\ArgvInputReader;
 use Drupal\Console\Core\Utils\ConfigurationManager;
 use Drupal\Console\Core\Utils\DrupalFinder;
 use Drupal\Console\Launcher\Application;
-use Drupal\Console\Launcher\Utils\ParseArguments;
-use Drupal\Console\Launcher\Utils\RemoteProcess;
+use Drupal\Console\Launcher\Utils\LauncherRemote;
+
 use Drupal\Console\Launcher\Utils\Server;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -65,20 +65,19 @@ $input = new ArrayInput([]);
 $io = new DrupalStyle($input, $output);
 
 if ($target = $argvInputReader->get('target')) {
-    $skipOptionKeys = [
-        'target',
-        'root'
-    ];
-    $args = (new ParseArguments())->parse($skipOptionKeys);
     $configurationManager->loadConfiguration($drupalFinder->getComposerRoot());
     $configurationManager->getSites();
     $options = $configurationManager->readTarget($target);
-    if ($options && $options['remote']) {
-        $remote = new RemoteProcess(new Server($options));
-        $process = $remote->run($args);
-        $status = $process->getExitCode();
-        echo (substr($remote->getOutput(), 0, -50)); // hack to remove clear after close connection
-        exit($status);
+    if ($options && isset($options['remote'])) {
+        $launcherRemote = $container->get('console.launcher_remote');
+        $launch = $launcherRemote->launch($options, $command);
+        exit(0);
+    } else {
+        // @TODO fix and launch local drupal
+        $root = $options['root'];
+        $drupalFinder = new DrupalFinder();
+        $drupalFinder->locateRoot($root);
+        $isValidDrupal = ($composerRoot && $drupalRoot);
     }
 }
 
