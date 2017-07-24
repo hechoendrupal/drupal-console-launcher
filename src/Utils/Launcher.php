@@ -18,7 +18,6 @@ class Launcher
      */
     public function launch(DrupalFinder $drupalFinder)
     {
-        
         chdir($drupalFinder->getComposerRoot());
         $drupal = $drupalFinder->getVendorDir() . '/drupal/console/bin/drupal';
 
