@@ -8,7 +8,6 @@ use Drupal\Console\Core\Utils\DrupalFinder;
 use Drupal\Console\Launcher\Application;
 use Drupal\Console\Launcher\Utils\LauncherRemote;
 
-use Drupal\Console\Launcher\Utils\Server;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
