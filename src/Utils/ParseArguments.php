@@ -14,10 +14,8 @@ namespace Drupal\Console\Launcher\Utils;
  */
 class ParseArguments
 {
-
     public function __construct()
     {
-
     }
 
     public function parse($skipOptionKeys)
@@ -25,7 +23,6 @@ class ParseArguments
         $args      = \CommandLine::parseArgs($_SERVER['argv']);
         $parseArgs = '';
         foreach ($args as $key => $value) {
-
             if ($key !== 0 && in_array($key, $skipOptionKeys)) {
                 continue;
             }
