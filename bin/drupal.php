@@ -7,7 +7,7 @@ use Drupal\Console\Core\Utils\ConfigurationManager;
 use Drupal\Console\Core\Utils\DrupalFinder;
 use Drupal\Console\Launcher\Application;
 use Drupal\Console\Launcher\Utils\LauncherRemote;
-use Drupal\Console\Launcher\Utils\Server;
+
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -76,7 +76,7 @@ if ($target = $argvInputReader->get('target')) {
         $root = $options['root'];
         $drupalFinder = new DrupalFinder();
         $drupalFinder->locateRoot($root);
-        $isValidDrupal = ($composerRoot && $drupalRoot)?true:false;
+        $isValidDrupal = ($composerRoot && $drupalRoot);
     }
 }
 
