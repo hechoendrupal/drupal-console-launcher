@@ -42,7 +42,7 @@ class LauncherRemote
         return true;
     }
 
-    public function getSshConnectionString($options)
+    private function getSshConnectionString($options)
     {
         return sprintf(
             'ssh -A -tt %s%s%s',
