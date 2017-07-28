@@ -37,9 +37,8 @@
     },
     "require": {
         "php": "^5.5.9 || ^7.0",
-        "drupal/console-core": "1.0.0-rc25",
+        "drupal/console-core": "1.0.0-rc26",
         "padraic/phar-updater": "~1.0@dev",
-        "phpseclib/phpseclib": "2.*",
         "pwfisher/command-line-php": "dev-master#ce756a94efa3544b56d03a02d3634a8d969ee962"
     },
     "bin": ["bin/drupal"],
