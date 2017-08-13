@@ -15,11 +15,21 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 set_time_limit(0);
 error_reporting(-1);
 
-$pharRoot = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR;
-$pharAutoload = $pharRoot.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
+$autoloaders = [
+    dirname(__DIR__, 1) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php',
+    dirname(__DIR__, 3) . DIRECTORY_SEPARATOR . 'autoload.php',
+];
 
-if (file_exists($pharAutoload)) {
-    $autoload = include_once $pharAutoload;
+foreach ($autoloaders as $file) {
+    if (file_exists($file)) {
+        $autoloader = $file;
+        break;
+    }
+}
+
+if (isset($autoloader)) {
+    $autoload = include_once $autoloader;
+    $launcherRoot = dirname($autoloader, 2);
 } else {
     echo ' Something is wrong with your drupal.phar archive.'.PHP_EOL.
         ' Try downloading again by executing from your terminal:'.PHP_EOL.
@@ -39,7 +49,7 @@ $composerRoot = $drupalFinder->getComposerRoot();
 $drupalRoot = $drupalFinder->getDrupalRoot();
 $isValidDrupal = ($composerRoot && $drupalRoot)?true:false;
 
-$drupalConsole = new DrupalConsoleCore($pharRoot);
+$drupalConsole = new DrupalConsoleCore($launcherRoot);
 $container = $drupalConsole->boot();
 
 /* @var ConfigurationManager  $configurationManager */
