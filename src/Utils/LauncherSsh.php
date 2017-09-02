@@ -12,21 +12,15 @@ namespace Drupal\Console\Launcher\Utils;
  *
  * @package Drupal\Console\Core\Utils
  */
-class LauncherRemote
+class LauncherSsh extends Launcher
 {
     public function launch($options)
     {
-        $skipOptionKeys = [
-            'target',
-            'root'
-        ];
-        $args = (new ParseArguments())->parse($skipOptionKeys);
-
         $command = sprintf(
-            '%s/vendor/bin/drupal --root=%s %s && exit',
+            '%s/vendor/drupal/console/bin/drupal --root=%s %s',
             $options['root'],
             $options['root'],
-            $args
+            $this->parseArguments()
         );
 
         $command = $this->getSshConnectionString($options) . ' ' . $command;
@@ -44,11 +38,19 @@ class LauncherRemote
 
     private function getSshConnectionString($options)
     {
-        return sprintf(
-            'ssh -A -tt %s%s%s',
+        $extraOptions = null;
+        if (array_key_exists('extra-options', $options)) {
+            $extraOptions = ' ' . $options['extra-options'] . ' ';
+        }
+
+        $ssh = sprintf(
+            'ssh -A -tt %s%s%s%s',
             $options['user'] ? : '',
             $options['user'] ? '@' . $options['host'] : $options['host'],
-            $options['port'] ? ' -p ' . $options['port'] : ''
+            $options['port'] ? ' -p ' . $options['port'] : '22',
+            $extraOptions?:''
         );
+
+        return $ssh;
     }
 }
