@@ -69,7 +69,7 @@ if ($target = $argvInputReader->get('target')) {
             $launcherType = 'console.launcher_' . $options['type'];
             if ($container->has($launcherType)) {
                 $launcher = $container->get($launcherType);
-                $launch = $launcher->launch($options, $command);
+                $launch = $launcher->launch($options);
                 exit(0);
             }
         }
