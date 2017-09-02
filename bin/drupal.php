@@ -110,7 +110,7 @@ if ($isValidDrupal) {
     if (!$launch) {
         $message = sprintf(
             $translator->trans('application.site.errors.not-installed'),
-            $argvInputReader->get('root')
+            PHP_EOL . $drupalFinder->getComposerRoot()
         );
         $io->error($message);
 
@@ -119,7 +119,7 @@ if ($isValidDrupal) {
         );
 
         $io->commentBlock(
-            $configuration->get('application.composer.install-console')
+            'composer require drupal/console:~1.0 --prefer-dist --optimize-autoloader'
         );
 
         exit(1);
