@@ -130,5 +130,4 @@ if ($isValidDrupal) {
 
 $argvInputReader->restoreOriginalArgvValues();
 $application = new Application($container);
-$application->setDefaultCommand('about');
 $application->run();
