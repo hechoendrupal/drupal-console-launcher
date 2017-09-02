@@ -6,9 +6,6 @@ use Drupal\Console\Core\Utils\ArgvInputReader;
 use Drupal\Console\Core\Utils\ConfigurationManager;
 use Drupal\Console\Core\Utils\DrupalFinder;
 use Drupal\Console\Launcher\Application;
-use Drupal\Console\Launcher\Utils\LauncherRemote;
-
-use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
@@ -67,16 +64,23 @@ if ($target = $argvInputReader->get('target')) {
     $configurationManager->loadConfiguration($drupalFinder->getComposerRoot());
     $configurationManager->getSites();
     $options = $configurationManager->readTarget($target);
-    if ($options && isset($options['remote'])) {
-        $launcherRemote = $container->get('console.launcher_remote');
-        $launch = $launcherRemote->launch($options, $command);
-        exit(0);
-    } else {
-        // @TODO fix and launch local drupal
-        $root = $options['root'];
-        $drupalFinder = new DrupalFinder();
-        $drupalFinder->locateRoot($root);
-        $isValidDrupal = ($composerRoot && $drupalRoot);
+    if ($options) {
+        if ($options['type'] != 'local') {
+            $launcherType = 'console.launcher_' . $options['type'];
+            if ($container->has($launcherType)) {
+                $launcher = $container->get($launcherType);
+                $launch = $launcher->launch($options);
+                exit(0);
+            }
+        }
+        else {
+            $root = $options['root'];
+            $drupalFinder = new DrupalFinder();
+            $drupalFinder->locateRoot($root);
+            $composerRoot = $drupalFinder->getComposerRoot();
+            $drupalRoot = $drupalFinder->getDrupalRoot();
+            $isValidDrupal = ($composerRoot && $drupalRoot)?true:false;
+        }
     }
 }
 
@@ -100,8 +104,8 @@ if ($debug) {
 }
 
 if ($isValidDrupal) {
-    $drupalConsoleLauncher = $container->get('console.launcher');
-    $launch = $drupalConsoleLauncher->launch($drupalFinder);
+    $launcher = $container->get('console.launcher_local');
+    $launch = $launcher->launch($drupalFinder);
 
     if (!$launch) {
         $message = sprintf(
