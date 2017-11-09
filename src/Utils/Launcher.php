@@ -7,6 +7,8 @@
 
 namespace Drupal\Console\Launcher\Utils;
 
+use Symfony\Component\Console\Input\ArgvInput;
+
 /**
  * Class LauncherRemote
  *
@@ -31,6 +33,18 @@ abstract class Launcher
         } else {
             $skipOptionKeys = $this->skipOptionKeys;
         }
-        return (new ParseArguments())->parse($skipOptionKeys);
+
+        $argvInput = new ArgvInput();
+        $returnAsString = $argvInput->__toString();
+
+        foreach ($skipOptionKeys as $option) {
+            $returnAsString = preg_replace(
+                '/--'.$option.'=(\')(.*?)(\')/',
+                '',
+                $returnAsString
+            );
+        }
+
+        return ' ' . $returnAsString;
     }
 }
