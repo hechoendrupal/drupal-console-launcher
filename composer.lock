@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "aa1772c87fd9ca2d60372e1709c14d20",
+    "content-hash": "e885b498ff8a5e71a23718052383ca07",
     "packages": [
         {
             "name": "dflydev/dot-access-configuration",
@@ -516,47 +516,6 @@
                 "psr-3"
             ],
             "time": "2016-10-10T12:19:37+00:00"
-        },
-        {
-            "name": "pwfisher/command-line-php",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/pwfisher/CommandLine.php.git",
-                "reference": "ce756a94efa3544b56d03a02d3634a8d969ee962"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/pwfisher/CommandLine.php/zipball/ce756a94efa3544b56d03a02d3634a8d969ee962",
-                "reference": "ce756a94efa3544b56d03a02d3634a8d969ee962",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "CommandLine.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "CC-BY-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Patrick Fisher",
-                    "email": "patrick@pwfisher.com"
-                }
-            ],
-            "description": "PHP Command Line interface class. Provides friendly and flexible CLI argument parsing.",
-            "keywords": [
-                "cli",
-                "parser",
-                "parsing"
-            ],
-            "time": "2014-09-23 01:07:11"
         },
         {
             "name": "stecman/symfony-console-completion",
@@ -1451,8 +1410,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "padraic/phar-updater": 20,
-        "pwfisher/command-line-php": 20
+        "padraic/phar-updater": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
