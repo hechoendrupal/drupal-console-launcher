@@ -72,8 +72,7 @@ if ($target = $argvInputReader->get('target')) {
                 $launch = $launcher->launch($options);
                 exit(0);
             }
-        }
-        else {
+        } else {
             $root = $options['root'];
             $drupalFinder = new DrupalFinder();
             $drupalFinder->locateRoot($root);
