@@ -36,7 +36,7 @@ $composerRoot = $drupalFinder->getComposerRoot();
 $drupalRoot = $drupalFinder->getDrupalRoot();
 $isValidDrupal = ($composerRoot && $drupalRoot)?true:false;
 
-$drupalConsole = new DrupalConsoleCore($pharRoot);
+$drupalConsole = new DrupalConsoleCore($pharRoot, null, $drupalFinder);
 $container = $drupalConsole->boot();
 
 /* @var ConfigurationManager  $configurationManager */
