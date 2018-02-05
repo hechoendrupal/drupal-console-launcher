@@ -104,9 +104,9 @@ if ($debug) {
 
 if ($isValidDrupal) {
     $launcher = $container->get('console.launcher_local');
-    $launch = $launcher->launch($drupalFinder);
+    $exitcode = $launcher->launch($drupalFinder);
 
-    if (!$launch) {
+    if ($exitcode === FALSE) {
         $message = sprintf(
             $translator->trans('application.site.errors.not-installed'),
             PHP_EOL . $drupalFinder->getComposerRoot()
@@ -124,7 +124,7 @@ if ($isValidDrupal) {
         exit(1);
     }
 
-    exit(0);
+    exit($exitcode);
 }
 
 $argvInputReader->restoreOriginalArgvValues();
