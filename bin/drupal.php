@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 set_time_limit(0);
 error_reporting(-1);
 
-$pharRoot = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR;
+$pharRoot = dirname(__DIR__).DIRECTORY_SEPARATOR;
 $pharAutoload = $pharRoot.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
 
 if (file_exists($pharAutoload)) {
