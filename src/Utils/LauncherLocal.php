@@ -34,8 +34,11 @@ class LauncherLocal extends Launcher
             $drupalFinder->getComposerRoot()
         );
 
-        proc_close($process);
+        // If process was successful, we'll return it's exitcode to propagate
+        if ($process) {
+          return proc_close($process);
+        }
 
-        return true;
+        return false;
     }
 }
