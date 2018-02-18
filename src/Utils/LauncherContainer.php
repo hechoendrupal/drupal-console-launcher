@@ -7,6 +7,10 @@ namespace Drupal\Console\Launcher\Utils;
  *
  * @package Drupal\Console\Launcher\Utils
  */
+/**
+ * Class LauncherContainer
+ * @package Drupal\Console\Launcher\Utils
+ */
 class LauncherContainer extends Launcher
 {
     /**
@@ -31,8 +35,11 @@ class LauncherContainer extends Launcher
             $pipes
         );
 
-        proc_close($process);
+        // If process was successful, we'll return it's exit code to propagate
+        if ($process) {
+            return proc_close($process);
+        }
 
-        return true;
+        return false;
     }
 }

@@ -12,8 +12,16 @@ namespace Drupal\Console\Launcher\Utils;
  *
  * @package Drupal\Console\Core\Utils
  */
+/**
+ * Class LauncherSsh
+ * @package Drupal\Console\Launcher\Utils
+ */
 class LauncherSsh extends Launcher
 {
+    /**
+     * @param $options
+     * @return bool
+     */
     public function launch($options)
     {
         $command = sprintf(
@@ -31,11 +39,18 @@ class LauncherSsh extends Launcher
             $pipes
         );
 
-        proc_close($process);
+        // If process was successful, we'll return it's exit code to propagate
+        if ($process) {
+            return proc_close($process);
+        }
 
-        return true;
+        return false;
     }
 
+    /**
+     * @param $options
+     * @return string
+     */
     private function getSshConnectionString($options)
     {
         $extraOptions = null;

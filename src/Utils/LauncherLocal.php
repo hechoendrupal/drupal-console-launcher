@@ -12,7 +12,7 @@ use Drupal\Console\Core\Utils\DrupalFinder;
 class LauncherLocal extends Launcher
 {
     /**
-     * @param $drupalFinder
+     * @param $drupalFinder DrupalFinder
      *
      * @return bool
      */
@@ -34,7 +34,7 @@ class LauncherLocal extends Launcher
             $drupalFinder->getComposerRoot()
         );
 
-        // If process was successful, we'll return it's exitcode to propagate
+        // If process was successful, we'll return it's exit code to propagate
         if ($process) {
           return proc_close($process);
         }

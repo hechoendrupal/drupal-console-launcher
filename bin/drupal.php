@@ -4,6 +4,7 @@ use Drupal\Console\Core\Bootstrap\DrupalConsoleCore;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Core\Utils\ArgvInputReader;
 use Drupal\Console\Core\Utils\ConfigurationManager;
+use Drupal\Console\Core\Utils\TranslatorManager;
 use Drupal\Console\Core\Utils\DrupalFinder;
 use Drupal\Console\Launcher\Application;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -24,6 +25,16 @@ if (file_exists($pharAutoload)) {
     exit(1);
 }
 
+$launcherType = [
+    'local' => new Drupal\Console\Launcher\Utils\LauncherLocal(),
+    'ssh' => new Drupal\Console\Launcher\Utils\LauncherSsh(),
+    'container' => new Drupal\Console\Launcher\Utils\LauncherContainer()
+];
+
+$output = new ConsoleOutput();
+$input = new ArrayInput([]);
+$io = new DrupalStyle($input, $output);
+
 $argvInputReader = new ArgvInputReader();
 $target = $argvInputReader->get('target', null);
 $root = $argvInputReader->get('root', getcwd());
@@ -34,56 +45,32 @@ $drupalFinder = new DrupalFinder();
 $drupalFinder->locateRoot($root);
 $composerRoot = $drupalFinder->getComposerRoot();
 $drupalRoot = $drupalFinder->getDrupalRoot();
-$isValidDrupal = ($composerRoot && $drupalRoot)?true:false;
 
-$drupalConsole = new DrupalConsoleCore($pharRoot, null, $drupalFinder);
-$container = $drupalConsole->boot();
-
-/* @var ConfigurationManager  $configurationManager */
-$configurationManager = $container->get('console.configuration_manager');
+$configurationManager = new ConfigurationManager();
+$configurationManager->loadConfiguration($drupalFinder->getComposerRoot());
 $configuration = $configurationManager->getConfiguration();
-$translator = $container->get('console.translator_manager');
 
 if ($options = $configuration->get('application.options') ?: []) {
     $argvInputReader->setOptionsFromConfiguration($options);
 }
-$targetConfig = [];
-if ($target = $argvInputReader->get('target')) {
-    $targetConfig = $container->get('console.configuration_manager')
-        ->readTarget($target);
-    $argvInputReader->setOptionsFromTargetConfiguration($targetConfig);
-}
 
-$argvInputReader->setOptionsAsArgv();
-
-$output = new ConsoleOutput();
-$input = new ArrayInput([]);
-$io = new DrupalStyle($input, $output);
-
-if ($target = $argvInputReader->get('target')) {
-    $configurationManager->loadConfiguration($drupalFinder->getComposerRoot());
-    $configurationManager->getSites();
-    $options = $configurationManager->readTarget($target);
-    if ($options) {
-        if ($options['type'] != 'local') {
-            $launcherType = 'console.launcher_' . $options['type'];
-            if ($container->has($launcherType)) {
-                $launcher = $container->get($launcherType);
-                $launch = $launcher->launch($options);
-                exit(0);
-            }
+if ($target) {
+    if ($targetOptions = $configurationManager->readTarget($target)) {
+        $argvInputReader->setOptionsFromTargetConfiguration($targetOptions);
+        $argvInputReader->setOptionsAsArgv();
+        $type = $targetOptions['type'];
+        if ($type !== 'local') {
+            $launcher = $launcherType[$type];
+            $exitCode = $launcher->launch($targetOptions);
+            exit($exitCode);
         } else {
-            $root = $options['root'];
-            $drupalFinder = new DrupalFinder();
+            $root = $targetOptions['root'];
             $drupalFinder->locateRoot($root);
-            $composerRoot = $drupalFinder->getComposerRoot();
-            $drupalRoot = $drupalFinder->getDrupalRoot();
-            $isValidDrupal = ($composerRoot && $drupalRoot)?true:false;
         }
     }
 }
 
-if ($debug || ($isValidDrupal && $command == 'list')) {
+if ($debug || ($drupalFinder->isValidDrupal() && $command == 'list')) {
     $io->writeln(
         sprintf(
             '<info>%s</info> version <comment>%s</comment>',
@@ -102,11 +89,16 @@ if ($debug) {
     );
 }
 
-if ($isValidDrupal) {
-    $launcher = $container->get('console.launcher_local');
+if ($drupalFinder->isValidDrupal()) {
+    $launcher = $launcherType['local'];
     $exitCode = $launcher->launch($drupalFinder);
-
     if ($exitCode === FALSE) {
+        $translator = new TranslatorManager();
+        $translator->loadCoreLanguage(
+            $configuration->get('application.language'),
+            $pharRoot
+        );
+
         $message = sprintf(
             $translator->trans('application.site.errors.not-installed'),
             PHP_EOL . $drupalFinder->getComposerRoot()
@@ -127,6 +119,10 @@ if ($isValidDrupal) {
     exit($exitCode);
 }
 
+// Restore original argv values
 $argvInputReader->restoreOriginalArgvValues();
+// Boot Launcher as standalone.
+$drupalConsole = new DrupalConsoleCore($pharRoot, null, $drupalFinder);
+$container = $drupalConsole->boot();
 $application = new Application($container);
 $application->run();

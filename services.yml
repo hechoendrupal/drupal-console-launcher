@@ -1,11 +1,4 @@
 services:
-  # DrupalConsoleLauncher Services
-  console.launcher_local:
-    class: Drupal\Console\Launcher\Utils\LauncherLocal
-  console.launcher_ssh:
-    class: Drupal\Console\Launcher\Utils\LauncherSsh
-  console.launcher_container:
-    class: Drupal\Console\Launcher\Utils\LauncherContainer
   # DrupalConsoleLauncher Commands
   console.self_update:
     class: Drupal\Console\Launcher\Command\Self\UpdateCommand
