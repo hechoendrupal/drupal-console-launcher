@@ -1,0 +1,6 @@
+services:
+  # DrupalConsoleLauncher Commands
+  console.self_update:
+    class: Drupal\Console\Launcher\Command\Self\UpdateCommand
+    tags:
+      - { name: drupal.command }

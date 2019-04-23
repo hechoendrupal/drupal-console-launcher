@@ -1,34 +1,50 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\Console\Core\Utils\LauncherBase.
+ */
+
 namespace Drupal\Console\Launcher\Utils;
 
-use DrupalFinder\DrupalFinder;
+use Symfony\Component\Console\Input\ArgvInput;
 
 /**
- * Class Launcher
+ * Class LauncherRemote
  *
- * @package Drupal\Console\Launcher\Utils
+ * @package Drupal\Console\Core\Utils
  */
-class Launcher
+abstract class Launcher
 {
-    /**
-     * @param $drupalFinder
-     *
-     * @return bool
-     */
-    public function launch(DrupalFinder $drupalFinder)
-    {
-        chdir($drupalFinder->getComposerRoot());
-        $drupal = $drupalFinder->getVendorDir() . '/drupal/console/bin/drupal';
+    protected $skipOptionKeys = [
+        'target',
+        'root'
+    ];
 
-        if (!file_exists($drupal)) {
-            return false;
+    protected function parseArguments($skipOptionKeys = [], $merge = true)
+    {
+        if ($skipOptionKeys) {
+            if ($merge) {
+                $skipOptionKeys = array_merge(
+                    $this->skipOptionKeys,
+                    $skipOptionKeys
+                );
+            }
+        } else {
+            $skipOptionKeys = $this->skipOptionKeys;
         }
 
-        $drupal = realpath($drupal).'.php';
+        $argvInput = new ArgvInput();
+        $returnAsString = $argvInput->__toString();
 
-        include_once $drupal;
+        foreach ($skipOptionKeys as $option) {
+            $returnAsString = preg_replace(
+                '/--'.$option.'=(\')(.*?)(\')/',
+                '',
+                $returnAsString
+            );
+        }
 
-        return true;
+        return ' ' . $returnAsString;
     }
 }

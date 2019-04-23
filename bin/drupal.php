@@ -1,88 +1,128 @@
 <?php
 
-use DrupalFinder\DrupalFinder;
-use Drupal\Console\Launcher\Utils\Colors;
-use Drupal\Console\Launcher\Utils\Launcher;
-use Drupal\Console\Launcher\Command\SelfUpdateCommand;
+use Drupal\Console\Core\Bootstrap\DrupalConsoleCore;
+use Drupal\Console\Core\Style\DrupalStyle;
+use Drupal\Console\Core\Utils\ArgvInputReader;
+use Drupal\Console\Core\Utils\ConfigurationManager;
+use Drupal\Console\Core\Utils\TranslatorManager;
+use Drupal\Console\Core\Utils\DrupalFinder;
+use Drupal\Console\Launcher\Application;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\ConsoleOutput;
 
 set_time_limit(0);
+error_reporting(-1);
 
-$autoloaders = [
-    __DIR__ . '/../../../autoload.php',
-    __DIR__ . '/../vendor/autoload.php'
-];
-foreach ($autoloaders as $file) {
-    if (file_exists($file)) {
-        $autoloader = $file;
-        break;
-    }
-}
-if (isset($autoloader)) {
-    include_once $autoloader;
+$pharRoot = dirname(__DIR__).DIRECTORY_SEPARATOR;
+$pharAutoload = $pharRoot.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
+
+if (file_exists($pharAutoload)) {
+    $autoload = include_once $pharAutoload;
 } else {
-    echo 'You must set up the project dependencies using `composer install`' . PHP_EOL;
+    echo ' Something is wrong with your drupal.phar archive.'.PHP_EOL.
+        ' Try downloading again by executing from your terminal:'.PHP_EOL.
+        ' curl https://drupalconsole.com/installer -L -o drupal.phar'.PHP_EOL;
     exit(1);
 }
 
-$root = getcwd();
-$source = null;
-$target = null;
-$command = null;
-$version = '1.0.0-rc21';
-$showVersion = false;
-$debug = false;
+$launcherType = [
+    'local' => new Drupal\Console\Launcher\Utils\LauncherLocal(),
+    'ssh' => new Drupal\Console\Launcher\Utils\LauncherSsh(),
+    'container' => new Drupal\Console\Launcher\Utils\LauncherContainer()
+];
 
-if ($argc>1) {
-    $command = $argv[1];
-}
+$output = new ConsoleOutput();
+$input = new ArrayInput([]);
+$io = new DrupalStyle($input, $output);
 
-foreach ($argv as $value) {
-    if (substr($value, 0, 7) == "--root=") {
-        $root = substr($value, 7);
-    }
-    if (substr($value, 0, 9) == "--version") {
-        $showVersion = true;
-    }
-    if (substr($value, 0, 7) == "--debug") {
-        $debug = true;
-    }
-}
-
-if ($showVersion || $debug) {
-    echo Colors::GREEN . 'Drupal Console Launcher' . Colors::NONE . ' version ' . Colors::YELLOW . $version . Colors::NONE . PHP_EOL;
-}
-if ($debug) {
-    echo Colors::GREEN . 'Launcher path: ' . Colors::YELLOW . $argv[0] . Colors::NONE . PHP_EOL . PHP_EOL;
-}
+$argvInputReader = new ArgvInputReader();
+$target = $argvInputReader->get('target', null);
+$root = $argvInputReader->get('root', getcwd());
+$debug = $argvInputReader->get('debug', false);
+$command = $argvInputReader->get('command', false);
 
 $drupalFinder = new DrupalFinder();
 $drupalFinder->locateRoot($root);
 $composerRoot = $drupalFinder->getComposerRoot();
 $drupalRoot = $drupalFinder->getDrupalRoot();
-$isValidDrupal = ($composerRoot && $drupalRoot)?true:false;
 
-if ($command === 'self-update' || $command === 'selfupdate') {
-    $selfUpdateCommand = new SelfUpdateCommand();
-    $selfUpdateCommand->run($version, $isValidDrupal, $composerRoot);
+$configurationManager = new ConfigurationManager();
+$configurationManager->loadConfiguration($drupalFinder->getComposerRoot());
+$configuration = $configurationManager->getConfiguration();
+
+if ($options = $configuration->get('application.options') ?: []) {
+    $argvInputReader->setOptionsFromConfiguration($options);
 }
 
-if ($isValidDrupal) {
-    $launcher = new Launcher();
-    if ($launcher->launch($drupalFinder)) {
-        exit(0);
+if ($target) {
+    if ($targetOptions = $configurationManager->readTarget($target)) {
+        $argvInputReader->setOptionsFromTargetConfiguration($targetOptions);
+        $argvInputReader->setOptionsAsArgv();
+        $type = $targetOptions['type'];
+        if ($type !== 'local') {
+            $launcher = $launcherType[$type];
+            $exitCode = $launcher->launch($targetOptions);
+            exit($exitCode);
+        } else {
+            $root = $targetOptions['root'];
+            $drupalFinder->locateRoot($root);
+        }
     }
-    echo 'Could not find DrupalConsole in the current site (' . $root . ').' .
-        PHP_EOL;
-    echo 'Please execute: composer require drupal/console:~1.0' . PHP_EOL;
-    exit(1);
 }
 
-if (file_exists($root.'/composer.json')) {
-    echo 'Seems like there is an error with your composer.json file,' . PHP_EOL;
-    echo 'Please execute: composer validate' . PHP_EOL;
-} else {
-    echo 'The drupal command should be run from within a Drupal project.' . PHP_EOL;
-    echo 'See the documentation page about the Launcher:' . PHP_EOL;
-    echo 'https://docs.drupalconsole.com/en/getting/launcher.html' . PHP_EOL . PHP_EOL;
+if ($debug || ($drupalFinder->isValidDrupal() && $command == 'list')) {
+    $io->writeln(
+        sprintf(
+            '<info>%s</info> version <comment>%s</comment>',
+            Application::NAME,
+            Application::VERSION
+        )
+    );
 }
-exit(1);
+
+if ($debug) {
+    $io->writeln(
+        sprintf(
+            '<info>Launcher path:</info> <comment>%s</comment>',
+            $argv[0]
+        )
+    );
+}
+
+if ($drupalFinder->isValidDrupal()) {
+    $launcher = $launcherType['local'];
+    $exitCode = $launcher->launch($drupalFinder);
+    if ($exitCode === FALSE) {
+        $translator = new TranslatorManager();
+        $translator->loadCoreLanguage(
+            $configuration->get('application.language'),
+            $pharRoot
+        );
+
+        $message = sprintf(
+            $translator->trans('application.site.errors.not-installed'),
+            PHP_EOL . $drupalFinder->getComposerRoot()
+        );
+        $io->error($message);
+
+        $io->info(
+            $translator->trans('application.site.errors.execute-composer')
+        );
+
+        $io->commentBlock(
+            'composer require drupal/console:~1.0 --prefer-dist --optimize-autoloader'
+        );
+
+        exit(1);
+    }
+
+    exit($exitCode);
+}
+
+// Restore original argv values
+$argvInputReader->restoreOriginalArgvValues();
+// Boot Launcher as standalone.
+$drupalConsole = new DrupalConsoleCore($pharRoot, null, $drupalFinder);
+$container = $drupalConsole->boot();
+$application = new Application($container);
+$application->run();
