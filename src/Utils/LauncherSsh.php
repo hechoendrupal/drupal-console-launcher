@@ -7,6 +7,8 @@
 
 namespace Drupal\Console\Launcher\Utils;
 
+use Symfony\Component\Process\Process;
+
 /**
  * Class LauncherRemote
  *
@@ -24,27 +26,30 @@ class LauncherSsh extends Launcher
      */
     public function launch($options)
     {
+        $drupalConsoleBinary = isset($options['options'])?isset($options['options']['drupal-console-binary'])?$options['options']['drupal-console-binary']:'drupal':'drupal';
+
         $command = sprintf(
-            '%s/vendor/drupal/console/bin/drupal --root=%s %s',
-            $options['root'],
+            '%s --root=%s %s',
+            $drupalConsoleBinary,
             $options['root'],
             $this->parseArguments()
         );
 
         $command = $this->getSshConnectionString($options) . ' ' . $command;
 
-        $process = proc_open(
-            $command,
-            [0 => STDIN, 1 => STDOUT, 2 => STDERR],
-            $pipes
-        );
+        try {
+            $process = new Process($command);
+            $process->enableOutput();
+            $process->setTimeout(null);
+            $process->mustRun();
+            echo $process->getOutput();
 
-        // If process was successful, we'll return it's exit code to propagate
-        if ($process) {
-            return proc_close($process);
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            return 0;
         }
 
-        return false;
+        return 1;
     }
 
     /**
@@ -59,7 +64,7 @@ class LauncherSsh extends Launcher
         }
 
         $ssh = sprintf(
-            'ssh -A -tt %s%s%s%s',
+            'ssh -A %s%s%s%s',
             $options['user'] ? : '',
             $options['user'] ? '@' . $options['host'] : $options['host'],
             $options['port'] ? ' -p ' . $options['port'] : '22',
