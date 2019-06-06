@@ -55,7 +55,14 @@ if ($options = $configuration->get('application.options') ?: []) {
 }
 
 if ($target) {
-    if ($targetOptions = $configurationManager->readTarget($target)) {
+    try{
+        $targetOptions = $configurationManager->readTarget($target);
+    }catch (Exception $e) {
+        $io->error($e->getMessage());
+        exit(1);
+    }
+
+    if ($targetOptions) {
         $argvInputReader->setOptionsFromTargetConfiguration($targetOptions);
         $argvInputReader->setOptionsAsArgv();
         $type = $targetOptions['type'];
