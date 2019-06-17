@@ -20,7 +20,7 @@ class Application extends CoreApplication
     /**
      * @var string
      */
-    const VERSION = '1.9.0';
+    const VERSION = '1.9.1';
 
     /**
      * Application constructor.
