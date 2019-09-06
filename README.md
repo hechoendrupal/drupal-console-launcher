@@ -1,4 +1,4 @@
-# Drupal Console Launcher 
+# Drupal Console Launcher
 
 DrupalConsole global executable aka Launcher.
 
@@ -10,7 +10,7 @@ For example, if you have Drupal root in the `web` or `docroot` directory, and a 
 
 ## Installing Drupal Console Launcher
 ```
-curl https://drupalconsole.com/installer -L -o drupal.phar
-mv drupal.phar /usr/local/bin/drupal
-chmod +x /usr/local/bin/drupal
+curl -L https://drupalconsole.com/installer > drupal.phar
+chmod +x drupal.phar
+sudo mv drupal.phar /usr/local/bin/drupal
 ```
