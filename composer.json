@@ -1,33 +1,38 @@
 {
     "name": "drupal/console-launcher",
     "description": "Drupal Console launcher",
-    "keywords": ["Drupal", "Console", "Development", "Symfony"],
+    "keywords": [
+        "Drupal",
+        "Console",
+        "Development",
+        "Symfony"
+    ],
     "homepage": "http://drupalconsole.com/",
     "type": "project",
     "license": "GPL-2.0-or-later",
     "authors": [
         {
-            "name":      "David Flores",
-            "email":     "dmousex@gmail.com",
-            "homepage":  "http://dmouse.net"
+            "name": "David Flores",
+            "email": "dmousex@gmail.com",
+            "homepage": "http://dmouse.net"
         },
         {
-            "name":      "Jesus Manuel Olivas",
-            "email":     "jesus.olivas@gmail.com",
-            "homepage":  "http://jmolivas.com"
+            "name": "Jesus Manuel Olivas",
+            "email": "jesus.olivas@gmail.com",
+            "homepage": "http://jmolivas.com"
         },
         {
-            "name":      "Eduardo Garcia",
-            "email":     "enzo@enzolutions.com",
-            "homepage":  "http://enzolutions.com/"
+            "name": "Eduardo Garcia",
+            "email": "enzo@enzolutions.com",
+            "homepage": "http://enzolutions.com/"
         },
         {
-            "name":      "Omar Aguirre",
-            "email":     "omersguchigu@gmail.com"
+            "name": "Omar Aguirre",
+            "email": "omersguchigu@gmail.com"
         },
         {
-            "name":      "Drupal Console Contributors",
-            "homepage":  "https://github.com/hechoendrupal/DrupalConsole/graphs/contributors"
+            "name": "Drupal Console Contributors",
+            "homepage": "https://github.com/hechoendrupal/DrupalConsole/graphs/contributors"
         }
     ],
     "support": {
@@ -37,11 +42,13 @@
     },
     "require": {
         "php": "^5.5.9 || ^7.0",
-        "drupal/console-core": "1.9.4",
-        "drupal/console-en": "1.9.4",
+        "drupal/console-core": "1.9.7",
+        "drupal/console-en": "1.9.7",
         "padraic/phar-updater": "~1.0@dev"
     },
-    "bin": ["bin/drupal"],
+    "bin": [
+        "bin/drupal"
+    ],
     "config": {
         "bin-dir": "bin/",
         "sort-packages": true
@@ -49,6 +56,8 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "autoload": {
-        "psr-4": {"Drupal\\Console\\Launcher\\": "src"}
+        "psr-4": {
+            "Drupal\\Console\\Launcher\\": "src"
+        }
     }
 }
